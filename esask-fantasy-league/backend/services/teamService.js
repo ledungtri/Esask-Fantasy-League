@@ -1,4 +1,4 @@
-const Team = require('../models/team');
+const Team = require('../models/teamModel');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 async function createTeam(body) {
