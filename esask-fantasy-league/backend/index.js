@@ -2,7 +2,7 @@ const database = require('./database/database');
 const express = require('express');
 const app = express();
 const cors = require('cors');
-
+const teamRoute = require('./routes/teamRoute');
 
 function startServer() {
     database.connect().then(() => {
@@ -19,8 +19,7 @@ function startServer() {
 }
 
 function useRoutes() {
-    // app.use('/api/teams', teamRoute);
-    // TODO: implement teams route
+    app.use('/api/teams', teamRoute);
     // TODO: implement player route
     // TODO: implement contest route
     // TODO: implement user route
