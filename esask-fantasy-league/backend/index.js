@@ -13,7 +13,7 @@ function startServer() {
 
         useRoutes();
 
-        const port = 3000;
+        const port = 3001;
         app.listen(port, () => console.log(`Listening in port ${port}...`));
     });
 }
