@@ -2,9 +2,11 @@ const database = require('./database/database');
 const express = require('express');
 const app = express();
 const cors = require('cors');
-
+const dotenv = require('dotenv');
 
 function startServer() {
+    dotenv.config();
+
     database.connect().then(() => {
         app.use(express.json());
         app.use(cors(
@@ -13,7 +15,7 @@ function startServer() {
 
         useRoutes();
 
-        const port = 3001;
+        const port = process.env.PORT || 3001;
         app.listen(port, () => console.log(`Listening in port ${port}...`));
     });
 }
