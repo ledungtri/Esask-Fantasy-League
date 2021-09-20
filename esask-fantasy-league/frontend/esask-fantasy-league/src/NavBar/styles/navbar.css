@@ -1,0 +1,22 @@
+.navbar {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 70px;
+}
+.navbar a {
+  width: 10%;
+}
+.logo {
+  width: 100%;
+}
+.links {
+  display: flex;
+}
+.links div {
+  margin-right: 20px;
+}
+.links div a {
+  color: #eeeeee;
+}

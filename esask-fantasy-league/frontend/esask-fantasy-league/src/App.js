@@ -1,11 +1,19 @@
 import React from 'react';
-import PlayerList from './components/PlayerList';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import HomePage from './Home Page/components/HomePage';
+import PlayerList from './Player List/components/PlayerList';
 
 function App() {
   return (
-    <div className="App">
-      <PlayerList />
-    </div>
+    <Router>
+        <div className="App">
+          <Switch>
+            <Route path="/" exact component={HomePage} />
+            <Route path="/players" exact component={PlayerList} />
+          </Switch>
+        </div>
+    </Router>
+    
   );
 }
 

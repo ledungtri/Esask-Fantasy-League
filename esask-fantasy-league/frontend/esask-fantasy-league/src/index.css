@@ -1,13 +1,38 @@
 body {
+  background-color: #0f044c;
+  background-image: linear-gradient(
+      0deg,
+      rgba(15, 4, 76, 0.7),
+      rgba(15, 4, 76, 0.7)
+    ),
+    url("../src/Resources/images/162-1623790_big.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #eeeeee;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+/*------------------- NavBar CSS --------------------- */
+@import url("../src/NavBar/styles/navbar.css");
+
+/*------------------- PlayerList CSS --------------------- */
+@import url("../src/Player List/styles/playerlist.css");
+
+/*------------------- Pagination CSS --------------------- */
+@import url("../src/Player List/styles/pagination.css");
+
+/*------------------- Loading CSS --------------------- */
+@import url("../src/Player List/styles/loading.css");
+
+/*------------------- HomePage CSS --------------------- */
+@import url("../src/Home Page/styles/homepage.css");
