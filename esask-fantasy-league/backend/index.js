@@ -2,8 +2,9 @@ const database = require('./database/database');
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const dotenv = require('dotenv');
+const playerRoute = require('./routes/playerRoute');
 const teamRoute = require('./routes/teamRoute');
+const dotenv = require('dotenv');
 
 function startServer() {
     dotenv.config();
@@ -21,9 +22,11 @@ function startServer() {
     });
 }
 
+
+
 function useRoutes() {
     app.use('/api/teams', teamRoute);
-    // TODO: implement player route
+    app.use('/api', playerRoute);
     // TODO: implement contest route
     // TODO: implement user route
 }
