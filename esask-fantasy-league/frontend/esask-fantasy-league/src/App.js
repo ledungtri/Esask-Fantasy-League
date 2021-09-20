@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import {TeamCreate} from "./pages";
+import {TeamCreate} from "./CreateTeam";
 
 function App() {
   return (
