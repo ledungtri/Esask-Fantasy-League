@@ -1,5 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import apis from "../api";
+
+
+import styled from 'styled-components';
+
+const Label = styled.label`
+    margin: 5px;
+`
+
+
 
 
 
@@ -7,10 +16,28 @@ import apis from "../api";
 
 function TeamCreate() {
 
-    async function handleCreateTeam(props){
+    const [values, setValues]=useState({
+        teamname:''
+    })
 
+    const handleChange = e => {
+        setValues({
+            ...values,
+            [e.target.name]:e.target.value
+        })
+        console.log(e.target.value)
+        
+    }
+
+    const handleSubmit = e =>{
+        e.preventDefault();
+        //another method
+        // const data = new FormData(e.target);
+        // const value = data.get('teamname');
+        // console.log({ value });
+        //
         const payload = {
-            "name": "My Team2", 
+            "name": e.target.teamname.value, 
             "contestId": "613d65ea63676a0636013920", 
             "players": [
                 {"id": "wr37PIyFXfCAaTU6HaAxlIx-glt2GrpqUzoThzFGGb71QWE", "name" : "nifty jg", "value": 0},
@@ -21,22 +48,37 @@ function TeamCreate() {
                 {"id": "hZWFpvpRVAmczqbF6gCwU6JvupAYJNmDVEYLFLwxFXItOnY-CTxyLjvVKA", "name" : "HLE Arthur", "value": 0}
             ]
         };
-        
-        console.log(payload); 
 
-        await apis.createTeam(payload).then(res => {
+        console.log(payload); 
+        
+
+        apis.createTeam(payload).then(res => {
             console.log("Team created successfully");
         })
 
     }
     
-    
     return (
-        <div className="TeamCreate">
+        <div className="TeamCreateContainer">
 
+            <div className="contestDetails">
+                <h1>Start Date : </h1>
+                <h1>End Date : </h1>
+            </div>
 
-                         
-            <button onClick={handleCreateTeam}>Create Team</button>
+            <form className="createTeamForm" onSubmit={handleSubmit}>
+                <Label>Team Name:</Label>
+                <input 
+                    type="text"
+                    name="teamname"
+                    value={values.teamname}
+                    onChange={handleChange}
+                    placeholder="Enter your team's name"
+
+                />
+                <button type="submit">Create Team</button>
+            </form>
+
         </div>
 
         // TODO: contest details
