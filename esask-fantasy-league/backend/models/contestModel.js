@@ -5,15 +5,18 @@ const contestSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    start_date: {
+    name: {
+        type: String,
+        required: true
+    },
+    startDate: {
         type: Date,
         required: true
     },
-    end_date: {
+    endDate: {
         type: Date,
         required: true
     },
-
     isContestOpen: {
         type: Boolean,
         required: true,
