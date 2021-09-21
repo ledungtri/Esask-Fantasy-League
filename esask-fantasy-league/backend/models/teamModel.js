@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const teamPlayerSchema = new mongoose.Schema({
-    id: {
+    summonerId: {
         type: String,
         required: true
     },
-    name: {
+    summonerName: {
         type: String,
         required: true
     },

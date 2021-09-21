@@ -6,6 +6,7 @@ import PlayerList from './Player List/components/PlayerList';
 import {TeamCreate} from "./CreateTeam";
 
 function App() {
+  const mockContest = {_id: "613d65ea63676a0636013920", name: "Contest Number 1", startDate: "17/09/2021", endDate: "24/09/2021"};
   return (
     <Router>
         <div className="App">
@@ -13,7 +14,7 @@ function App() {
           <Switch>
             <Route path="/" exact component={HomePage} />
             <Route path="/players" exact component={PlayerList} />
-            <Route path='/create-team' exact component={TeamCreate} />
+            <Route path='/create-team' exact component={() => <TeamCreate contest={mockContest}/>} />
           </Switch>
         </div>
     </Router>
