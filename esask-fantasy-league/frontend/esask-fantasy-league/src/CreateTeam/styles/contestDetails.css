@@ -1,0 +1,20 @@
+
+.contestDetails{
+    
+    background-color: #787A91;
+    border-radius: 25px;
+    border: 1px solid #787a91;
+    color: #eeeeee;
+    margin: 20px;
+    padding: 10px;
+    
+}
+
+
+
+
+.outter_div{
+    display: flex;
+    justify-content: space-evenly;
+}
+

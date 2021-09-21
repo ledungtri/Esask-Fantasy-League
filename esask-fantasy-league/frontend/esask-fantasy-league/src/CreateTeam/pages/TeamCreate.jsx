@@ -3,9 +3,13 @@ import styled from 'styled-components';
 import apis from "../../api/api";
 import ContestDetails from "../components/ContestDetails";
 
-const Label = styled.label`
-    margin: 5px;
-`
+import TeamCreateCss from "../styles/TeamCreate.css"
+
+
+
+
+
+
 
 function TeamCreate() {
     const mockContest = {name: "Contest Number 1", startDate: "17/09/2021", endDate: "24/09/2021"};
@@ -35,21 +39,35 @@ function TeamCreate() {
         });
     }
 
+
+
     return (
         <div className="TeamCreateContainer">
-            <ContestDetails contest={mockContest}/>
+            
+
+            <div>
+                <ContestDetails contest={mockContest}/>
+            </div>
+            
+            
 
             <form className="createTeamForm" onSubmit={handleSubmit}>
-                <Label>Team Name:</Label>
-                <input
-                    type="text"
-                    name="teamName"
-                    value={teamName}
-                    onChange={handleChange}
-                    placeholder="Enter your team's name"
-
-                />
-                <button type="submit">Create Team</button>
+                <div className="outerDiv_input_button">
+                <div  className="labelHeading">
+                <label><h3>Team Name:</h3></label>
+                </div>
+                <div className="inputFieldDiv">
+                    <input 
+                        type="text" id="fname"
+                        name="teamName"
+                        value={teamName}
+                        onChange={handleChange}
+                        placeholder="Enter your team's name here"
+                    />
+                </div>
+                </div>
+                <input type="submit" value="Create Team"/>
+                
             </form>
 
         </div>
