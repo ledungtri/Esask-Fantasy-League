@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import Loading from './Loading';
 import Paginate from './Pagination';
+import Title from "../../Home Page/components/Title";
 
 function PlayerList(props) {
     const [playerList, setPlayerList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
-    const playersPerPage = props.playersPerPage || 35;
-    const title = props.title || "List Of Players";
+    const playersPerPage = 35;
+    const title = "List Of Players";
     const showBtn = props.showBtn || false;
 
     async function fetchPlayersList(){
@@ -38,9 +39,7 @@ function PlayerList(props) {
     return (
         <div>
             <div>
-                <div className="title">
-                    <h3>{title}</h3>
-                </div>
+                {props.disableTitle? "" : <Title title={title}/>}
                 {loading? <Loading /> : ""}
                 {showBtn ? "" :
                     <div className={showBtn ? "listing_heading width_90" :"listing_heading width_50"}>
@@ -90,9 +89,9 @@ function PlayerList(props) {
                 <p>Page {page} of {totalPages}</p>
                 <Paginate totalPages={totalPages} handlePaginate={handlePaginate} />
             </div>        
-            
+
             </div>
-            
+
         </div>
     )
 }

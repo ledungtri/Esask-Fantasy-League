@@ -1,22 +1,12 @@
 import React from "react";
-import contestDetails from "../styles/contestDetails.css"
-
-
+import Title from "../../Home Page/components/Title";
 
 function ContestDetails(props) {
-    console.log(JSON.stringify(props.contest));
     return(
-        <div className="contestDetails">
-            <h1>{props.contest.name}</h1>
-            <div className="outter_div">
-                <div className="start_div">
-                <h3>Start Date : </h3>
-                </div>
-                <div className="end_div">
-                <h3>End Date : </h3>
-                </div>
-            </div>
-            
+        <div data-testid="contest-details" className="contestDetails">
+            <Title title={"Contest : " + props.contest.name}/>
+            <Title title={"Start Date : " + props.contest.startDate}/>
+            <Title title={"End Date : " + props.contest.endDate}/>
         </div>
     );
 }

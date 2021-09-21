@@ -1,23 +1,18 @@
 import React, {useState} from "react";
-import styled from 'styled-components';
 import apis from "../../api/api";
 import ContestDetails from "../components/ContestDetails";
 import PlayerList from "../../Player List/components/PlayerList";
+import Title from "../../Home Page/components/Title";
 
-import TeamCreateCss from "../styles/TeamCreate.css"
-
-function TeamCreate(props) {
+function CreateTeam(props) {
     const [teamName, setTeamName] = useState("");
     const [totalValue, setTotalValue] = useState(0);
     const [selectedPlayers] = useState([]);
 
     function handleSelectPlayer(player) {
-
         const length = selectedPlayers.filter(p => p !== null).length;
         if (length < 6 && !selectedPlayers.includes(player)) {
-            console.log("player: " + JSON.stringify(player));
             selectedPlayers.push(player);
-            console.log("selectedPlayers: " + JSON.stringify(selectedPlayers));
             recalculateTotalValue();
         }
     }
@@ -38,26 +33,26 @@ function TeamCreate(props) {
         e.preventDefault();
 
         const players = selectedPlayers.filter(p => p !== null);
-        if (players.length > 6) {
+        if (players.length !== 6) {
             // TODO: flash message
-            console.log("Error");
+            console.log("players.length !== 6");
             return;
         }
 
         if (totalValue > 50000) {
-            // TODO: check budget
-            console.log("Error");
+            // TODO: flash message
+            console.log("totalValue > 50000");
             return;
         }
 
         const payload = {"name": teamName, "contestId": props.contest._id, "players": selectedPlayers};
-        const response = await apis.createTeam(payload);
-
-        // TODO: flash message
-        if (response.status === 200) {
+        try {
+            const response = await apis.createTeam(payload);
+            // TODO: flash message
             console.log("Team created successfully");
-        } else {
-            console.log("Error");
+        } catch (e) {
+            // TODO: flash message
+            console.log(JSON.stringify(e));
         }
     }
 
@@ -69,50 +64,33 @@ function TeamCreate(props) {
                 <ContestDetails contest={props.contest}/>
             </div>
 
-            <div className='title'>
+            <div data-testid="remaining-budget" className='title'>
                 <h2>Remaining Budget: ${50000 - totalValue}</h2>
             </div>
 
             <div data-testid="available-players" className="playerListContainer">
-                <PlayerList
-                    title="Available Players"
-                    playersPerPage={10}
-                    showBtn={true}
-                    btnText="Select"
-                    callback={handleSelectPlayer}
-                />
+                <Title title="Available Players"/>
+                <PlayerList disableTitle showBtn btnText="Select" callback={handleSelectPlayer}/>
             </div>
 
             <div data-testid='selected-players' className="playerListContainer">
-                <PlayerList
-                    players={selectedPlayers}
-                    title="Selected Players"
-                    showBtn={true}
-                    btnText="Remove"
-                    callback={handleRemovePlayer}
-                />
-            </div>
+                <Title title="Selected Players"/>
+                <PlayerList players={selectedPlayers} disableTitle showBtn btnText="Remove" callback={handleRemovePlayer}/>
 
-            <form className="createTeamForm" onSubmit={handleSubmit}>
-                <div className="outerDiv_input_button">
-                <div  className="labelHeading">
-                <label><h3>Team Name:</h3></label>
-                </div>
-                <div className="inputFieldDiv">
+                <form className="createTeamForm" onSubmit={handleSubmit}>
                     <input
-                        type="text" id="fname"
+                        data-testid='team-name-input'
+                        type="text"
                         name="teamName"
                         value={teamName}
                         onChange={(e) => setTeamName(e.target.value)}
                         placeholder="Enter your team's name here"
                     />
-                </div>
-                </div>
-                <input type="submit" value="Create Team"/>
-
-            </form>
+                    <input data-testid='submit-btn' type="submit" value="Create Team"/>
+                </form>
+            </div>
         </div>
     );
 }
 
-export default TeamCreate;
+export default CreateTeam;
