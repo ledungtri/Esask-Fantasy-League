@@ -3,11 +3,13 @@ import Navbar from '../../NavBar/components/Navbar';
 import Loading from './Loading';
 import Paginate from './Pagination';
 
-function PlayerList() {
+function PlayerList(props) {
     const [playerList, setPlayerList] = useState([]);
+    const [showBtn, setShowBtn] = useState(false);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
-    const playersPerPage = 35;
+    const playersPerPage = props.playersPerPage || 35;
+    const title = props.title || "List Of Players";
     
 
     async function fetchPlayersList(){
@@ -15,61 +17,75 @@ function PlayerList() {
         const res = await fetch("http://localhost:3001/api/playerlist");
         res.json().then(res => setPlayerList(res))
         setLoading(false);
+        setShowBtn(props.showBtn);
     }
 
     useEffect(() => {
-        fetchPlayersList();
+        if(!props.players){
+            fetchPlayersList();
+        }else{
+            setPlayerList(props.players)
+        }
+        
     },[])
    
     
     const startIndex = (page - 1) * playersPerPage;
     const current = playerList.slice(startIndex,startIndex + playersPerPage);
-    const totalPages = playerList.length/playersPerPage;
+    const totalPages = Math.ceil(playerList.length/playersPerPage);
     
-    const handlePaginate = number => {
+    const handlePaginate = (number) => {
         setPage(number);
     }
-
 
     return (
         <div>
             <div>
-                <Navbar />
                 <div className="title">
-                    <h3>List Of Players</h3>
+                    <h3>{title}</h3>
                 </div>
                 {loading? <Loading /> : ""}
-                <div className="listing_heading">
-                    <div>
+                {showBtn ? "" :
+                    <div className={showBtn ? "listing_heading width_75" :"listing_heading width_50"}>
                         <div>
-                            <p>Rank</p>
-                        </div>
-                        <div className="player_name">
-                            <p>Player Name</p>
-                        </div>
-                        <div>
-                            <p>League Points</p>
-                        </div>
-                        <div>
-                            <p>Salary</p>
+                            <div className="player_rank">
+                                <p>Rank</p>
+                            </div>
+                            <div className="player_name">
+                                <p className="width">Player Name</p>
+                            </div>
+                            <div>
+                                <p className="width">League Points</p>
+                            </div>
+                            <div>
+                                <p>Salary</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
                     {current.map(player => (
-                        <div className="listing">
+                        <div className={showBtn ? "listing width_75" : "listing hover width_50"} >
                             <div key={player.summonerId}>
                                 <div>
                                     <p>{player.pos}</p>
                                 </div>
-                                <div className="player_name">
-                                    <p>{player.summonerName}</p>
+                                <div className= "player_name">
+                                    <p className="width">{player.summonerName}</p>
                                 </div>
+                                {showBtn ? "" :
+                                    <div>
+                                        <p>{player.leaguePoints}</p>
+                                    </div>
+                                }
                                 <div>
-                                    <p>{player.leaguePoints}</p>
+                                    <p>${player.value}</p>
                                 </div>
-                                <div>
-                                    <p>{player.value}</p>
-                                </div>
+
+                                {showBtn ? 
+                                    <div className="select_player_div">
+                                        <button className="select_player_btn" onClick={() => props.callback(player)}>{props.btnText || "Select Player"}</button>
+                                    </div>
+                                : ""}
                             </div>
                         </div>
                     ))}

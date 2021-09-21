@@ -11,28 +11,33 @@
 .listing_heading {
   margin: 15px auto;
   height: 50px;
-  width: 50%;
 }
-.listing:hover {
+.hover:hover {
   background-color: rgba(120, 122, 145, 1);
   transform: scale(1.1);
 }
 .listing div {
   margin: 0 30px;
 }
-.listing_heading div {
-  margin: 0 30px 0 22px;
+.listing_heading > div {
+  margin: 0 30px 0 45px;
 }
 .listing div,
 .listing_heading div {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr 1fr;
 }
 .listing_heading .player_name {
-  width: 200px;
+  margin-left: 15px;
 }
-.listing .player_name {
-  width: 25%;
+.width {
+  width: 150px;
+}
+.width_50 {
+  width: 50%;
+}
+.width_75 {
+  width: 75%;
 }
 .pagination {
   display: flex;
@@ -41,4 +46,18 @@
 }
 .pagination p {
   margin-right: 20px;
+}
+.select_player_div {
+  padding: 5px 10px;
+}
+.select_player_btn {
+  background-color: #141e61;
+  border-radius: 10px;
+  color: #eeeeee;
+  height: 40px;
+  width: 100px;
+}
+.select_player_btn:hover {
+  background-color: #0f044c;
+  transform: scale(1.04);
 }
