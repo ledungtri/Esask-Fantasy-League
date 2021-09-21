@@ -14,7 +14,11 @@ getAllContests = async (req, res) => {
                 .status(404)
                 .json({success: false, error: "No contests available"});
         }
-
+        
+        array.forEach(contest => {
+            contest.isContestOpe = contest.startDate > Date.now;
+        });
+        
         return res
             .status(200)
             .json({success: true, data: contests});
