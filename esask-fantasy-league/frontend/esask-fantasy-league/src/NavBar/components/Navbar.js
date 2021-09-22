@@ -12,7 +12,7 @@ function Navbar() {
             
             <div className="links">
                 <div>
-                    <Link data-testid="nav_contest" to="">Contests</Link>
+                    <Link data-testid="nav_contest" to="/contests">Contests</Link>
                 </div>
                 <div>
                     <Link data-testid="nav_player" to="/players">Players</Link>

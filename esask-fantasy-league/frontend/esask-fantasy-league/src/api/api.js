@@ -8,6 +8,7 @@ export const createTeam = payload => api.post(`/teams`, payload);
 
 const apis = {
     createTeam
+    
 };
 
 export default apis;
