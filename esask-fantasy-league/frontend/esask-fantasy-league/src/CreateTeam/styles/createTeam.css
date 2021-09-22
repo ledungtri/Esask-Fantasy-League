@@ -1,6 +1,6 @@
 .playerListContainer {
     width: 50%;
-    display: inline-table;
+    display: inline-block;
     overflow: auto;
     height: 800px;
 }
