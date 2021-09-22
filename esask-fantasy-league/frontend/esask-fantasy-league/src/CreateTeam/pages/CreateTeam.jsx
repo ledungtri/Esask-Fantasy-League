@@ -3,11 +3,15 @@ import apis from "../../api/api";
 import ContestDetails from "../components/ContestDetails";
 import PlayerList from "../../Player List/components/PlayerList";
 import Title from "../../Home Page/components/Title";
+import PopUpMessage from "../components/PopUpMessage";
 
 function CreateTeam(props) {
     const [teamName, setTeamName] = useState("");
     const [totalValue, setTotalValue] = useState(0);
     const [selectedPlayers] = useState([]);
+
+    const [message, setMessage] = useState();
+    const [messageType, setMessageType] = useState('');
 
     function handleSelectPlayer(player) {
         const length = selectedPlayers.filter(p => p !== null).length;
@@ -29,30 +33,40 @@ function CreateTeam(props) {
         setTotalValue(total);
     }
 
+    function closeModal(){
+        setMessageType('');
+    }
+
     async function handleSubmit(e) {
         e.preventDefault();
 
         const players = selectedPlayers.filter(p => p !== null);
         if (players.length !== 6) {
-            // TODO: flash message
-            console.log("players.length !== 6");
+            setMessage("There should be 6 players");
+            setMessageType('error');
             return;
         }
 
         if (totalValue > 50000) {
-            // TODO: flash message
-            console.log("totalValue > 50000");
+            setMessage("Budget exceeded. You can create a team only worth $50,000");
+            setMessageType('error');
+            return;
+        }
+
+        if (!teamName) {
+            setMessage("Please enter team name");
+            setMessageType('error');
             return;
         }
 
         const payload = {"name": teamName, "contestId": props.contest._id, "players": selectedPlayers};
         try {
-            const response = await apis.createTeam(payload);
-            // TODO: flash message
-            console.log("Team created successfully");
+            await apis.createTeam(payload);
+            setMessage("Team Created Successfully");
+            setMessageType('success');
         } catch (e) {
-            // TODO: flash message
-            console.log(JSON.stringify(e));
+            setMessage("Error");
+            setMessageType('error');
         }
     }
 
@@ -76,6 +90,8 @@ function CreateTeam(props) {
             <div data-testid='selected-players' className="playerListContainer">
                 <Title title="Selected Players"/>
                 <PlayerList players={selectedPlayers} disableTitle showBtn btnText="Remove" callback={handleRemovePlayer}/>
+
+                {messageType? <PopUpMessage type={messageType} body={message} closeHandler={closeModal}/> : ""}
 
                 <form className="createTeamForm" onSubmit={handleSubmit}>
                     <input

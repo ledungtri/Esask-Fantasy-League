@@ -2,13 +2,26 @@
     width: 50%;
     display: inline-block;
     overflow: auto;
-    height: 800px;
+    height: 1000px;
 }
 
 .createTeamForm{
     margin: 20px;
 }
 
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 input[type=text] {
     width: 100%;
@@ -32,3 +45,28 @@ input[type=submit] {
     width: 100%;
     border-radius: 10px;
   }
+
+.pop-up-header {
+    padding: 2px 16px;
+    color: white;
+}
+
+.error {
+    background-color: #ce1b1b;
+}
+
+.success {
+    background-color: #649a00;
+}
+
+.pop-up-body {
+    padding: 2px 16px;
+    color: black;
+}
+
+.pop-up-message {
+    background-color: #eeeeee;
+    margin: auto;
+    border: 1px solid #888;
+    width: 80%;
+}
