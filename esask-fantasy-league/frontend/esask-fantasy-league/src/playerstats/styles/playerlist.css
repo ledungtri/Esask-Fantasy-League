@@ -1,0 +1,105 @@
+.title {
+    padding: 10px;
+    text-align: center;
+  }
+  .listing {
+    background-color: rgba(120, 122, 145, 0.7);
+    border: 1px solid #787a91;
+    border-radius: 25px;
+  }
+  .text-light {
+    color: #EEEEEE;
+    padding: 1em;
+  }
+  .listing,
+  .listing_heading {
+    margin: 15px auto;
+    height: 50px;
+  }
+  .hover:hover {
+    background-color: rgba(120, 122, 145, 1);
+    transform: scale(1.1);
+  }
+  .listing div {
+    margin: 0 30px;
+  }
+  .listing_heading > div {
+    margin: 0 30px 0 45px;
+  }
+  .listing div,
+  .listing_heading div {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr 1fr;
+  }
+  .listing_heading .player_name {
+    margin-left: 15px;
+  }
+  .width {
+    width: 150px;
+  }
+  .width_50 {
+    width: 50%;
+  }
+  .width_75 {
+    width: 75%;
+  }
+
+  .header_player {
+    width: 75%;
+    height: 27vh;
+    padding-top: 1em;
+    background-color: #141e61;
+    margin: 15px auto;
+  }
+  .performance_player {
+    background-color: #141e61;
+    margin: 20px;
+    padding: 40px 40px 40px 40px;
+
+  }
+  .performance-row {
+    margin: 0 auto;
+  }
+
+  .performance-col {
+    text-align: center;
+  }
+
+  .select_player_btn {
+    background-color: #141e61;
+    border-radius: 10px;
+    color: #eeeeee;
+   
+    padding:0.35em 1.2em;
+    border:0.1em solid #FFFFFF;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:#FFFFFF;
+    text-align:center;
+    transition: all 0.2s;
+    float: right;
+  }
+  .select_player_btn:hover {
+    background-color: #0f044c;
+    transform: scale(1.04);
+  }
+
+  .table-dark {
+    --bs-table-bg: rgb(20, 30, 97) !important;
+    --bs-table-striped-bg: rgb(15, 4, 76) !important;
+  }
+
+  .modal-header { 
+    color: white;
+  }
+  .modal-header .btn-close  { 
+    /* background: url("https://image.flaticon.com/icons/svg/60/60993.svg") !important; */
+ }
+ .modal-content {
+   background-color: rgb(61 60 115 / 50%) !important;
+ }
+ 
