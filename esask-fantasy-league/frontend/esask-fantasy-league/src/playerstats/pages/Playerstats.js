@@ -17,14 +17,15 @@ function Playerstats(props) {
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState(true);
     const handleClose = () => setShow(false);
-    const sumonnerIDProp = props.summonerID;
-    
+    const sumonnerIDProp = props.summonerId;
+
 
 
     const fetchPlayer = async () => {
+        // console.log(sumonnerIDProp);
         setLoading(true);
         const response = await axios.get(
-          'http://localhost:3001/api/player/'+ summonerID  //this should be replaced by props.sumonnerID or sumonnerIDProp
+          'http://localhost:3001/api/player/'+ sumonnerIDProp  //this should be replaced by props.sumonnerID or sumonnerIDProp
         );
 
         console.log("response stats");
@@ -41,6 +42,7 @@ function Playerstats(props) {
 
 
     useEffect(() => {
+        // setSumonnerIDProp(props.summonerId)
         fetchPlayer();
        
     }, []);
@@ -50,21 +52,23 @@ function Playerstats(props) {
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                show={show}
-                onHide={handleClose}
+                show={props.show}
+                onHide={props.handleClose}
             >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
                 Player's Stats
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+                {loading? <Loading /> :
+                <Modal.Body>
                 <HeaderName performance = {playerEntries} totalGames = {totalGames} />  
-                {loading? <Loading /> : ""}       
+
                 <MatchesStats stats = {playerStats} />
                 {props.loggedin?<DraftButton onClose={handleClose} loggedin={true}  />:""}
 
             </Modal.Body>
+                    }
             <Modal.Footer>
             </Modal.Footer>
             </Modal>

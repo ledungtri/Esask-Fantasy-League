@@ -8,6 +8,7 @@ body {
     url("../src/Resources/images/162-1623790_big.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
   background-attachment: fixed;
   color: #eeeeee;
   margin: 0;
@@ -38,7 +39,7 @@ code {
 @import url("../src/Home Page/styles/homepage.css");
 
 /*------------------- PlayerStats CSS --------------------- */
-@import url("../src/playerstats/styles/playerlist.css");
+@import url("playerstats/styles/playerstats.css");
 
 /*------------------- Loading CSS --------------------- */
 @import url("../src/playerstats/styles/loading.css");

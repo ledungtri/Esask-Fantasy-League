@@ -2,11 +2,14 @@ import React, {useState, useEffect} from 'react';
 import Navbar from '../../NavBar/components/Navbar';
 import Loading from './Loading';
 import Paginate from './Pagination';
+import Playerstats from "../../playerstats/pages/Playerstats";
 
 function PlayerList(props) {
     const [playerList, setPlayerList] = useState([]);
     const [showBtn, setShowBtn] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [showPlayerStats, setShowPlayerStats] = useState(false);
+    const [summoner, setSummoner] = useState();
     const [page, setPage] = useState(1);
     const playersPerPage = props.playersPerPage || 35;
     const title = props.title || "List Of Players";
@@ -37,9 +40,19 @@ function PlayerList(props) {
     const handlePaginate = (number) => {
         setPage(number);
     }
+    const showPlayerDetails = (player) =>{
+        setShowPlayerStats(true);
+        console.log(player);
+        setSummoner(player);
+    }
+    const handleClose = () =>{
+        setShowPlayerStats(false);
+    }
 
     return (
-        <div>
+        <div className="player_list">
+            <Playerstats summonerId={summoner} show={showPlayerStats} handleClose={handleClose} loggedin = {true}  />
+
             <div>
                 <div className="title">
                     <h3 data-testid="title">{title}</h3>
@@ -66,20 +79,24 @@ function PlayerList(props) {
                     {current.map(player => (
                         <div className={showBtn ? "listing width_75" : "listing hover width_50"} >
                             <div key={player.summonerId}>
-                                <div>
-                                    <p>{player.pos}</p>
-                                </div>
-                                <div className= "player_name">
-                                    <p className="width">{player.summonerName}</p>
-                                </div>
-                                {showBtn ? "" :
                                     <div>
-                                        <p>{player.leaguePoints}</p>
+                                        <p>{player.pos}</p>
                                     </div>
-                                }
-                                <div>
-                                    <p>${player.value}</p>
-                                </div>
+                                    <div className= "player_name">
+                                        <a href="#" onClick={()=>showPlayerDetails(player.summonerId)}>
+                                            <p className="width">{player.summonerName}</p>
+                                        </a>
+                                    </div>
+                                    {showBtn ? "" :
+                                        <div>
+                                            <p>{player.leaguePoints}</p>
+                                        </div>
+                                    }
+                                    <div>
+                                        <p>${player.value}</p>
+                                    </div>
+
+
 
                                 {showBtn ? 
                                     <div className="select_player_div">
