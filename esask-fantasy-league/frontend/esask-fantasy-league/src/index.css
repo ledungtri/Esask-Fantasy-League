@@ -36,3 +36,9 @@ code {
 
 /*------------------- HomePage CSS --------------------- */
 @import url("../src/Home Page/styles/homepage.css");
+
+/*------------------- PlayerStats CSS --------------------- */
+@import url("../src/playerstats/styles/playerlist.css");
+
+/*------------------- Loading CSS --------------------- */
+@import url("../src/playerstats/styles/loading.css");

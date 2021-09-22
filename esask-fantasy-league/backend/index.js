@@ -4,6 +4,7 @@ const app = express();
 const router = express.Router();
 const cors = require('cors');
 const playerRoute = require('./routes/playerRoute');
+const playerRouter = require('./routes/playerRoute');
 const dotenv = require('dotenv');
 
 
@@ -29,6 +30,7 @@ function useRoutes() {
     // app.use('/api/teams', teamRoute);
     // TODO: implement teams route
     app.use('/api', playerRoute);
+    app.use('/api', playerRouter);
     // TODO: implement contest route
     // TODO: implement user route
 }
