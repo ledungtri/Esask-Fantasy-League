@@ -5,27 +5,26 @@ import axios from 'axios';
 import Loading from '../components/Loading';
 import Modal from 'react-bootstrap/Modal'
 
-const Wrapper = styled.div`
-    padding: 0 40px 40px 40px;
-    background:rgba(0,0,0,0.5);
 
-`
-var accountID = 'Tu5ydMxHVEFJBeoBrq5hasa6HD6V3SWJzg7cMltFP0c1FPU';
-var summonerID = 'zJz1wEtm2m30q7g3LpKr5r9Fj6ey_leWPIp29EdRsPyKRIs';
+// var accountID = 'Tu5ydMxHVEFJBeoBrq5hasa6HD6V3SWJzg7cMltFP0c1FPU';
+ var summonerID = 'zJz1wEtm2m30q7g3LpKr5r9Fj6ey_leWPIp29EdRsPyKRIs';
 
 function Playerstats(props) {
 
     const [playerStats, setPlayerStats] = useState([]);
     const [playerEntries, setPlayerEntries] = useState({});
+    const [totalGames, setTotalGames] = useState(0);
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState(true);
     const handleClose = () => setShow(false);
+    const sumonnerIDProp = props.summonerID;
+    
 
 
     const fetchPlayer = async () => {
         setLoading(true);
         const response = await axios.get(
-          'http://localhost:3001/api/player/'+accountID+'/'+summonerID
+          'http://localhost:3001/api/player/'+ summonerID  //this should be replaced by props.sumonnerID or sumonnerIDProp
         );
 
         console.log("response stats");
@@ -35,8 +34,8 @@ function Playerstats(props) {
         if (response.status < 400) {
           setPlayerStats(response.data.stats);
           setPlayerEntries(response.data.entries);
+          setTotalGames(response.data.totalGames)
           setLoading(false);
-         // return playerStats;
         }
       };
 
@@ -60,7 +59,7 @@ function Playerstats(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <HeaderName performance = {playerEntries}/>  
+                <HeaderName performance = {playerEntries} totalGames = {totalGames} />  
                 {loading? <Loading /> : ""}       
                 <MatchesStats stats = {playerStats} />
                 {props.loggedin?<DraftButton onClose={handleClose} loggedin={true}  />:""}
