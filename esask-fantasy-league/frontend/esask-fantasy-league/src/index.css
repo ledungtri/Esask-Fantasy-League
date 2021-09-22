@@ -36,3 +36,6 @@ code {
 
 /*------------------- HomePage CSS --------------------- */
 @import url("../src/Home Page/styles/homepage.css");
+
+/*------------------- HomePage CSS --------------------- */
+@import url("/src/ContestList/styles/ContestList.css");

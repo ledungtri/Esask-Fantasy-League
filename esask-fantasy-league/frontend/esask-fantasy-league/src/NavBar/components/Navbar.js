@@ -12,7 +12,7 @@ function Navbar() {
             
             <div className="links">
                 <div>
-                    <Link to="">Contests</Link>
+                    <Link to="/contests">Contests</Link>
                 </div>
                 <div>
                     <Link to="/players">Players</Link>

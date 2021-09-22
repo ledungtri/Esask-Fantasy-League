@@ -27,7 +27,7 @@ function startServer() {
 function useRoutes() {
     app.use('/api/teams', teamRoute);
     app.use('/api', playerRoute);
-    app.use('/api/contests', contestRoute);
+    app.use('/api', contestRoute);
 
     // TODO: implement user route
 }

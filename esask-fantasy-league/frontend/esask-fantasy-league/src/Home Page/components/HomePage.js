@@ -18,7 +18,7 @@ function HomePage() {
                     </div>
                 
                 <div className="contests_div">
-                    <Link to="/">
+                    <Link to="/contests">
                         <h1>Contests</h1>
                         <p>Create a team and compete against other participants</p>
                     </Link>
