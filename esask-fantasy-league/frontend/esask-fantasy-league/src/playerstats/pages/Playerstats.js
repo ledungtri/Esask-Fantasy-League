@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import apis from '../../api'
 import Accordion from 'react-bootstrap/Accordion'
 import {HeaderName, PlayerPerformance, MatchesStats, DraftButton} from '../components'
 import styled from 'styled-components';
