@@ -16,7 +16,7 @@ function App() {
             <Route path="/" exact component={HomePage} />
             <Route path="/players" exact component={PlayerList} />
             <Route path="/contests" exact component={ContestList} />
-            <Route path='/create-team' exact component={() => <CreateTeam contest={mockContest}/>} />
+            <Route path='/create-team' exact component={CreateTeam} />
           </Switch>
         </div>
     </Router>

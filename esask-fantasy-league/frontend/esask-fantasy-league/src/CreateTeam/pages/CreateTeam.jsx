@@ -5,6 +5,7 @@ import PlayerList from "../../Player List/components/PlayerList";
 import Title from "../../Home Page/components/Title";
 
 function CreateTeam(props) {
+    const contest = (props.location && props.location.contest) || {};
     const [teamName, setTeamName] = useState("");
     const [totalValue, setTotalValue] = useState(0);
     const [selectedPlayers] = useState([]);
@@ -45,7 +46,7 @@ function CreateTeam(props) {
             return;
         }
 
-        const payload = {"name": teamName, "contestId": props.contest._id, "players": selectedPlayers};
+        const payload = {"name": teamName, "contestId": contest._id, "players": selectedPlayers};
         try {
             const response = await apis.createTeam(payload);
             // TODO: flash message
@@ -61,7 +62,7 @@ function CreateTeam(props) {
             <div className="title"><h1>Create a team</h1></div>
 
             <div>
-                <ContestDetails contest={props.contest}/>
+                <ContestDetails contest={contest}/>
             </div>
 
             <div data-testid="remaining-budget" className='title'>
