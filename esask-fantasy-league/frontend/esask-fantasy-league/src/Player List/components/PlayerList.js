@@ -51,8 +51,9 @@ function PlayerList(props) {
 
     return (
         <div className="player_list">
-            <Playerstats summonerId={summoner} show={showPlayerStats} handleClose={handleClose} loggedin = {true}  />
-
+            {showPlayerStats ? <Playerstats summonerId={summoner} show={showPlayerStats} handleClose={handleClose}
+                                            loggedin={true}/> : ""
+            }
             <div>
                 <div className="title">
                     <h3 data-testid="title">{title}</h3>
