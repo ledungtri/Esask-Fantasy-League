@@ -1,0 +1,63 @@
+.title {
+  padding: 10px;
+  text-align: center;
+}
+.listing {
+  background-color: rgba(120, 122, 145, 0.7);
+  border: 1px solid #787a91;
+  border-radius: 25px;
+}
+.listing,
+.listing_heading {
+  margin: 15px auto;
+  height: 50px;
+}
+.hover:hover {
+  background-color: rgba(120, 122, 145, 1);
+  transform: scale(1.1);
+}
+.listing div {
+  margin: 0 30px;
+}
+.listing_heading > div {
+  margin: 0 30px 0 45px;
+}
+.listing div,
+.listing_heading div {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr 1fr;
+}
+.listing_heading .player_name {
+  margin-left: 15px;
+}
+.width {
+  width: 150px;
+}
+.width_50 {
+  width: 50%;
+}
+.width_90 {
+  width: 90%;
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pagination p {
+  margin-right: 20px;
+}
+.select_player_div {
+  padding: 5px 10px;
+}
+.select_player_btn {
+  background-color: #141e61;
+  border-radius: 10px;
+  color: #eeeeee;
+  height: 40px;
+  width: 100px;
+}
+.select_player_btn:hover {
+  background-color: #0f044c;
+  transform: scale(1.04);
+}
