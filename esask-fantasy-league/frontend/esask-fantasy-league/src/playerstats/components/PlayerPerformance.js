@@ -11,12 +11,12 @@ export default function playerPerformance(props) {
 
         <>
 
-        <div class="container">
-            <div class="row performance-row" >
-                <div class="col text-light performance-col"> wins : {performance? performance.wins:""} </div>
-                <div class="col text-light performance-col"> Losses : {performance? performance.losses:""} </div>
-                <div class="col text-light performance-col"> Total matches : {performance? performance.losses:""} </div>
-                <div class="w-100"></div>
+        <div className="container">
+            <div className="row performance-row" >
+                <div className="col text-light performance-col"> wins : {performance? performance.wins:""} </div>
+                <div className="col text-light performance-col"> Losses : {performance? performance.losses:""} </div>
+                <div className="col text-light performance-col"> Total matches : {performance? performance.losses:""} </div>
+                <div className="w-100"></div>
   
             </div>
         </div>

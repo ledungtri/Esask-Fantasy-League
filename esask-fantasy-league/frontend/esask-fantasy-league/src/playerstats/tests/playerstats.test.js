@@ -1,46 +1,40 @@
 import React from 'react';
-import {render, screen, fireEvent} from '@testing-library/react'
-import Playerstats from './Playerstats'
+import {render, screen, fireEvent, waitForElementToBeRemoved, waitFor} from '@testing-library/react'
+import Playerstats from '../pages/Playerstats'
 import axios from "axios";
 import DraftButton from '../components/DraftButton';
+import '@testing-library/jest-dom'
 
 
-const loggedin = true;
-
-// test('calls onClick prop when players name clicked', () => {
-//     const handleClick = jest.fn()
-//     render(<a onClick={handleClick}>Name</a>)
-//     fireEvent.click(screen.getByTestId(/name/i))
-//     expect(handleClick).toHaveBeenCalledTimes(1)
-//   });
 
 describe('The button to draft the player shows up only when user is logged in', () => {
-  it('Renders the button when logged in', () => {
-    render(<Playerstats />);
-     if(loggedin) expect(screen.getByText('Draft this player')).toBeInTheDocument();
-     //if(loggedin) expect(screen.getByText('Draft this player')).not.toBeInTheDocument();
-     if(!loggedin) expect(screen.getByText('Draft this player')).tobeNull();
+  it('Not to render the button when logged out ', () => {
+    render(<Playerstats loggedin={false}/>);
+    expect(screen.queryByTestId(/draftbtn/i)).not.toBeTruthy();
   });
 
-  it('Closes the popup when the button is clicked', () => {
-    const logSpy = jest.spyOn(console, "log");
-    render(<DraftButton loggedin={true}/>);
-     fireEvent.click(screen.getByText('Draft this player'));
-     expect(logSpy).toHaveBeenCalledTimes(1);
-      //expect(screen.getByText('Draft this player')).tobeNull();
-
-     
+  it('Render the draft button when user is logged in ', () => {
+    render(<Playerstats loggedin={true}/>);
+    const button = screen.getByText('Draft this player');
+    expect(button).toBeInTheDocument();
   });
 
+});
+
+it('Closes the popup when the button is clicked', async  () => {
+  render(<Playerstats loggedin={true} />);
+  const button = screen.getByText('Draft this player');
+  await waitFor(()=>screen.getByText('Draft this player'));
+  fireEvent.click(screen.getByText('Draft this player'));
+  await waitForElementToBeRemoved(screen.getByText('Draft this player'));
+  expect(button).not.toBeInTheDocument();
+});
 
 
-  // test('Not to render the button when logged out ', () => {
-  //   const playersStats = render(<Playerstats />);
-  //   const loggedin = playersStats.props.loggedin;
-  //   console.log(loggedin);
-  //   const button = playersStats.getByText("Draft this player");
-  //   if (loggedin) expect(button).toBeInTheDocument();
+it('gets the data from the server', async  () => {
+  render(<Playerstats />);
+  const loadingText = screen.queryByTestId(/loadingtext/i);
 
-  // });
-
+  await waitForElementToBeRemoved(screen.queryByTestId(/loadingtext/i));
+  expect(loadingText).not.toBeInTheDocument();
 });

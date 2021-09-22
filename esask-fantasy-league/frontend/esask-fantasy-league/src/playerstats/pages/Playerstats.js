@@ -63,7 +63,7 @@ function Playerstats(props) {
                 <HeaderName performance = {playerEntries}/>  
                 {loading? <Loading /> : ""}       
                 <MatchesStats stats = {playerStats} />
-                <DraftButton loggedin={true}  />
+                {props.loggedin?<DraftButton onClose={handleClose} loggedin={true}  />:""}
 
             </Modal.Body>
             <Modal.Footer>
