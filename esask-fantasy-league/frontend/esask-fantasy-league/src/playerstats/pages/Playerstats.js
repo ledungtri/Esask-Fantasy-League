@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Accordion from 'react-bootstrap/Accordion'
 import {HeaderName, PlayerPerformance, MatchesStats, DraftButton} from '../components'
 import styled from 'styled-components';
 import axios from 'axios';
 import Loading from '../components/Loading';
-import Card from 'react-bootstrap/Card'
 import Modal from 'react-bootstrap/Modal'
 
 const Wrapper = styled.div`
@@ -23,15 +21,13 @@ function Playerstats(props) {
     const [show, setShow] = useState(true);
     const handleClose = () => setShow(false);
 
-    // http://localhost:3001/api/player/HardStuck%20Dream 
 
     const fetchPlayer = async () => {
         setLoading(true);
         const response = await axios.get(
           'http://localhost:3001/api/player/'+accountID+'/'+summonerID
         );
-        console.log("responseeeeeeee")
-        console.log(response)
+
         console.log("response stats");
         console.log(response.data.stats);
         console.log("response entries");
