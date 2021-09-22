@@ -60,7 +60,7 @@ function CreateTeam(props) {
             return;
         }
 
-        const payload = {"name": teamName, "contestId": contest._id, "players": selectedPlayers};
+        const payload = {"name": teamName, "contestId": contest._id, "players": players};
         try {
             await apis.createTeam(payload);
             setMessage("Team Created Successfully");
@@ -84,13 +84,11 @@ function CreateTeam(props) {
             </div>
 
             <div data-testid="available-players" className="playerListContainer">
-                <Title title="Available Players"/>
-                <PlayerList disableTitle showBtn btnText="Select" callback={handleSelectPlayer}/>
+                <PlayerList title="Available Players" showBtn btnText="Select" callback={handleSelectPlayer}/>
             </div>
 
             <div data-testid='selected-players' className="playerListContainer">
-                <Title title="Selected Players"/>
-                <PlayerList players={selectedPlayers} disableTitle showBtn btnText="Remove" callback={handleRemovePlayer}/>
+                <PlayerList players={selectedPlayers} title="Selected Players" showBtn btnText="Remove" callback={handleRemovePlayer}/>
 
                 {messageType? <PopUpMessage type={messageType} body={message} closeHandler={closeModal}/> : ""}
 

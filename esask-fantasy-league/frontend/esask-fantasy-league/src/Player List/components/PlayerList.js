@@ -10,7 +10,7 @@ function PlayerList(props) {
     const [summoner, setSummoner] = useState();
     const [page, setPage] = useState(1);
     const playersPerPage = 35;
-    const title = "List Of Players";
+    const title = props.title || "List Of Players";
     const showBtn = props.showBtn || false;
 
     async function fetchPlayersList(){
