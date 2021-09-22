@@ -6,14 +6,14 @@ function HomePage() {
     return (
         <div className="homepage">
             <div className="homepage_logo_div">
-                <img className="homepage_logo" src={logo} alt="esask logo" />
+                <img data-testid="large_logo" className="homepage_logo" src={logo} alt="esask logo-large" />
             </div>
             <div className="options_div">
                 
                     <div className="players_div">
                         <Link to="/players">
                             <h1>Players</h1>
-                            <p>Top players from the Grand Master League</p>
+                            <p data-testid="player_text">Top players from the Grand Master League</p>
                         </Link>
                     </div>
                 

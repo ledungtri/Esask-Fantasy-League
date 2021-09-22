@@ -42,7 +42,7 @@ function PlayerList(props) {
         <div>
             <div>
                 <div className="title">
-                    <h3>{title}</h3>
+                    <h3 data-testid="title">{title}</h3>
                 </div>
                 {loading? <Loading /> : ""}
                 {showBtn ? "" :

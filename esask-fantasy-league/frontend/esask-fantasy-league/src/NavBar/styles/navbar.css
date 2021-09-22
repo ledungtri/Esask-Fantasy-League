@@ -3,10 +3,10 @@
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  margin: 0 70px;
+  margin: 0 5%;
 }
 .navbar a {
-  width: 10%;
+  width: 12%;
 }
 .logo {
   width: 100%;

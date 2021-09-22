@@ -11,7 +11,8 @@
 .options_div {
   display: flex;
   justify-content: space-evenly;
-  margin-top: -60px;
+  margin-top: -30px;
+  flex-wrap: wrap;
 }
 .players_div,
 .contests_div {
@@ -19,8 +20,9 @@
   box-shadow: 8px 10px 15px rgb(20, 30, 97);
   color: #eeeeee;
   text-align: center;
-  height: 20vh;
-  width: 30vw;
+  margin-bottom: 10px;
+  height: 150px;
+  width: 430px;
 }
 .players_div {
   background-image: linear-gradient(

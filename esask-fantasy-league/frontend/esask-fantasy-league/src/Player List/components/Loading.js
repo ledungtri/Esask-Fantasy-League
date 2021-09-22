@@ -2,7 +2,7 @@ import React from 'react'
 
 function Loading() {
     return (
-        <div>
+        <div data-testid="load_comp">
             <div className="preloader">
                 <div className="spinner">
                     <div className="half_spinner"></div>

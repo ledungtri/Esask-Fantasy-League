@@ -5,17 +5,17 @@ import logo from '../../Resources/images/logo-transparent.png'
 function Navbar() {
     return (
         <div className="navbar">
-            <Link to="/">
-                <img className="logo" src={logo} alt="esask logo" />
+            <Link  to="/">
+                <img data-testid="nav_logo" className="logo" src={logo} alt="esask logo" />
             </Link>
             
             
             <div className="links">
                 <div>
-                    <Link to="">Contests</Link>
+                    <Link data-testid="nav_contest" to="">Contests</Link>
                 </div>
                 <div>
-                    <Link to="/players">Players</Link>
+                    <Link data-testid="nav_player" to="/players">Players</Link>
                 </div>
             </div>
 

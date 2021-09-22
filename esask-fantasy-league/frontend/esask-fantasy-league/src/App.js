@@ -5,7 +5,9 @@ import Navbar from './NavBar/components/Navbar';
 import PlayerList from './Player List/components/PlayerList';
 
 function App() {
+  
   return (
+    
     <Router>
         <div className="App">
           <Navbar />
@@ -15,7 +17,7 @@ function App() {
           </Switch>
         </div>
     </Router>
-    
+     
   );
 }
 

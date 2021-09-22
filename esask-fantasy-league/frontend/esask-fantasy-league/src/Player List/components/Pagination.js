@@ -5,7 +5,7 @@ function Pagination({totalPages, handlePaginate}) {
 
     
     return (
-        <div className="paginate">
+        <div data-testid="paginate" className="paginate">
             {pageNumbers.map(number => (
                 <button className="page_btn" key={number} onClick={() => handlePaginate(number)}>{number}</button>
             ))}
