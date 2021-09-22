@@ -1,5 +1,3 @@
-var request = require("request");
-const axios = require('axios');
 var _ = require('lodash');
 
 
@@ -30,21 +28,26 @@ const kayn = Kayn(process.env.APP_KEY)({
  },
 })
 
+/** This object will receive the list of all matches for that player with metadata */
 var stats = [];
 
 
+const main =  async (summonerID)  => {
 
-
-const main =  async (accountID, summonerID)  => {
+    /** Call the method to return the sumonner's AccountId from their sumonnerID */
+  const accountID = (await sumAccountID(summonerID)).accountId;
 
   stats = [];
   /** Helper method to Return 5 matches for that player  */
   const matchListByAccount = async () => {
-    return (await kayn.Matchlist.by.accountID(accountID)).matches.slice(-5);
+    return (await kayn.Matchlist.by.accountID(accountID)).matches;
   }
 
   /** Call the method to return 5 matches for this player's accountID */
-  const result = await matchListByAccount();
+  let result = (await matchListByAccount());
+  const totalMatchesCount = result.length;
+  result = result.slice(-5);
+
 
   /** For each match, get the details and stats of that player during that match */
   for(const match of result) {
@@ -67,8 +70,15 @@ const main =  async (accountID, summonerID)  => {
   /**Call the method to show total wins and losses for sumonnerID */
   const entries = await entriesBySumonnerID(summonerID);
 
-  return {stats, entries:entries};
+  return {stats, entries:entries, totalGames:totalMatchesCount};
 
+}
+
+
+
+/** helper function to get the sumonner accountID from sumonnerID **/
+ sumAccountID = async (sumonnerID) => {
+  return await kayn.Summoner.by.id(sumonnerID);
 }
 
 /** helper function to get the match Details using the match ID **/

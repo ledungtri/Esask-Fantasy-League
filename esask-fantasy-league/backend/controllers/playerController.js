@@ -5,12 +5,11 @@ const playerService = require('../services/playerService');
 
 const get =  function(req, res){
   
-    accountID = req.params._id;
-    summonerID = req.params._sId;
+    summonerID = req.params._id; //_id is sumonnerID
 
-    playerService.main(accountID,summonerID)
+    playerService.main(summonerID)
     .then(function(response) {
-        return res.status(200).json({success:true, entries:response.entries, stats: response.stats});
+        return res.status(200).json({success:true, entries:response.entries, stats: response.stats, totalGames:response.totalGames});
     })
     .catch((error) => console.log(error))
  
