@@ -1,26 +1,23 @@
 import React, {useState, useEffect} from 'react';
-import Navbar from '../../NavBar/components/Navbar';
 import Loading from './Loading';
 import Paginate from './Pagination';
 import Playerstats from "../../playerstats/pages/Playerstats";
 
 function PlayerList(props) {
     const [playerList, setPlayerList] = useState([]);
-    const [showBtn, setShowBtn] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showPlayerStats, setShowPlayerStats] = useState(false);
     const [summoner, setSummoner] = useState();
     const [page, setPage] = useState(1);
-    const playersPerPage = props.playersPerPage || 35;
-    const title = props.title || "List Of Players";
-    
+    const playersPerPage = 35;
+    const title = "List Of Players";
+    const showBtn = props.showBtn || false;
 
     async function fetchPlayersList(){
         setLoading(true);
         const res = await fetch("http://localhost:3001/api/playerlist");
         res.json().then(res => setPlayerList(res))
         setLoading(false);
-        setShowBtn(props.showBtn);
     }
 
     useEffect(() => {
@@ -29,14 +26,14 @@ function PlayerList(props) {
         }else{
             setPlayerList(props.players)
         }
-        
+
     },[])
    
     
     const startIndex = (page - 1) * playersPerPage;
     const current = playerList.slice(startIndex,startIndex + playersPerPage);
     const totalPages = Math.ceil(playerList.length/playersPerPage);
-    
+
     const handlePaginate = (number) => {
         setPage(number);
     }
@@ -60,7 +57,7 @@ function PlayerList(props) {
                 </div>
                 {loading? <Loading /> : ""}
                 {showBtn ? "" :
-                    <div className={showBtn ? "listing_heading width_75" :"listing_heading width_50"}>
+                    <div className={showBtn ? "listing_heading width_90" :"listing_heading width_50"}>
                         <div>
                             <div className="player_rank">
                                 <p>Rank</p>
@@ -78,7 +75,7 @@ function PlayerList(props) {
                     </div>
                 }
                     {current.map(player => (
-                        <div className={showBtn ? "listing width_75" : "listing hover width_50"} >
+                        <div className={showBtn ? "listing width_90" : "listing hover width_50"} >
                             <div key={player.summonerId}>
                                     <div>
                                         <p>{player.pos}</p>
@@ -99,7 +96,7 @@ function PlayerList(props) {
 
 
 
-                                {showBtn ? 
+                                {showBtn ?
                                     <div className="select_player_div">
                                         <button className="select_player_btn" onClick={() => props.callback(player)}>{props.btnText || "Select Player"}</button>
                                     </div>
@@ -111,9 +108,9 @@ function PlayerList(props) {
                 <p>Page {page} of {totalPages}</p>
                 <Paginate totalPages={totalPages} handlePaginate={handlePaginate} />
             </div>        
-            
+
             </div>
-            
+
         </div>
     )
 }
