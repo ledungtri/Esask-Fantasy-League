@@ -43,14 +43,3 @@ it('Calls the function on draft button click ', async  () => {
 });
 
 
-it('gets the data from the server', async  () => {
-
- // jest.useFakeTimers('legacy');
-  render(<Playerstats loggedin={true} />);
-  //jest.setTimeout(20000);
-  await waitFor(()=>screen.queryByTestId(/loadingtext/i));
- // const loadingText = screen.queryByTestId(/loadingtext/i);
-  await new Promise((resolve) => setTimeout(resolve, 10000)); // 1000 is the time that i know my `msw` should be finished.
-  await waitForElementToBeRemoved(screen.queryByTestId(/loadingtext/i));
-  expect(loadingText).not.toBeInTheDocument();
-}, 220000);
