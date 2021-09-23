@@ -1,8 +1,11 @@
+.TeamCreateContainer {
+    padding-bottom: 20px;
+}
 .playerListContainer {
     width: 50%;
     display: inline-block;
     overflow: auto;
-    height: 1000px;
+    height: 500px;
 }
 
 .createTeamForm{
