@@ -73,14 +73,14 @@ function CreateTeam(props) {
 
     return (
         <div className="TeamCreateContainer">
-            <div className="title"><h1>Create a team</h1></div>
+            <div className="title"><h3>Create a team</h3></div>
 
             <div>
                 <ContestDetails contest={contest}/>
             </div>
 
             <div data-testid="remaining-budget" className='title'>
-                <h2>Remaining Budget: ${50000 - totalValue}</h2>
+                <h4>Remaining Budget: ${50000 - totalValue}</h4>
             </div>
 
             <div data-testid="available-players" className="playerListContainer">

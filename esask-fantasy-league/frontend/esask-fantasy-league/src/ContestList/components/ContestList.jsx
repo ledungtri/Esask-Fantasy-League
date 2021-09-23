@@ -24,7 +24,7 @@ function ContestList(props) {
     }
 
     return (
-        <div>
+        <div className="contest_list">
             <Title title="List of Contests"/>
             {loading? <Loading /> : ""}
                 
