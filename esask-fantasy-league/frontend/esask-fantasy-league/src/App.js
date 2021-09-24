@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import HomePage from './Home Page/components/HomePage';
 import Navbar from './NavBar/components/Navbar';
 import PlayerList from './Player List/components/PlayerList';
-import ContestList from './ContestList/components/ContestList';
+import ContestList from './ContestList/pages/ContestList';
 import {CreateTeam} from "./CreateTeam";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
