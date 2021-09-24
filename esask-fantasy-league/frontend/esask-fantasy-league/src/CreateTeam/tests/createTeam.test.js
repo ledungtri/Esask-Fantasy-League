@@ -5,8 +5,8 @@ import {render} from "@testing-library/react";
 let getByTestId;
 
 beforeEach(() => {
-    const mockContest = {_id: "613d65ea63676a0636013920", name: "Weekly Contest", startDate: "17/09/2021", endDate: "24/09/2021"};
-    const component = render(<CreateTeam contest={mockContest}/>);
+    const mockContest = {_id: "613d65ea63676a0636013920", name: "Weekly Contest", startDate: "2021-09-17T00:00:00.000Z", endDate: "2021-09-24T00:00:00.000Z"};
+    const component = render(<CreateTeam location={{contest: mockContest}}/>);
     getByTestId = component.getByTestId;
 });
 
