@@ -5,8 +5,8 @@ import Table from 'react-bootstrap/Table'
 
 export default function MatchesStats(props) {
     const stats = (props.stats);
-    console.log("props stats")
-    console.log(stats?stats:"");
+    // console.log("props stats")
+    // console.log(stats?stats:"");
     return (
         <div className="performance_player">
             <h1 className="text-light text-center">Game History</h1>

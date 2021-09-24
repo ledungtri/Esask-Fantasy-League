@@ -5,9 +5,8 @@ import React from 'react'
 
 export default function playerPerformance(props) {
     const performance = (props.performance)[0];
-    const totalGames = (props.totalGames);
-    console.log("props performane")
-    console.log(performance?performance.wins:"");
+    // console.log("props performane")
+    // console.log(performance?performance.wins:"");
     return (
 
         <>
