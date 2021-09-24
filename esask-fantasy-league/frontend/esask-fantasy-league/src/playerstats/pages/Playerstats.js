@@ -6,6 +6,7 @@ import {HeaderName, PlayerPerformance, MatchesStats, DraftButton} from '../compo
 import axios from 'axios';
 import Loading from '../components/Loading';
 import Modal from 'react-bootstrap/Modal'
+import * as apiService from '../api/api'
 
 
 
@@ -22,9 +23,7 @@ function Playerstats(props) {
 
     const fetchPlayer = async () => {
         setLoading(true);
-        const response = await axios.get(
-          'http://localhost:3001/api/player/'+ sumonnerIDProp  //this should be replaced by props.sumonnerID or sumonnerIDProp
-        );
+        const response = await apiService.getData(sumonnerIDProp)
 
         if (response.status < 400) {
           setPlayerStats(response.data.stats);
@@ -56,7 +55,7 @@ function Playerstats(props) {
         </Modal.Header>
             {loading? <Loading /> :
         <Modal.Body>
-            <HeaderName performance = {playerEntries} totalGames = {totalGames} />  
+            <HeaderName performance = {playerEntries}  />  
             <MatchesStats stats = {playerStats} />
         </Modal.Body>
             }

@@ -5,7 +5,6 @@ import Table from 'react-bootstrap/Table'
 
 export default function MatchesStats(props) {
     const stats = (props.stats);
-    console.log(typeof(stats))
     console.log("props stats")
     console.log(stats?stats:"");
     return (

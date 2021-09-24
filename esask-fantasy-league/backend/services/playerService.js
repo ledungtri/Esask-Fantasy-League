@@ -12,9 +12,9 @@ const kayn = Kayn(process.env.APP_KEY)({
  },
  requestOptions: {
      shouldRetry: true,
-     numberOfRetriesBeforeAbort: 3,
+     numberOfRetriesBeforeAbort: 1,
      delayBeforeRetry: 1000,
-     burst: false,
+     burst: true,
      shouldExitOn403: false,
  },
  cacheOptions: {
@@ -64,25 +64,21 @@ const main =  async (summonerID)  => {
     stats = [];
     /** Helper method to Return 5 matches for that player  */
     const matchListByAccount = async () => {
-        return (await kayn.Matchlist.by.accountID(accountID)).matches;
+        return (await kayn.Matchlist.by.accountID(accountID).query({beginIndex:0}).query({endIndex:5})).matches;
     }
 
     /** Call the method to return 5 matches for this player's accountID */
     let result = (await matchListByAccount());
-    const totalMatchesCount = result.length;
-    result = result.slice(-5);
-
 
     /** For each match, get the details and stats of that player during that match */
     for(const match of result) {
 
-        const matchDetail = await matchDetailByID(match.gameId)
         var date = new Date(match.timestamp).toLocaleDateString("en-US") //get the date for this match
         var position = getPosition(match.role, match.lane) //with 87%.5 accuracy
 
+        const matchDetail = await matchDetailByID(match.gameId)
         //get the participant id by accountID
         var participantIdByAccountID = (_.filter(matchDetail.participantIdentities, {player: {accountId: accountID}}))[0].participantId;
-        var sumonnerIcon = (_.filter(matchDetail.participantIdentities, {player: {accountId: accountID}}))[0].player.profileIcon;
 
         //get the player's stats using the participantID that we found earlier.
         var participantStats = (_.filter(matchDetail.participants, {participantId: participantIdByAccountID}))[0].stats;
@@ -94,7 +90,8 @@ const main =  async (summonerID)  => {
     /**Call the method to show total wins and losses for sumonnerID */
     const entries = await entriesBySumonnerID(summonerID);
 
-    return {stats, entries:entries, totalGames:totalMatchesCount};
+   // return {stats, entries:entries, totalGames:totalMatchesCount};
+    return {stats, entries:entries};
 
 }
 

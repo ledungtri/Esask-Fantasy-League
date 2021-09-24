@@ -11,7 +11,7 @@ export default function HeaderName(props) {
     return (
         <div className="header_player">
             <h1 className="text-center text-light">{props.performance[0]?props.performance[0].summonerName:""}</h1>
-            <PlayerPerformance performance = {props.performance} totalGames={props.totalGames} />
+            <PlayerPerformance performance = {props.performance}  />
         </div>
     )
 }
