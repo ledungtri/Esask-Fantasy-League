@@ -25,7 +25,6 @@ function Playerstats(props) {
         setLoading(true);
         const response = await apiService.getData(sumonnerIDProp)
      
-
         if (response.status < 400) {
           setPlayerStats(response.data.stats);
           setPlayerEntries(response.data.entries);
@@ -60,10 +59,11 @@ function Playerstats(props) {
             <MatchesStats stats = {playerStats} />
         </Modal.Body>
             }
+          {props.loggedin&&props.show?<DraftButton onClose={handleClose} loggedin={true}  />:""}
+
         <Modal.Footer>
         </Modal.Footer>
       </Modal>
-      {props.loggedin&&props.show?<DraftButton onClose={handleClose} loggedin={true}  />:""}
 
       </div>
             
