@@ -22,7 +22,6 @@ function Playerstats(props) {
 
 
     const fetchPlayer = async () => {
-        // console.log(sumonnerIDProp);
         setLoading(true);
         const response = await axios.get(
           'http://localhost:3001/api/player/'+ sumonnerIDProp  //this should be replaced by props.sumonnerID or sumonnerIDProp
@@ -42,36 +41,37 @@ function Playerstats(props) {
 
 
     useEffect(() => {
-        // setSumonnerIDProp(props.summonerId)
         fetchPlayer();
        
     }, []);
       
     return (
-            <Modal
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                show={props.show}
-                onHide={props.handleClose}
-            >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                Player's Stats
-                </Modal.Title>
-            </Modal.Header>
-                {loading? <Loading /> :
-                <Modal.Body>
-                <HeaderName performance = {playerEntries} totalGames = {totalGames} />  
+      <div>
+      <Modal
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={props.show}
+        onHide={props.handleClose}
+        >
+        <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+            Player's Stats
+            </Modal.Title>
+        </Modal.Header>
+            {loading? <Loading /> :
+        <Modal.Body>
+            <HeaderName performance = {playerEntries} totalGames = {totalGames} />  
+            <MatchesStats stats = {playerStats} />
+        </Modal.Body>
+            }
+        <Modal.Footer>
+        </Modal.Footer>
+      </Modal>
+      {props.loggedin&&props.show?<DraftButton onClose={handleClose} loggedin={true}  />:""}
 
-                <MatchesStats stats = {playerStats} />
-                {props.loggedin?<DraftButton onClose={handleClose} loggedin={true}  />:""}
-
-            </Modal.Body>
-                    }
-            <Modal.Footer>
-            </Modal.Footer>
-            </Modal>
+      </div>
+            
     )
 }
 
