@@ -24,6 +24,7 @@ function Playerstats(props) {
     const fetchPlayer = async () => {
         setLoading(true);
         const response = await apiService.getData(sumonnerIDProp)
+     
 
         if (response.status < 400) {
           setPlayerStats(response.data.stats);

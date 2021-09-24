@@ -1,7 +1,8 @@
 import axios from 'axios';
+import backendHost from "./backendHost";
 
 const api = axios.create({
-    baseURL: 'http://localhost:3001/api'
+    baseURL: backendHost.BACKEND_HOST + '/api'
 });
 
 export const createTeam = payload => api.post(`/teams`, payload);

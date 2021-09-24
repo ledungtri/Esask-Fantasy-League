@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Loading from './Loading';
 import Paginate from './Pagination';
 import Playerstats from "../../playerstats/pages/Playerstats";
+import backendHost from "../../api/backendHost";
 
 function PlayerList(props) {
     const [playerList, setPlayerList] = useState([]);
@@ -15,7 +16,7 @@ function PlayerList(props) {
 
     async function fetchPlayersList(){
         setLoading(true);
-        const res = await fetch("http://localhost:3001/api/playerlist");
+        const res = await fetch(backendHost.BACKEND_HOST + "/api/playerlist");
         res.json().then(res => setPlayerList(res))
         setLoading(false);
     }
