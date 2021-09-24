@@ -15,8 +15,8 @@ test("contain contest details", () => {
     const titles = contestDetails.getElementsByClassName('title');
     expect(titles).toHaveLength(3);
     expect(titles[0].textContent).toEqual("Contest : Weekly Contest");
-    expect(titles[1].textContent).toEqual("Start Date : 17/09/2021");
-    expect(titles[2].textContent).toEqual("End Date : 24/09/2021");
+    expect(titles[1].textContent).toEqual("Start Date : 9/16/2021");
+    expect(titles[2].textContent).toEqual("End Date : 9/23/2021");
 });
 
 test("contain remaining budget", () => {
