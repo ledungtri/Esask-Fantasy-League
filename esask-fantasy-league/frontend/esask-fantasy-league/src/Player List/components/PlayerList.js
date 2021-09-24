@@ -15,7 +15,7 @@ function PlayerList(props) {
 
     async function fetchPlayersList(){
         setLoading(true);
-        const res = await fetch("http://localhost:3001/api/playerlist");
+        const res = await fetch("http://localhost:3002/api/playerlist");
         res.json().then(res => setPlayerList(res))
         setLoading(false);
     }

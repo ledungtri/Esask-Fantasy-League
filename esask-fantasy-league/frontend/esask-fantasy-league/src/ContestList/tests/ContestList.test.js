@@ -1,32 +1,38 @@
 import React from "react";
-import {render,screen} from '@testing-library/react'
+import {render,screen,within} from '@testing-library/react'
 import '@testing-library/jest-dom';
 import ContestList from "../components/ContestList";
 
+const mockContestData = {"success":true,"data":[{"_id":"613d65ea63676a0636013920","name":"Contest number 1","startDate":"2021-09-12T00:00:00.000Z","endDate":"2021-09-19T00:00:00.000Z","isContestOpen":false,"__v":0},{"_id":"614a95ba0ef0f364014b401c","name":"Contest number 2","startDate":"2021-09-21T06:00:00.000Z","endDate":"2021-09-27T00:00:00.000Z","isContestOpen":false,"__v":0},{"_id":"614a95ee0ef0f364014b401d","name":"Contest number 3","startDate":"2021-09-28T00:00:00.000Z","endDate":"2021-10-05T00:00:00.000Z","isContestOpen":true,"__v":0}]};
 
 beforeEach(() => {
-    const mockContest = {_id: "613d65ea63676a0636013920", name: "Contest number 1", startDate: "2021-09-20", endDate: "24/09/2021"};
-    render(<ContestList contest={mockContest}/>);
-})
-
-test('check if heading of list of contests is displayed', () => {
-    const contestName = screen.getByText("Contest");
-    const contestStartDate = screen.getByText("Start Date");
-    const contestEndDate = screen.getByText("End Date");
-    const contestStatus = screen.getByText("Status");
-    expect(contestName).toBeInTheDocument();
-    expect(contestStartDate).toBeInTheDocument();
-    expect(contestEndDate).toBeInTheDocument();
-    expect(contestStatus).toBeInTheDocument();
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: jest.fn().mockResolvedValue(mockContestData)
+    })
+    render(<ContestList />);
 });
 
-// test('check if the first contest of the database is loaded correctly', () => {
-//     const firstContestName = screen.getByText("Contest number 1");
-//     const firstContestStartDate = screen.getByText("2021-09-12");
-//     const firstContestEndDate = screen.getByText("2021-09-19");
-//     const firstContestStatus = screen.getByText("Contest Closed")
-//     expect(firstContestName).toBeInTheDocument();
-//     expect(firstContestStartDate).toBeInTheDocument();
-//     expect(firstContestEndDate).toBeInTheDocument();
-//     expect(firstContestStatus).toBeInTheDocument();
-// });
+afterEach(() => {
+jest.restoreAllMocks();
+});
+
+test('check if heading of list of contests is displayed', () => {
+    screen.getByText("Contest");
+    screen.getByText("Start Date");
+    screen.getByText("End Date");
+    screen.getByText("Status");
+});
+
+test('check if rows are correctly displayed', async () => {
+    const row1 = within((await screen.findAllByTestId("contest-row"))[0])
+    row1.getByText("Contest number 1")
+    const row3 = within((await screen.findAllByTestId("contest-row"))[2])
+    row3.getByText("Contest number 3")
+});
+
+test('check if buttons are disabled for a closed contest and enabled for an open contest', async () => {
+    const row1 = within((await screen.findAllByTestId("contest-row"))[0])
+    expect(row1.getByRole("button", {name: /Contest Closed/i})).toBeDisabled();
+    const row3 = within((await screen.findAllByTestId("contest-row"))[2])
+    expect(row3.getByRole("button", {name: /Join Contest/i})).toBeEnabled();
+});
