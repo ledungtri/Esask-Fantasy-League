@@ -1,7 +1,6 @@
-var _ = require('lodash');
 
-
-/** Kayn configuration */
+const _ = require('lodash');
+/** Nisrine: Kayn configuration */
 const { Kayn, REGIONS } = require('kayn')
 const kayn = Kayn(process.env.APP_KEY)({
  region: REGIONS.NORTH_AMERICA,
@@ -28,8 +27,8 @@ const kayn = Kayn(process.env.APP_KEY)({
  },
 })
 
-/** This object will receive the list of all matches for that player with metadata */
-var stats = [];
+/** Nisrine: This object will receive the list of all matches for that player with metadata */
+let stats = [];
 
 PlayerListService =  (res_data) =>{
     const sorted_res = res_data.sort((a,b) => (a.leaguePoints < b.leaguePoints) ? 1 : -1);
@@ -56,7 +55,7 @@ PlayerListService =  (res_data) =>{
     return sorted_res;
 }
 
-
+/** Nisrine: Main function to be called, to display the stats of a player */
 const main =  async (summonerID)  => {
 
     /** Call the method to return the sumonner's AccountId from their sumonnerID */
@@ -99,24 +98,22 @@ const main =  async (summonerID)  => {
 
 }
 
-
-
-/** helper function to get the sumonner accountID from sumonnerID **/
+/** Nisrine: helper function to get the sumonner accountID from sumonnerID **/
 sumAccountID = async (sumonnerID) => {
     return await kayn.Summoner.by.id(sumonnerID);
 }
 
-/** helper function to get the match Details using the match ID **/
+/** Nisrine: helper function to get the match Details using the match ID **/
 matchDetailByID = async (matchID) => {
     return await kayn.Match.get(matchID);
 }
 
-/** helper function to get total wins, losses for a sumonnerID **/
+/** Nisrine: helper function to get total wins, losses for a sumonnerID **/
 entriesBySumonnerID = async (sumonnerID) => {
     return await kayn.League.Entries.by.summonerID(sumonnerID);
 }
 
-/** helper function to get the position using the lane and role, with 87.5% accuracy **/
+/** Nisrine: helper function to get the position using the lane and role, with 87.5% accuracy **/
 getPosition = (role, lane) => {
     if(lane == "MID_LANE" && role=="SOLO") {
         return "MIDDLE";
