@@ -11,7 +11,7 @@ function ContestList(props) {
 
     async function fetchContestsList(){
         setLoading(true);
-        const res = await fetch("http://localhost:3002/api/contests");
+        const res = await fetch("http://localhost:3001/api/contests");
         res.json().then(res => setContestList(res.data))
         setLoading(false);
     }
