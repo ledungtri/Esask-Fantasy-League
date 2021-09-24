@@ -5,11 +5,10 @@ import Title from "../../Home Page/components/Title";
 function ContestList(props) {
     const [contestList, setContestList] = useState([]);
     const [loading, setLoading] = useState(false);
-    const title = "List of Contests";
 
     async function fetchContestsList(){
         setLoading(true);
-        const res = await fetch("http://localhost:3001/api/contests");
+        const res = await fetch("http://localhost:3002/api/contests");
         res.json().then(res => setContestList(res.data))
         console.log(res)
         setLoading(false);
@@ -28,7 +27,7 @@ function ContestList(props) {
             <Title title="List of Contests"/>
             {loading? <Loading /> : ""}
                 
-            <div className="list_heading">
+            <div data-testid='contest-heading' className="list_heading">
                 <div>
                     <div className="contest_name">
                         <p>Contest</p>
@@ -52,10 +51,10 @@ function ContestList(props) {
                             <p>{contest.name}</p>
                         </div>
                         <div className= "start_date">
-                            <p>{contest.startDate.substring(0,10)}</p>
+                            <p>{new Date(contest.startDate).toLocaleDateString()}</p>
                         </div>
                         <div className="end_date">
-                            <p>{contest.endDate.substring(0,10)}</p>
+                            <p>{new Date(contest.endDate).toLocaleDateString()}</p>
                         </div>
                         <div className='join_contest'>
                             <button className="btnJoinContest" disabled={!contest.isContestOpen} onClick={() => handleJoinContestBtnClick(contest)}>
