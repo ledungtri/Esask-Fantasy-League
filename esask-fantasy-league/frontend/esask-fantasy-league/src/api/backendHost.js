@@ -1,0 +1,1 @@
+export default {BACKEND_HOST: 'http://localhost:3001'}

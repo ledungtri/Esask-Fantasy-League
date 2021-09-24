@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import Loading from '../components/Loading';
 import Modal from 'react-bootstrap/Modal'
+import backendHost from "../../api/backendHost";
 
 
 // var accountID = 'Tu5ydMxHVEFJBeoBrq5hasa6HD6V3SWJzg7cMltFP0c1FPU';
@@ -24,7 +25,7 @@ function Playerstats(props) {
     const fetchPlayer = async () => {
         setLoading(true);
         const response = await axios.get(
-          'http://localhost:3001/api/player/'+ sumonnerIDProp  //this should be replaced by props.sumonnerID or sumonnerIDProp
+            backendHost.BACKEND_HOST + '/api/player/'+ sumonnerIDProp  //this should be replaced by props.sumonnerID or sumonnerIDProp
         );
 
         console.log("response stats");

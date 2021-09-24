@@ -3,6 +3,7 @@ import Loading from '../../Player List/components/Loading';
 import Title from "../../Home Page/components/Title";
 import ContestHeading from '../components/ContestHeading';
 import ContestRow from '../components/ContestRow';
+import backendHost from "../../api/backendHost";
 
 function ContestList(props) {
 
@@ -11,7 +12,7 @@ function ContestList(props) {
 
     async function fetchContestsList(){
         setLoading(true);
-        const res = await fetch("http://localhost:3001/api/contests");
+        const res = await fetch(backendHost.BACKEND_HOST + "/api/contests");
         res.json().then(res => setContestList(res.data))
         setLoading(false);
     }
