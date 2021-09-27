@@ -30,7 +30,7 @@ const kayn = Kayn(process.env.APP_KEY)({
 /** Nisrine: This object will receive the list of all matches for that player with metadata */
 let stats = [];
 
-PlayerListService =  (res_data) =>{
+assignPlayerValue =  (res_data) =>{
     const sorted_res = res_data.sort((a,b) => (a.leaguePoints < b.leaguePoints) ? 1 : -1);
 
     for(let i = 0; i < sorted_res.length; i++){
@@ -56,7 +56,7 @@ PlayerListService =  (res_data) =>{
 }
 
 /** Nisrine: Main function to be called, to display the stats of a player */
-const main =  async (summonerID)  => {
+const getPlayerStats =  async (summonerID)  => {
 
     /** Call the method to return the sumonner's AccountId from their sumonnerID */
     const accountID = (await sumAccountID(summonerID)).accountId;
@@ -130,7 +130,4 @@ getPosition = (role, lane) => {
     else return "NONE"
 }
 
-
-
-module.exports = {PlayerListService,main,
-    entriesBySumonnerID};
+module.exports = {assignPlayerValue, getPlayerStats};

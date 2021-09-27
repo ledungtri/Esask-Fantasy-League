@@ -6,7 +6,7 @@ const playerService = require('../services/playerService');
 /** Nisrine */
 const getPlayerStats =  function(req, res){
     summonerID = req.params._id; //_id is sumonnerID
-    playerService.main(summonerID)
+    playerService.getPlayerStats(summonerID)
     .then(function(response) {
         return res.status(200).json({success:true, entries:response.entries, stats: response.stats, totalGames:response.totalGames});
     })
@@ -28,7 +28,7 @@ playerList = async (req, res) => {
         });
 
         const res_data = response.data.entries;
-        const list_data = listService.PlayerListService(res_data);
+        const list_data = listService.assignPlayerValue(res_data);
 
         return res.status(200).json(list_data);
 
