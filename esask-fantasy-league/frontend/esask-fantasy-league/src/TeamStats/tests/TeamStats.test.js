@@ -1,5 +1,5 @@
 /** Author : Nisrine Zbadi 
- * Description: tests for display player stats story.
+ * Description: tests for display team stats story.
 */
 import {render, screen, fireEvent, waitFor, getByRole} from '@testing-library/react'
 import TeamStats from '../pages/TeamStats'
