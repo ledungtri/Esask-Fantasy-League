@@ -26,6 +26,7 @@ function PlayerList(props) {
             fetchPlayersList();
         }else{
             setPlayerList(props.players)
+
         }
 
     },[])

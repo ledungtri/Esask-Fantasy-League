@@ -1,3 +1,8 @@
+const axios = require('axios');
+
+const accountID = 'baGOA1982No4WKLjEBqmRRDiWCQcGSOaooegRgQKNnwuoqnJEUhOvfo8';
+const puuid = 'Edibcr2uxRErOdgWh8LBlgRaplrVgCwnFLMR5Zq-wrVtZu8bFne94Fpu73sH-h-H_cOv36ULWgmOlg';
+
 
 const _ = require('lodash');
 /** Nisrine: Kayn configuration */
@@ -59,7 +64,7 @@ assignPlayerValue =  (res_data) =>{
 const getPlayerStats =  async (summonerID)  => {
 
     /** Call the method to return the sumonner's AccountId from their sumonnerID */
-    const accountID = (await sumAccountID(summonerID)).accountId;
+   // const accountID = (await sumAccountID(summonerID)).accountId;
 
     stats = [];
     /** Helper method to Return 5 matches for that player  */
@@ -67,8 +72,16 @@ const getPlayerStats =  async (summonerID)  => {
         return (await kayn.Matchlist.by.accountID(accountID).query({beginIndex:0}).query({endIndex:5})).matches;
     }
 
+    const response = await axios({
+        url: 'https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/'+puuid+'/ids?start=0&count=20&api_key='+process.env.APP_KEY,
+    });
+
+    const result = response.data;
+    console.log(result)
+
+
     /** Call the method to return 5 matches for this player's accountID */
-    let result = (await matchListByAccount());
+    //let result = (await matchListByAccount());
 
     /** For each match, get the details and stats of that player during that match */
     for(const match of result) {
@@ -76,9 +89,10 @@ const getPlayerStats =  async (summonerID)  => {
         var date = new Date(match.timestamp).toLocaleDateString("en-US") //get the date for this match
         var position = getPosition(match.role, match.lane) //with 87%.5 accuracy
 
-        const matchDetail = await matchDetailByID(match.gameId)
+        const matchDetail = await matchDetailByID(match)
+        console.log(matchDetail)
         //get the participant id by accountID
-        var participantIdByAccountID = (_.filter(matchDetail.participantIdentities, {player: {accountId: accountID}}))[0].participantId;
+        var participantIdByAccountID = (_.filter(matchDetail.participants, {player: {accountId: accountID}}))[0].participantId;
 
         //get the player's stats using the participantID that we found earlier.
         var participantStats = (_.filter(matchDetail.participants, {participantId: participantIdByAccountID}))[0].stats;
@@ -102,7 +116,12 @@ sumAccountID = async (sumonnerID) => {
 
 /** Nisrine: helper function to get the match Details using the match ID **/
 matchDetailByID = async (matchID) => {
-    return await kayn.Match.get(matchID);
+   // return await kayn.Match.get(matchID);
+   const response = await axios({
+    url: 'https://americas.api.riotgames.com/lol/match/v5/matches/'+matchID+'?api_key='+process.env.APP_KEY,
+});
+return response.data;
+
 }
 
 /** Nisrine: helper function to get total wins, losses for a sumonnerID **/

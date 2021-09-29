@@ -9,12 +9,22 @@ async function createTeam(req, res) {
     }
 }
 
-async function getTeamById(req, res) {
+async function getTeamStatsById(req, res) {
     //TODO: implement getTeamById
+    try {
+        let teamStats = await teamService.getTeamStats(req.params._id);
+       // console.log(teamStats)
+        return res.status(200).json({success: true, teamStats: teamStats});
+    } catch(error) {        
+       return res.status(400).json({success:false, error: error});        
+    }
+
 }
 
 async function updateTeamById(req, res) {
     //TODO: implement updateTeamById
 }
 
-module.exports = {createTeam, getTeamById, updateTeamById};
+
+
+module.exports = {createTeam, updateTeamById, getTeamStatsById};
