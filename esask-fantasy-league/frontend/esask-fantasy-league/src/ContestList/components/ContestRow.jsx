@@ -13,10 +13,15 @@ function ContestRow({contest, onJoinBtnClick}) {
                 <div className="end-date">
                     <span>{new Date(contest.endDate).toLocaleDateString()}</span>
                 </div>
-                <div className='join-contest-status'>
-                    <button className="btnJoinContest" disabled={!contest.isContestOpen} onClick={() => onJoinBtnClick(contest)}>
-                        {contest.isContestOpen ? 'Join Contest' : 'Contest Closed'}
-                    </button>
+                <div className='status'>
+                    <span>{contest.status}</span>
+                </div>
+                <div className='join-button'>
+                    <button
+                        className="btnJoinContest"
+                        disabled={contest.status !== 'Upcoming'}
+                        onClick={() => onJoinBtnClick(contest)}
+                    >Join Contest</button>
                 </div>
             </div>
         </div>
