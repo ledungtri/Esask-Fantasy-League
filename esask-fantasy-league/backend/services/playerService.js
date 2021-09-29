@@ -1,39 +1,15 @@
-const axios = require('axios');
-
-const accountID = 'baGOA1982No4WKLjEBqmRRDiWCQcGSOaooegRgQKNnwuoqnJEUhOvfo8';
-const puuid = 'Edibcr2uxRErOdgWh8LBlgRaplrVgCwnFLMR5Zq-wrVtZu8bFne94Fpu73sH-h-H_cOv36ULWgmOlg';
-
-
+const GaleforceModule = require('galeforce');
 const _ = require('lodash');
-/** Nisrine: Kayn configuration */
-const { Kayn, REGIONS } = require('kayn')
-const kayn = Kayn(process.env.APP_KEY)({
- region: REGIONS.NORTH_AMERICA,
- apiURLPrefix: 'https://%s.api.riotgames.com',
- locale: 'en_US',
- debugOptions: {
-     isEnabled: true,
-     showKey: false,
- },
- requestOptions: {
-     shouldRetry: true,
-     numberOfRetriesBeforeAbort: 1,
-     delayBeforeRetry: 1000,
-     burst: true,
-     shouldExitOn403: false,
- },
- cacheOptions: {
-     cache: null,
-     timeToLives: {
-         useDefault: false,
-         byGroup: {},
-         byMethod: {},
-     },
- },
-})
 
-/** Nisrine: This object will receive the list of all matches for that player with metadata */
-let stats = [];
+const galeforce = new GaleforceModule({
+    'riot-api': {key: process.env.RIOT_TOKEN},
+    'rate-limit': {
+        type: 'bottleneck',
+        options: {
+            intervals: {1: 20}
+        }
+    }
+});
 
 assignPlayerValue =  (res_data) =>{
     const sorted_res = res_data.sort((a,b) => (a.leaguePoints < b.leaguePoints) ? 1 : -1);
@@ -62,91 +38,62 @@ assignPlayerValue =  (res_data) =>{
 
 /** Nisrine: Main function to be called, to display the stats of a player */
 const getPlayerStats =  async (summonerID)  => {
+    const puuid = await getPuuidFromSummonerId(summonerID);
+    const matchIds = await getPlayerMatchIds(puuid);
 
-    /** Call the method to return the sumonner's AccountId from their sumonnerID */
-   // const accountID = (await sumAccountID(summonerID)).accountId;
-
-    stats = [];
-    /** Helper method to Return 5 matches for that player  */
-    const matchListByAccount = async () => {
-        return (await kayn.Matchlist.by.accountID(accountID).query({beginIndex:0}).query({endIndex:5})).matches;
-    }
-
-    const response = await axios({
-        url: 'https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/'+puuid+'/ids?start=0&count=20&api_key='+process.env.APP_KEY,
-    });
-
-    const result = response.data;
-    console.log(result)
-
-
-    /** Call the method to return 5 matches for this player's accountID */
-    //let result = (await matchListByAccount());
-
-    /** For each match, get the details and stats of that player during that match */
-    for(const match of result) {
-
-        var date = new Date(match.timestamp).toLocaleDateString("en-US") //get the date for this match
-        var position = getPosition(match.role, match.lane) //with 87%.5 accuracy
-
-        const matchDetail = await matchDetailByID(match)
-        console.log(matchDetail)
-        //get the participant id by accountID
-        var participantIdByAccountID = (_.filter(matchDetail.participants, {player: {accountId: accountID}}))[0].participantId;
-
-        //get the player's stats using the participantID that we found earlier.
-        var participantStats = (_.filter(matchDetail.participants, {participantId: participantIdByAccountID}))[0].stats;
-
-        const {win, kills, assists, deaths} = participantStats;
-        stats.push({date: date, position:position, accountId:accountID, data:{win, kills, assists, deaths}});
-    };
+    const promises = matchIds.map(matchId => getPerformanceByMatchId(matchId, puuid));
+    /** Nisrine: This object will receive the list of all matches for that player with metadata */
+    const stats = await Promise.all(promises);
 
     /**Call the method to show total wins and losses for sumonnerID */
     const entries = await entriesBySumonnerID(summonerID);
-
-   // return {stats, entries:entries, totalGames:totalMatchesCount};
     return {stats, entries:entries};
-
 }
 
-/** Nisrine: helper function to get the sumonner accountID from sumonnerID **/
-sumAccountID = async (sumonnerID) => {
-    return await kayn.Summoner.by.id(sumonnerID);
+/** helper function to get the sumonner's Puuid from their sumonnerID */
+async function getPuuidFromSummonerId(summonerId) {
+    const player = await galeforce.lol.summoner().region(galeforce.region.lol.NORTH_AMERICA).summonerId(summonerId).exec();
+    return  player.puuid;
 }
 
-/** Nisrine: helper function to get the match Details using the match ID **/
-matchDetailByID = async (matchID) => {
-   // return await kayn.Match.get(matchID);
-   const response = await axios({
-    url: 'https://americas.api.riotgames.com/lol/match/v5/matches/'+matchID+'?api_key='+process.env.APP_KEY,
-});
-return response.data;
+/** helper function to get the matches ids from summoner's Puuid */
+async function getPlayerMatchIds(puuid, startDate = null, endDate = null) {
+    const query = {type: "ranked", queueId: 420, count: 5};
+    if (startDate) {
+        query.startTime = Math.floor(startDate.getTime() / 1000);
+    }
+    if (endDate) {
+        query['endTime'] = Math.floor(endDate.getTime() / 1000);
+    }
+    return galeforce.lol.match.list()
+        .region(galeforce.region.riot.AMERICAS)
+        .puuid(puuid)
+        .query(query)
+        .exec();
+}
 
+/** helper function to get the player performance using the match ID */
+async function getPerformanceByMatchId(matchId, puuid) {
+    const match = await galeforce.lol.match.match().region(galeforce.region.riot.AMERICAS).matchId(matchId).exec();
+    const date = new Date(match.info.gameStartTimestamp).toLocaleDateString("en-US") //get the date for this match
+
+    const participants = match.info.participants;
+
+    // Calculate player's performance
+    const participant = participants.find(p => p.puuid === puuid);
+
+    // // get team performance
+    const teamId = participant.teamId;
+    const team = match.info.teams.find(t => t.teamId === teamId);
+
+    const data = {win: team.win, kills: participant.kills, assists: participant.assists, deaths: participant.deaths};
+    const teamBonuses = {towers: team.objectives.tower.kills, dragons: team.objectives.dragon.kills, barons: team.objectives.baron.kills};
+    return {date: date, position: participant.teamPosition, data, teamBonuses};
 }
 
 /** Nisrine: helper function to get total wins, losses for a sumonnerID **/
-entriesBySumonnerID = async (sumonnerID) => {
-    return await kayn.League.Entries.by.summonerID(sumonnerID);
-}
-
-/** Nisrine: helper function to get the position using the lane and role, with 87.5% accuracy **/
-getPosition = (role, lane) => {
-    if(lane == "MID_LANE" && role=="SOLO") {
-        return "MIDDLE";
-    }
-    if(lane == "TOP_LANE" && role=="SOLO") {
-        return "TOP";
-    }
-    if(lane == "JUNGLE" && role=="NONE") {
-        return "JUNGLE";
-    }
-    if(lane == "BOT_LANE" && role=="DUO_CARRY") {
-        return "BOTTOM";
-    }
-    if(lane == "BOT_LANE" && role=="DUO_SUPPORT") {
-        return "UTILITY";
-    }
-    else return "NONE"
+entriesBySumonnerID = (sumonnerID) => {
+    return galeforce.lol.league.entries().region(galeforce.region.lol.NORTH_AMERICA).summonerId(sumonnerID).exec();
 }
 
 module.exports = {assignPlayerValue, getPlayerStats};
