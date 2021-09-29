@@ -39,14 +39,14 @@ describe('Showing the team stats only when the contest is not over yet ', () => 
 it('Closes the popup when the button is clicked', async  () => {
   const onClick = jest.fn();
   render(<TeamStats  />);
-  await waitFor(()=>screen.getByText('Draft this player'));
-  fireEvent.click(screen.getByText('Draft this player'));  
+  fireEvent.click(screen.getByRole('button', {name:'Close'}));  
+  expect(screen.queryByTestId(/stats-section/i)).not.toBeInTheDocument();
   expect(onClick).toHaveBeenCalled();
 });
 
 
 it('Renders the close button ', async () => {
-  render(<Playerstats show={true} loggedin={true} />);
+  render(<TeamStats  />);
   await  waitFor(()=>screen.getByRole('button', {name:'Close'}));
   const closeButton = screen.getByRole('button', {name:'Close'});
   expect(closeButton).toBeInTheDocument();
