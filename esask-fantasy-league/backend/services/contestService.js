@@ -1,4 +1,5 @@
 const Contest = require('../models/contestModel');
+const teamService = require('./teamService');
 
 async function getContests() {
     const contests = await Contest.find();
@@ -14,4 +15,10 @@ async function getContests() {
     return contests;
 }
 
-module.exports = {getContests};
+async function getContestById(id) {
+    const contest = await Contest.findById(id);
+    const participatedTeam = await teamService.findTeamsByContestId(id);
+    return {contest, participatedTeam};
+}
+
+module.exports = {getContests, getContestById};
