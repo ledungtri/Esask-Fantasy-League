@@ -4,6 +4,6 @@ const router = express.Router();
 
 router.get('/contests', ContestListCtrl.getAllContests);
 
-//TODO get Contest Information
+router.get('/contests/:id', ContestListCtrl.getContestById);
 
 module.exports = router;
