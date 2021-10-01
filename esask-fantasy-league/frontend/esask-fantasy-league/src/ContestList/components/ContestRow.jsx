@@ -1,11 +1,11 @@
 import React from "react";
 
-function ContestRow({contest, onJoinBtnClick}) {
+function ContestRow({contest, onJoinBtnClick, showDetails}) {
     return (
         <div data-testid="contest-row" className="contestRowContainer">
             <div key={contest._id}>
                 <div className="contest-name">
-                    <span>{contest.name}</span>
+                    <span onClick={() => showDetails(contest._id, contest.status)}>{contest.name}</span>
                 </div>
                 <div className= "start-date">
                     <span>{new Date(contest.startDate).toLocaleDateString()}</span>
