@@ -13,6 +13,8 @@ function PlayerList(props) {
     const playersPerPage = 35;
     const title = props.title || "List Of Players";
     const showBtn = props.showBtn || false;
+    const showBtnCapt = props.showBtnCapt || false;
+    
 
     async function fetchPlayersList(){
         setLoading(true);
@@ -84,6 +86,11 @@ function PlayerList(props) {
                                         <a href="#" onClick={()=>showPlayerDetails(player.summonerId)}>
                                             <p className="width">{player.summonerName}</p>
                                         </a>
+                                        {player.isCaptain && showBtnCapt?
+                                            <span>
+                                                Captain
+                                            </span>
+                                        :""}
                                     </div>
                                     {showBtn ? "" :
                                         <div>
@@ -94,11 +101,12 @@ function PlayerList(props) {
                                         <p>${player.value}</p>
                                     </div>
 
-
-
                                 {showBtn ?
                                     <div className="select_player_div">
                                         <button className="select_player_btn" onClick={() => props.callback(player)}>{props.btnText || "Select Player"}</button>
+                                        {showBtnCapt?
+                                        <button className="select_player_btn" onClick={() => props.captainCallback(player)}>Captain</button>
+                                        :""}
                                     </div>
                                 : ""}
                             </div>

@@ -11,6 +11,9 @@ function CreateTeam(props) {
     const [totalValue, setTotalValue] = useState(0);
     const [selectedPlayers] = useState([]);
 
+    const[showCaptain, setShowCaptain] = useState(false);
+    
+
     const [message, setMessage] = useState();
     const [messageType, setMessageType] = useState('');
 
@@ -32,6 +35,28 @@ function CreateTeam(props) {
         let total = 0;
         selectedPlayers.forEach(player => total += player.value);
         setTotalValue(total);
+    }
+
+    //to be completed
+    function handleAssignCaptain(player){
+
+        console.log(selectedPlayers)
+                
+        for(let x=0; x<selectedPlayers.length; x++){
+            if(selectedPlayers[x].isCaptain){
+                selectedPlayers[x].isCaptain=false;
+            }
+        }
+
+        const index = selectedPlayers.indexOf(player);
+        player.isCaptain=true;
+        selectedPlayers[index]=player;
+
+        // console.log(selectedPlayers[index])
+
+        // console.log(selectedPlayers[index].isCaptain)
+        // console.log(selectedPlayers[index].summonerName)
+        setShowCaptain(true);
     }
 
     function closeModal(){
@@ -88,9 +113,15 @@ function CreateTeam(props) {
             </div>
 
             <div data-testid='selected-players' className="playerListContainer">
-                <PlayerList players={selectedPlayers} title="Selected Players" showBtn btnText="Remove" callback={handleRemovePlayer}/>
+
+                <PlayerList players={selectedPlayers} title="Selected Players" showBtnCapt showBtn btnText="Remove" callback={handleRemovePlayer} captainCallback={handleAssignCaptain}/>
 
                 {messageType? <PopUpMessage type={messageType} body={message} closeHandler={closeModal}/> : ""}
+                {showCaptain?
+                    <span>
+                        
+                    </span>
+                :""}
 
                 <form className="createTeamForm" onSubmit={handleSubmit}>
                     <input

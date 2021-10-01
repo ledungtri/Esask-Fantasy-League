@@ -73,6 +73,7 @@
   transform: scale(1.04);
 }
 
+
 @media only screen and (max-width: 1000px) {
   .width_50{
     width: 75%;
