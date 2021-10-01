@@ -10,6 +10,7 @@ export default function MatchesStats(props) {
     return (
         <div className="performance_player">
             <h1 className="text-light text-center">Game History</h1>
+            <p className="text-light text-center">(Last 5 Matches)</p>
             <Table striped bordered hover variant="dark">
             <thead>
                 <tr>

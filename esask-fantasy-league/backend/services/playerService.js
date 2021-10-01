@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const GaleforceModule = require('galeforce');
 const _ = require('lodash');
 
@@ -37,9 +39,10 @@ assignPlayerValue =  (res_data) =>{
 }
 
 /** Nisrine: Main function to be called, to display the stats of a player */
-const getPlayerStats =  async (summonerID)  => {
+const getPlayerStats =  async (summonerID, startDate = null, endDate = null)  => {
+
     const puuid = await getPuuidFromSummonerId(summonerID);
-    const matchIds = await getPlayerMatchIds(puuid);
+    const matchIds = await getPlayerMatchIds(puuid, startDate, endDate);
 
     const promises = matchIds.map(matchId => getPerformanceByMatchId(matchId, puuid));
     /** Nisrine: This object will receive the list of all matches for that player with metadata */
@@ -57,12 +60,15 @@ async function getPuuidFromSummonerId(summonerId) {
 }
 
 /** helper function to get the matches ids from summoner's Puuid */
-async function getPlayerMatchIds(puuid, startDate = null, endDate = null) {
-    const query = {type: "ranked", queueId: 420, count: 5};
-    if (startDate) {
-        query.startTime = Math.floor(startDate.getTime() / 1000);
+async function getPlayerMatchIds(puuid, startDate, endDate) {
+
+    const query = {type: "ranked", queueId: 420, count: 5}; //I removed count from here to get the all last week's matches
+    if (startDate!==null) {
+        startDate = new Date(startDate);
+        query['startTime'] = Math.floor(startDate.getTime() / 1000);
     }
-    if (endDate) {
+    if (endDate!==null) {
+        endDate = new Date(endDate);
         query['endTime'] = Math.floor(endDate.getTime() / 1000);
     }
     return galeforce.lol.match.list()

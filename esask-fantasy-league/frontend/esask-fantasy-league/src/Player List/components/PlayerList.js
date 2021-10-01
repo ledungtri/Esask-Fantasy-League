@@ -50,7 +50,8 @@ function PlayerList(props) {
 
     return (
         <div className="player_list">
-            {showPlayerStats ? <Playerstats summonerId={summoner} show={showPlayerStats} handleClose={handleClose} loggedin={true}/> : ""
+            {showPlayerStats ? <Playerstats summonerId={summoner} show={showPlayerStats} handleClose={handleClose} loggedin={true}
+            startDate={null} endDate={null}/> : ""
             }
             <div>
                 <div className="title">
