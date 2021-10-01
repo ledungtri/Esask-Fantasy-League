@@ -46,3 +46,6 @@ code {
 
 /*------------------- Loading CSS --------------------- */
 @import url("../src/playerstats/styles/loading.css");
+
+/*------------------- SearchBar CSS --------------------- */
+@import url("../src/Search Bar/styles/searchbar.css");

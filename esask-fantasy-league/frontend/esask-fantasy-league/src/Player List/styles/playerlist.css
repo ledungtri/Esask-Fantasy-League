@@ -1,9 +1,13 @@
-.player_list{
-  color: #EEEEEE;
+.player_list {
+  color: #eeeeee;
 }
 .title {
-  color: #EEEEEE;
+  color: #eeeeee;
   padding: 10px;
+  text-align: center;
+}
+.no_match {
+  color: #ff0000;
   text-align: center;
 }
 .listing {
@@ -31,18 +35,21 @@
   display: grid;
   grid-template-columns: 1fr 3fr 1fr 1fr;
 }
-.listing div p{
+.listing div p {
   margin-top: 10px;
 }
-.listing div a{
-  color: #EEEEEE;
+.listing div a {
+  color: #eeeeee;
   text-decoration: none;
 }
 .listing_heading .player_name {
   margin-left: 15px;
 }
 .width {
-  width: 150px;
+  width: 180px;
+}
+.width_20 {
+  width: 20%;
 }
 .width_50 {
   width: 50%;
@@ -74,7 +81,7 @@
 }
 
 @media only screen and (max-width: 1000px) {
-  .width_50{
+  .width_50 {
     width: 75%;
   }
 }

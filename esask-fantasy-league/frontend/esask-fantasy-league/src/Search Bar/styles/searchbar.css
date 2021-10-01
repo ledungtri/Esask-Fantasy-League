@@ -1,0 +1,28 @@
+.searchBar {
+  margin: 0 auto;
+  text-align: center;
+  width: 30%;
+}
+
+.searchInput_div input {
+  height: 35px;
+  width: 100%;
+  border-radius: 20px;
+}
+.searchError {
+  color: #ff0000;
+  font-size: 20px;
+}
+.searchBtn_div {
+  margin-top: 10px;
+}
+.searchBtn_div button {
+  border-radius: 10px;
+  padding: 3px 15px;
+  margin: 0 7px;
+}
+.searchBtn_div button:hover {
+  background-color: #787a91;
+  color: #eeeeee;
+  transform: scale(1.04);
+}

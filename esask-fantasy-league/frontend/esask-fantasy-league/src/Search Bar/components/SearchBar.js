@@ -1,3 +1,7 @@
+/*
+    Component that renders the search bar and it's buttons
+*/
+
 import React, {useState} from 'react'
 
 function SearchBar(props) {

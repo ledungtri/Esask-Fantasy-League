@@ -88,7 +88,7 @@ function CreateTeam(props) {
             </div>
 
             <div data-testid='selected-players' className="playerListContainer">
-                <PlayerList players={selectedPlayers} title="Selected Players" showBtn btnText="Remove" callback={handleRemovePlayer}/>
+                <PlayerList players={selectedPlayers} title="Selected Players" showBtn btnText="Remove" callback={handleRemovePlayer} hideSearch />
 
                 {messageType? <PopUpMessage type={messageType} body={message} closeHandler={closeModal}/> : ""}
 
