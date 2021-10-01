@@ -2,7 +2,7 @@ const router = require('express').Router();
 const teamController = require('../controllers/teamController');
 
 router.post('/', teamController.createTeam);
-router.get('/:_id', teamController.getTeamStatsById);
+router.get('/:_id/:startDate?/:endDate?', teamController.getTeamStatsById);
 
 //TODO get team
 

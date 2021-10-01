@@ -12,9 +12,12 @@ async function createTeam(req, res) {
 async function getTeamStatsById(req, res) {
     //TODO: implement getTeamById
     try {
-        let teamStats = await teamService.getTeamStats(req.params._id);
+        let teamStats = await teamService.getTeamStats(req.params._id, req.params.startDate, req.params.endDate);
        // console.log(teamStats)
-        return res.status(200).json({success: true, teamStats: teamStats});
+       if(Object.keys(teamStats).length==0)
+        return res.status(404).json({success: false, data: teamStats});
+        else
+        return res.status(200).json({success: true, data: teamStats});
     } catch(error) {        
        return res.status(400).json({success:false, error: error});        
     }

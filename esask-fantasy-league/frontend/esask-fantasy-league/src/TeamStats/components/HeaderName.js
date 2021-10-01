@@ -1,17 +1,21 @@
 import React from 'react'
 import styled from 'styled-components';
-import { PlayerPerformance } from '.';
+import { TeamPerformance } from '.';
 
 
 
 export default function HeaderName(props) {
 
-    // console.log('i am in header name')
-    // console.log(props.performance)
+    console.log('i am in header name')
+    console.log(props)
+    console.log(props.teamScore)
     return (
         <div className="header_player">
-            <h1 className="text-center text-light">{props.performance[0]?props.performance[0].summonerName:""}</h1>
-            <PlayerPerformance performance = {props.performance}  />
+            <h1 className="text-center text-light">
+                {props.teamName?props.teamName+" ":""} |
+                {props.teamScore?" "+props.teamScore+" Fpts":""}
+            </h1>
+            <TeamPerformance performance = {props.teamPerformance}  />
         </div>
     )
 }

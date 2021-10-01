@@ -2,7 +2,7 @@
  * Description: main page to display the stats of a player after click
 */
 import React, { useState, useEffect } from 'react';
-import {HeaderName, PlayerPerformance, MatchesStats, DraftButton} from '../components'
+import {HeaderName, PlayerPerformance, PlayersPerformance, DraftButton} from '../components'
 import axios from 'axios';
 import Loading from '../components/Loading';
 import Modal from 'react-bootstrap/Modal'
@@ -12,58 +12,67 @@ import * as apiService from '../api/api'
 
 function TeamStats(props) {
 
-    // const [playerStats, setPlayerStats] = useState([]);
-    // const [playerEntries, setPlayerEntries] = useState({});
-    // const [totalGames, setTotalGames] = useState(0);
-    // const [loading, setLoading] = useState(false);
-    // const [show, setShow] = useState(true);
-    // const handleClose = () => setShow(false);
-    // const sumonnerIDProp = props.summonerId;
+    const [playerStats, setPlayerStats] = useState([]);
+    const [teamPerformance, setTeamPerformance] = useState({});
+    const [teamScore, setTeamScore] = useState(0);
+    const [teamName, setTeamName] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [show, setShow] = useState(true);
+    const [startDate, setStartDate] = useState("2021-09-01");
+    const [endDate, setEndDate] = useState("2021-09-30");
 
+    const handleClose = () => setShow(false);
+   // const teamID = props.teamID; //this will come from contest page
+    const teamID = '615499d13389b232e00a21cb'; //this to be deleted when integrating the code with contest page
 
     const fetchPlayer = async () => {
-        // setLoading(true);
-        // const response = await apiService.getData(sumonnerIDProp)
+        setLoading(true);
+        const response = await apiService.getData(teamID, startDate, endDate)
      
-        // if (response.status < 400) {
-        //   setPlayerStats(response.data.stats);
-        //   setPlayerEntries(response.data.entries);
-        //   setTotalGames(response.data.totalGames)
-        //   setLoading(false);
-        // }
+        if (response.status < 400) {
+          console.log("response")
+          console.log(response)
+          setPlayerStats(response.data.data.playersData);
+          setTeamPerformance(response.data.data.teamData);
+          setTeamScore(response.data.data.score); //this is the total score of the whole team
+          setTeamName(response.data.data.name); 
+
+          setLoading(false);
+        }
       };
 
 
     useEffect(() => {
-       // fetchPlayer();
+        fetchPlayer();
        
     }, []);
       
     return (
       <div>
-      {/* <Modal
+      <Modal
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
-        show={props.show}
-        onHide={props.handleClose}
+       // show={props.show}
+        show={true}
+      //  onHide={props.handleClose}
+        onHide={()=>setShow(false)}
         >
         <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-            Player's Stats
+            Team's Stats
             </Modal.Title>
         </Modal.Header>
             {loading? <Loading /> :
         <Modal.Body>
-            <HeaderName performance = {playerEntries}  />  
-            <MatchesStats stats = {playerStats} />
+            <HeaderName teamPerformance = {teamPerformance} teamScore={teamScore} teamName={teamName} />  
+            <PlayersPerformance stats = {playerStats} startDate={startDate} endDate={endDate} />
         </Modal.Body>
             }
-          {props.loggedin&&props.show?<DraftButton onClose={handleClose} loggedin={true}  />:""}
 
         <Modal.Footer>
         </Modal.Footer>
-      </Modal> */}
+      </Modal>
 
       </div>
             

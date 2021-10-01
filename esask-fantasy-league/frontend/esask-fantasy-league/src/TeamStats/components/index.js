@@ -1,6 +1,6 @@
 import HeaderName from './HeaderName';
-import PlayerPerformance from './PlayerPerformance';
-import MatchesStats from './MatchesStats';
+import TeamPerformance from './TeamPerformance';
+import PlayersPerformance from './PlayersPerformance';
 import DraftButton from './DraftButton';
 
-export  {HeaderName, PlayerPerformance, MatchesStats, DraftButton}
+export  {HeaderName, TeamPerformance, PlayersPerformance, DraftButton}
