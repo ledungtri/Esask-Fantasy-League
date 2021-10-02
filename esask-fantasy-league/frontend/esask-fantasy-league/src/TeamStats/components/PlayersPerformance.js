@@ -27,7 +27,7 @@ export default function PlayersPerformance(props) {
              <Playerstats summonerId={summonerId} show={showPlayerStats} handleClose={handleClose} 
              startDate={props.startDate} endDate={props.endDate} /> : ""
             }
-            <h1 className="text-light text-center">Players Performance</h1>
+            <h1 className="text-light text-center">Contest Players Performance</h1>
             <Table striped bordered hover variant="dark">
             <thead>
                 <tr>
@@ -47,7 +47,7 @@ export default function PlayersPerformance(props) {
                         <td>{stat.data.kills}</td>
                         <td>{stat.data.assists}</td>
                         <td>{stat.data.deaths}</td>
-                        <td>{stat.score}</td>
+                        <td>{stat.playerScore}</td>
                         
                     </tr>      
                 ))}

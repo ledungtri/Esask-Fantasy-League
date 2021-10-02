@@ -16,7 +16,7 @@ function Playerstats(props) {
     const [endDate, setEndDate] = useState(props.endDate);
     const [playerStats, setPlayerStats] = useState([]);
     const [playerEntries, setPlayerEntries] = useState({});
-    const [totalGames, setTotalGames] = useState(0);
+    const [totalScore, setTotalScore] = useState(0);
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState(true);
     const handleClose = () => setShow(false);
@@ -28,11 +28,10 @@ function Playerstats(props) {
     const fetchPlayer = async () => {
         setLoading(true);
         const response = await apiService.getData(sumonnerIDProp, startDate, endDate)
-     
         if (response.status < 400) {
           setPlayerStats(response.data.stats);
           setPlayerEntries(response.data.entries);
-          setTotalGames(response.data.totalGames)
+          setTotalScore((response.data.stats)[0].score);
           setLoading(false);
         }
       };

@@ -15,7 +15,12 @@ export default function HeaderName(props) {
                 {props.teamName?props.teamName+" ":""} |
                 {props.teamScore?" "+props.teamScore+" Fpts":""}
             </h1>
-            <TeamPerformance performance = {props.teamPerformance}  />
+            {/* add border style here */}
+            <div> 
+                <h3 className="text-center text-light">Captain Bonuses:</h3>
+                <TeamPerformance performance = {props.teamPerformance}  />
+            </div>
+           
         </div>
     )
 }

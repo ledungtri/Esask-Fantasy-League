@@ -42,8 +42,9 @@ async function getTeamPlayers(id) { //id being the id of the team from the db
 async function getTeamStats(id,  startDate, endDate) { //id being the tema id from db
 
     
-    let sumTowers=0, sumDragons=0, sumBarons=0, sumWins=0; //captain bonuses
-    let teamScore = 0;
+    let towers=0, dragons=0, barons=0, wins=0; //captain bonuses
+    let teamScore = 0; //this is the tsum of all players score + the captain score
+    let captainBonusScore=0; //this is the captain score based on turrets, dragons, barons and win
     let playersStat=[];
     let teamName="";
     try {
@@ -53,27 +54,27 @@ async function getTeamStats(id,  startDate, endDate) { //id being the tema id fr
 
         //this has to be for all players in a team by match
         for(const player of players) {
-                const stats = await getPlayerStats(player.isCaptain, player.summonerId, startDate, endDate);
-                console.log(stats);
-                playersStat.push(stats);
+            const stats = await getPlayerStats(player.isCaptain, player.summonerId, startDate, endDate);
+            teamScore += stats.playerScore;
+            //console.log(stats);
+            playersStat.push(stats);
 
-                //we are doing the sum here to get the total score for the whole team
-                if(player.isCaptain) {
-                    sumTowers+=stats.data.towers;
-                    sumDragons+=stats.data.dragons
-                    sumBarons+=stats.data.barons
-                    sumWins+=stats.data.wins;  //these are data for the whole team
-                    teamScore+=stats.score;
-                }
-                             
-
+            if(player.isCaptain) {
+                towers = stats.data.towers;
+                dragons = stats.data.dragons
+                barons = stats.data.barons
+                wins = stats.data.wins;  //these are data for the whole team
+                captainBonusScore = calculateBonusCaptain(wins, towers, dragons, barons)
+                teamScore += captainBonusScore
+            }          
+           
         };
        
 
         return {
-            score: teamScore, 
+            score: teamScore, //team score is the captain's bonus.
             name:teamName,
-            teamData:{sumTowers, sumDragons, sumBarons, sumWins}, 
+            captainBonus:{towers, dragons, barons, wins, captainBonusScore}, 
             playersData:playersStat
         };
     } catch(error) {
@@ -91,10 +92,6 @@ async function getPlayerStats(isCaptain, id, startDate, endDate) { //player id
         let towers=0, dragons=0, barons=0;
         let wins=0, kills=0, assists=0, deaths=0; //these are total stats for all matches of this player
         for(const stat of stats.stats) { //for each stat means for each match stats for one specific player, in the last 5 matches
-            
-            console.log("statsstatsstatsstatsstatsstatsstatsstatsstats")
-            console.log(stat)
-            
             wins += stat.data.win?1:0;
             towers+=stat.teamBonuses.towers;
             dragons+=stat.teamBonuses.dragons;
@@ -106,10 +103,11 @@ async function getPlayerStats(isCaptain, id, startDate, endDate) { //player id
            // playerScore+=stat.data.score
         } 
      
+            // if(isCaptain)
+            // playerScore = calculateScoreCaptain( wins, towers, dragons, barons) //to change
+            // else 
+            playerScore = calculateScorePlayer(isCaptain, kills, assists, deaths) //to change
 
-            playerScore = calculateScore(isCaptain, wins, towers, dragons, barons) //to change
-
-       
 
         
         return { 
@@ -117,7 +115,7 @@ async function getPlayerStats(isCaptain, id, startDate, endDate) { //player id
             summonnerID:stats.entries[0].summonerId,
             isCaptain:isCaptain, 
             data: {kills, assists, deaths, wins, towers, dragons, barons}, //total stats for this player in the last 5 matches
-            score: playerScore 
+            playerScore: playerScore 
         }  
     } catch(error) {
         console.log(error)
@@ -126,16 +124,13 @@ async function getPlayerStats(isCaptain, id, startDate, endDate) { //player id
   
 }
 
-/**Calculate the points for individual player
- calculate the team stats according to the following:
-        // 1 tower/turret = 1 point.
-        //1 dragon = 2 point.
-        //1 baron = 3 point.
-       // Win = 2 point.*/
-function calculateScore(isCaptain, towers, dragons, barons, wins) {
-    if(isCaptain)
-        return 1.5*(towers + dragons*2 + barons*3 + wins*2)
-    else
-        return (towers + dragons*2 + barons*3 + wins*2) 
+/**Calculate team captain bonus */
+function calculateBonusCaptain(wins, towers, dragons, barons) {
+    if(isCaptain) return (1.5*(towers + dragons*2 + barons*3 + wins*2))
+    else return (towers + dragons*2 + barons*3 + wins*2) 
+}
+function calculateScorePlayer(isCaptain, kills, assists, deaths) {
+    if(!isCaptain) return (kills*3 + assists*2 - deaths ) 
+    else  return (1.5*(kills*3 + assists*2 - deaths) ) 
 }
 module.exports = {createTeam, getTeamById,getTeamPlayers,getTeamStats, getPlayerStats, updateTeamById};

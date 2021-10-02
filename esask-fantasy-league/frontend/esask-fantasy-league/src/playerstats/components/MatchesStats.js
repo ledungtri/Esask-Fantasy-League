@@ -20,6 +20,7 @@ export default function MatchesStats(props) {
                 <th>Assists</th>
                 <th>Deaths</th>
                 <th>Kills</th>
+                <th>Score</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,6 +32,7 @@ export default function MatchesStats(props) {
                         <td>{stat.data.assists}</td>
                         <td>{stat.data.deaths}</td>
                         <td>{stat.data.kills}</td>
+                        <td>{stat.score}</td>
                         
                     </tr>      
                 ))}

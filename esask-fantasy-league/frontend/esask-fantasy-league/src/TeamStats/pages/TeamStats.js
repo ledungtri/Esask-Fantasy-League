@@ -33,7 +33,7 @@ function TeamStats(props) {
           console.log("response")
           console.log(response)
           setPlayerStats(response.data.data.playersData);
-          setTeamPerformance(response.data.data.teamData);
+          setTeamPerformance(response.data.data.captainBonus);
           setTeamScore(response.data.data.score); //this is the total score of the whole team
           setTeamName(response.data.data.name); 
 
