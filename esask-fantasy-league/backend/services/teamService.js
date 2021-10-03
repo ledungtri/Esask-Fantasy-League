@@ -12,16 +12,16 @@ async function createTeam(body) {
     return await team.save();
 }
 
-
-async function getTeamById(id) {
-    //TODO: Implement getTeamById
+async function findTeamsByContest(contest) {
+    const teams = await Team.find({contestId: contest._id});
+    const promises =  teams.map(team => getTeamStats(team._id, contest.startDate, contest.endDate));
+    const participatedTeams = await Promise.all(promises);
+    const result = participatedTeams.sort((a, b) => b.score -  a.score);
+    for (let i = 0; i < result.length; i++) {
+        result[i].rank = i+1;
+    }
+    return result;
 }
-
-async function findTeamsByContestId(contestId) {
-    const teams = await Team.find({contestId: contestId});
-    return teams;
-}
-
 
 async function validateContest(contestId) {
     if (!ObjectId.isValid(contestId)) {
@@ -120,8 +120,6 @@ async function getPlayerStats(isCaptain, id, startDate, endDate) { //player id
     } catch(error) {
         console.log(error)
     }
-
-
 }
 
 /**Calculate team captain bonus */
@@ -133,4 +131,4 @@ function calculateScorePlayer(isCaptain, kills, assists, deaths) {
     if(!isCaptain) return (kills*3 + assists*2 - deaths )
     else  return (1.5*(kills*3 + assists*2 - deaths) )
 }
-module.exports = {createTeam, getTeamById,getTeamPlayers,getTeamStats, getPlayerStats, findTeamsByContestId};
+module.exports = {createTeam, findTeamsByContest, getTeamPlayers, getTeamStats, getPlayerStats, findTeamsByContestId};
