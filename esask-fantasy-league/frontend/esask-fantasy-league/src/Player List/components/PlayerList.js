@@ -26,6 +26,7 @@ function PlayerList(props) {
             fetchPlayersList();
         }else{
             setPlayerList(props.players)
+
         }
 
     },[])
@@ -55,7 +56,9 @@ function PlayerList(props) {
                 handleClose={handleClose}
                 handleDraftPlayer={() => props.callback(summoner)}
                 loggedin={true}
-            /> : ""}
+                startDate={null}
+                endDate={null}
+                /> : ""}
             <div>
                 <div className="title">
                     <h3 data-testid="title">{title}</h3>

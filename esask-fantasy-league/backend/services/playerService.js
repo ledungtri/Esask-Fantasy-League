@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const GaleforceModule = require('galeforce');
 const _ = require('lodash');
 require('dotenv').config();
@@ -38,9 +40,10 @@ assignPlayerValue =  (res_data) =>{
 }
 
 /** Nisrine: Main function to be called, to display the stats of a player */
-const getPlayerStats =  async (summonerID)  => {
+const getPlayerStats =  async (summonerID, startDate = null, endDate = null)  => {
+
     const puuid = await getPuuidFromSummonerId(summonerID);
-    const matchIds = await getPlayerMatchIds(puuid);
+    const matchIds = await getPlayerMatchIds(puuid, startDate, endDate);
 
     const promises = matchIds.map(matchId => getPerformanceByMatchId(matchId, puuid));
     /** Nisrine: This object will receive the list of all matches for that player with metadata */
@@ -58,12 +61,15 @@ async function getPuuidFromSummonerId(summonerId) {
 }
 
 /** helper function to get the matches ids from summoner's Puuid */
-async function getPlayerMatchIds(puuid, startDate = null, endDate = null) {
-    const query = {type: "ranked", queueId: 420, count: 5};
-    if (startDate) {
-        query.startTime = Math.floor(startDate.getTime() / 1000);
+async function getPlayerMatchIds(puuid, startDate, endDate) {
+
+    const query = {type: "ranked", queueId: 420, count: 5}; //I removed count from here to get the all last week's matches
+    if (startDate!==null) {
+        startDate = new Date(startDate);
+        query['startTime'] = Math.floor(startDate.getTime() / 1000);
     }
-    if (endDate) {
+    if (endDate!==null) {
+        endDate = new Date(endDate);
         query['endTime'] = Math.floor(endDate.getTime() / 1000);
     }
     return galeforce.lol.match.list()
@@ -87,14 +93,21 @@ async function getPerformanceByMatchId(matchId, puuid) {
     const teamId = participant.teamId;
     const team = match.info.teams.find(t => t.teamId === teamId);
 
+    const score = calculateScore(participant.kills, participant.assists, participant.deaths );
+    
     const data = {win: team.win, kills: participant.kills, assists: participant.assists, deaths: participant.deaths};
     const teamBonuses = {towers: team.objectives.tower.kills, dragons: team.objectives.dragon.kills, barons: team.objectives.baron.kills};
-    return {date: date, position: participant.teamPosition, data, teamBonuses};
+    return {date: date, score: score, position: participant.teamPosition, data, teamBonuses};
 }
 
 /** Nisrine: helper function to get total wins, losses for a sumonnerID **/
 entriesBySumonnerID = (sumonnerID) => {
     return galeforce.lol.league.entries().region(galeforce.region.lol.NORTH_AMERICA).summonerId(sumonnerID).exec();
+}
+
+/** Nisrine: helper function to calculate the player's score **/
+calculateScore = (kills, assists, deaths) => {
+    return (kills * 3 + assists * 2 - deaths )
 }
 
 module.exports = {assignPlayerValue, getPlayerStats};
