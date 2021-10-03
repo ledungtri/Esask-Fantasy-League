@@ -39,10 +39,10 @@ code {
 @import url("../src/Home Page/styles/homepage.css");
 
 /*------------------- ContestList CSS --------------------- */
-@import url("/src/ContestList/styles/contestList.css");
+@import url("ContestList/styles/contestList.css");
 
 /*------------------- ContestInfo CSS --------------------- */
-@import url("/src/ContestInfo/styles/contestInfo.css");
+@import url("../src/ContestInfo/styles/contestInfo.css");
 
 /*------------------- PlayerStats CSS --------------------- */
 @import url("playerstats/styles/playerstats.css");
