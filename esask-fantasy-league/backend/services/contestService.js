@@ -17,7 +17,7 @@ async function getContests() {
 
 async function getContestById(id) {
     const contest = await Contest.findById(id);
-    const participatedTeam = await teamService.findTeamsByContestId(id);
+    const participatedTeam = await teamService.findTeamsByContest(contest);
     return {contest, participatedTeam};
 }
 

@@ -53,7 +53,7 @@ async function getTeamStats(id,  startDate, endDate) { //id being the tema id fr
         teamName = team.name;
 
         //this has to be for all players in a team by match
-        for(const player of players) {
+        const promises = players.map(async player => {
             const stats = await getPlayerStats(player.isCaptain, player.summonerId, startDate, endDate);
             teamScore += stats.playerScore;
             //console.log(stats);
@@ -67,11 +67,11 @@ async function getTeamStats(id,  startDate, endDate) { //id being the tema id fr
                 captainBonusScore = calculateBonusCaptain(wins, towers, dragons, barons)
                 teamScore += captainBonusScore
             }
-
-        };
-
+        });
+        await Promise.all(promises);
 
         return {
+            id: team._id,
             score: teamScore, //team score is the captain's bonus.
             name:teamName,
             captainBonus:{towers, dragons, barons, wins, captainBonusScore},
