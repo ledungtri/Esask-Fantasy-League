@@ -2,8 +2,7 @@
  * Description: main page to display the stats of a player after click
 */
 import React, { useState, useEffect } from 'react';
-import {HeaderName, PlayerPerformance, MatchesStats, DraftButton} from '../components'
-import axios from 'axios';
+import {HeaderName, MatchesStats, DraftButton} from '../components'
 import Loading from '../components/Loading';
 import Modal from 'react-bootstrap/Modal'
 import * as apiService from '../api/api'
@@ -14,10 +13,7 @@ function Playerstats(props) {
 
     const [playerStats, setPlayerStats] = useState([]);
     const [playerEntries, setPlayerEntries] = useState({});
-    const [totalGames, setTotalGames] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [show, setShow] = useState(true);
-    const handleClose = () => setShow(false);
     const sumonnerIDProp = props.summonerId;
 
 
@@ -28,7 +24,6 @@ function Playerstats(props) {
         if (response.status < 400) {
           setPlayerStats(response.data.stats);
           setPlayerEntries(response.data.entries);
-          setTotalGames(response.data.totalGames)
           setLoading(false);
         }
       };
@@ -59,7 +54,10 @@ function Playerstats(props) {
             <MatchesStats stats = {playerStats} />
         </Modal.Body>
             }
-          {props.loggedin&&props.show?<DraftButton onClose={handleClose} loggedin={true}  />:""}
+          {props.loggedin&&props.show?<DraftButton handleDraftPlayer={() => {
+              props.handleDraftPlayer();
+              props.handleClose();
+          }} loggedin={true}  />:""}
 
         <Modal.Footer>
         </Modal.Footer>
