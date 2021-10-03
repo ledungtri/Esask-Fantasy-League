@@ -126,8 +126,7 @@ async function getPlayerStats(isCaptain, id, startDate, endDate) { //player id
 
 /**Calculate team captain bonus */
 function calculateBonusCaptain(wins, towers, dragons, barons) {
-    if(isCaptain) return (1.5*(towers + dragons*2 + barons*3 + wins*2))
-    else return (towers + dragons*2 + barons*3 + wins*2) 
+    return (1.5*(towers + dragons*2 + barons*3 + wins*2))
 }
 function calculateScorePlayer(isCaptain, kills, assists, deaths) {
     if(!isCaptain) return (kills*3 + assists*2 - deaths ) 

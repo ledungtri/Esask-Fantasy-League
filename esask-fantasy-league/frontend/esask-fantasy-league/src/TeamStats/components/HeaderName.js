@@ -12,14 +12,12 @@ export default function HeaderName(props) {
     return (
         <div className="header_player">
             <h1 className="text-center text-light">
-                {props.teamName?props.teamName+" ":""} |
-                {props.teamScore?" "+props.teamScore+" Fpts":""}
+                {props.teamName?props.teamName+" ":""} 
             </h1>
-            {/* add border style here */}
-            <div> 
-                <h3 className="text-center text-light">Captain Bonuses:</h3>
-                <TeamPerformance performance = {props.teamPerformance}  />
-            </div>
+            <h1 className="text-center text-light">
+            Team Score: {props.teamScore?" "+props.teamScore+" Fpts":""}
+            </h1>
+     
            
         </div>
     )

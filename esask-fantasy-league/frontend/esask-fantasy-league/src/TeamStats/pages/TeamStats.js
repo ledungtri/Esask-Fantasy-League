@@ -2,7 +2,7 @@
  * Description: main page to display the stats of a player after click
 */
 import React, { useState, useEffect } from 'react';
-import {HeaderName, PlayerPerformance, PlayersPerformance, DraftButton} from '../components'
+import {HeaderName, PlayerPerformance, PlayersPerformance, DraftButton, TeamPerformance} from '../components'
 import axios from 'axios';
 import Loading from '../components/Loading';
 import Modal from 'react-bootstrap/Modal'
@@ -50,12 +50,13 @@ function TeamStats(props) {
     return (
       <div>
       <Modal
+        scrollable={true}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
-       // show={props.show}
+        // show={props.show}
         show={true}
-      //  onHide={props.handleClose}
+        //  onHide={props.handleClose}
         onHide={()=>setShow(false)}
         >
         <Modal.Header closeButton>
@@ -64,9 +65,11 @@ function TeamStats(props) {
             </Modal.Title>
         </Modal.Header>
             {loading? <Loading /> :
-        <Modal.Body>
+        <Modal.Body >
             <HeaderName teamPerformance = {teamPerformance} teamScore={teamScore} teamName={teamName} />  
             <PlayersPerformance stats = {playerStats} startDate={startDate} endDate={endDate} />
+            <TeamPerformance performance = {teamPerformance}  />
+
         </Modal.Body>
             }
 
