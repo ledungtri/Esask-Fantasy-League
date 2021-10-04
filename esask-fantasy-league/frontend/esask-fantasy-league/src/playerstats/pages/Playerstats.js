@@ -19,10 +19,11 @@ function Playerstats(props) {
     const [totalScore, setTotalScore] = useState(0);
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState(true);
+    const [loggedin, setLoggedin] = useState(false);
     const handleClose = () => setShow(false);
     const sumonnerIDProp = props.summonerId;
 
-
+    if(props.loggedin) setLoggedin(props.loggedin)
 
 
     const fetchPlayer = async () => {
@@ -63,7 +64,7 @@ function Playerstats(props) {
           <MatchesStats stats = {playerStats} />
       </Modal.Body>
       }
-      {props.loggedin&&props.show?<DraftButton onClose={handleClose} loggedin={true}  />:""}
+      {loggedin&&props.show?<DraftButton onClose={handleClose} loggedin={true}  />:""}
 
         <Modal.Footer>
         </Modal.Footer>
