@@ -6,25 +6,21 @@ import backendHost from '../../api/backendHost';
 import ContestDetails from '../../CreateTeam/components/ContestDetails';
 import Modal from 'react-bootstrap/Modal';
 
-function ContestInfo(props) {
+function ContestInfo({contest, status, show, handleCloseInfo,onJoinBtnClick}) {
 
-    const [contest, setContest] = useState({});
+    const [currContest, setCurrContest] = useState({});
     const [teams, setTeams] = useState([]);
     const [loading, setLoading] = useState(false);
-    // const [show, setShow] = useState(true);
-    const contestID = props.contest;
-    const contestStatus = props.status;
+    const contestID = contest;
+    const contestStatus = status;
 
     async function fetchContest(){
         setLoading(true);
-        console.log(contestID);
-        console.log(contestStatus);
         const res = await fetch(backendHost.BACKEND_HOST + "/api/contests/" + contestID);
         res.json().then(res => {
-            setContest(res.data.contest)   
+            setCurrContest(res.data.contest)   
             setTeams(res.data.participatedTeam)
         });
-        console.log(contest)
         setLoading(false);
     }
 
@@ -34,25 +30,25 @@ function ContestInfo(props) {
 
     return (
         <div className="contestInfoContainer">
-            <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={props.show} onHide={props.handleCloseInfo}>
+            <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={show} onHide={handleCloseInfo}>
                 <Modal.Header closeButton>
                     <Modal.Title>Contest Details</Modal.Title>
                 </Modal.Header>
                 {loading ? <Loading /> : 
                     <Modal.Body>
-                        <ContestDetails contest={contest}/>
+                        <ContestDetails contest={currContest}/>
                         <TeamsListHeading /> 
                         {teams.map(team => (
                             <TeamRow team={team} contestStatus={contestStatus}/>
                         ))}
                     </Modal.Body>
                 }
-                {props.show ? 
+                {show ? 
                 <div className='join-button'>
                     <button
                         className="btnJoinContest"
                         disabled={contestStatus !== 'Upcoming'}
-                        onClick={() => props.onJoinBtnClick(contest)}
+                        onClick={() => onJoinBtnClick(currContest)}
                     >Join Contest</button>
                 </div>
                 : ""
