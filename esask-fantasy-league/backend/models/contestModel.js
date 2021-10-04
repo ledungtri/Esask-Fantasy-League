@@ -17,10 +17,9 @@ const contestSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    isContestOpen: {
-        type: Boolean,
-        required: true,
-        default: false
+    status: {
+        type: String,
+        required: false,
     }
 });
 

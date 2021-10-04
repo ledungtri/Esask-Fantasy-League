@@ -38,8 +38,11 @@ code {
 /*------------------- HomePage CSS --------------------- */
 @import url("../src/Home Page/styles/homepage.css");
 
-/*------------------- HomePage CSS --------------------- */
-@import url("/src/ContestList/styles/ContestList.css");
+/*------------------- ContestList CSS --------------------- */
+@import url("ContestList/styles/contestList.css");
+
+/*------------------- ContestInfo CSS --------------------- */
+@import url("../src/ContestInfo/styles/contestInfo.css");
 
 /*------------------- PlayerStats CSS --------------------- */
 @import url("playerstats/styles/playerstats.css");

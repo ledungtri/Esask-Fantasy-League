@@ -95,9 +95,15 @@ function PlayerList(props) {
 
     return (
         <div className="player_list">
-            {showPlayerStats ? <Playerstats summonerId={summoner} show={showPlayerStats} handleClose={handleClose} loggedin={false}
-            startDate={null} endDate={null}/> : ""
-            }
+            {showPlayerStats ? <Playerstats
+                summonerId={summoner.summonerId}
+                show={showPlayerStats}
+                handleClose={handleClose}
+                handleDraftPlayer={() => props.callback(summoner)}
+                loggedin={false}
+                startDate={null}
+                endDate={null}
+                /> : ""}
             <div>
                 <div className="title">
                     <h3 data-testid="title">{title}</h3>
@@ -138,7 +144,7 @@ function PlayerList(props) {
                                         <p>{player.pos}</p>
                                     </div>
                                     <div className= "player_name">
-                                        <a href="#" onClick={()=>showPlayerDetails(player.summonerId)}>
+                                        <a href="#" onClick={()=>showPlayerDetails(player)}>
                                             <p className="width">{player.summonerName}</p>
                                         </a>
                                         {player.isCaptain && showBtnCapt?
