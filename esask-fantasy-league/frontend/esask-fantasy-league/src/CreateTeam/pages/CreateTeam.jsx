@@ -11,6 +11,8 @@ function CreateTeam(props) {
     const [totalValue, setTotalValue] = useState(0);
     const [selectedPlayers] = useState([]);
 
+    const [captainId, setCaptainId] = useState("");
+
     const [message, setMessage] = useState();
     const [messageType, setMessageType] = useState('');
 
@@ -24,14 +26,33 @@ function CreateTeam(props) {
 
     function handleRemovePlayer(player) {
         const index = selectedPlayers.indexOf(player);
+        selectedPlayers[index].isCaptain=false;
         delete selectedPlayers[index];
         recalculateTotalValue();
+
     }
 
     function recalculateTotalValue() {
         let total = 0;
         selectedPlayers.forEach(player => total += player.value);
         setTotalValue(total);
+    }
+
+
+    function handleAssignCaptain(player){
+
+        console.log(selectedPlayers)
+
+        selectedPlayers.forEach(
+            player => player.isCaptain=false
+        )
+
+        const index = selectedPlayers.indexOf(player);
+        player.isCaptain=true;
+        selectedPlayers[index]=player;
+
+        setCaptainId(player.summonerId)
+
     }
 
     function closeModal(){
@@ -42,6 +63,24 @@ function CreateTeam(props) {
         e.preventDefault();
 
         const players = selectedPlayers.filter(p => p !== null);
+
+        let isCaptainAssigned=false;
+
+
+        for(let x=0; x<players.length; x++){
+            if(players[x].isCaptain){
+                isCaptainAssigned=true;
+
+            }
+        }
+        console.log(isCaptainAssigned);
+
+        if(isCaptainAssigned === false){
+            setMessage("Please select a captain");
+            setMessageType('error');
+            return;
+        }
+
         if (players.length !== 6) {
             setMessage("There should be 6 players");
             setMessageType('error');
@@ -88,7 +127,8 @@ function CreateTeam(props) {
             </div>
 
             <div data-testid='selected-players' className="playerListContainer">
-                <PlayerList players={selectedPlayers} title="Selected Players" showBtn btnText="Remove" callback={handleRemovePlayer} hideSearch />
+
+                <PlayerList players={selectedPlayers} title="Selected Players" showBtnCapt showBtn btnText="Remove" callback={handleRemovePlayer} captainCallback={handleAssignCaptain} hideSearch/>
 
                 {messageType? <PopUpMessage type={messageType} body={message} closeHandler={closeModal}/> : ""}
 

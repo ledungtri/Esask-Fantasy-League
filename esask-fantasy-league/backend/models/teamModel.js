@@ -34,7 +34,8 @@ const teamSchema = new mongoose.Schema({
         required: true,
         validate: [
             { validator: validateTeamSize, msg: 'Team must have 6 players' },
-            { validator: validateTeamValue, msg: 'Team value must not exceed $50,000' }
+            { validator: validateTeamValue, msg: 'Team value must not exceed $50,000' },
+            
             // todo: check has 1 captain
         ]
     }

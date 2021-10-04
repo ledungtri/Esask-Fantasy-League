@@ -1,5 +1,5 @@
 
-/* 
+/*
     Component that renders the list of player has gotten from the playerlist api
 
     Contains functionality for search bar component, to return the list of players matching search queries
@@ -23,6 +23,8 @@ function PlayerList(props) {
     const title = props.title || "List Of Players";
     const showBtn = props.showBtn || false;
     const hideSearch = props.hideSearch || false;
+    const showBtnCapt = props.showBtnCapt || false;
+
 
     // get the list of players from the backend
     async function fetchPlayersList(){
@@ -52,12 +54,12 @@ function PlayerList(props) {
 
             if(filteredList.length == 0){
                 setShowNoMatch(true);
-            }   
+            }
             setPlayerList(filteredList);
         }catch(err){
             setShowError(true);
         }
-        
+
     }
     
     // function to return to full list
@@ -70,7 +72,7 @@ function PlayerList(props) {
     const current = playerList.slice(startIndex,startIndex + playersPerPage);
     const totalPages = Math.ceil(playerList.length/playersPerPage);
 
-    // function to handle pagination 
+    // function to handle pagination
     const handlePaginate = (number) => {
         setPage(number);
     }
@@ -87,8 +89,8 @@ function PlayerList(props) {
         setShowPlayerStats(false);
     }
 
-    
-   
+
+
 
     return (
         <div className="player_list">
@@ -137,6 +139,11 @@ function PlayerList(props) {
                                         <a href="#" onClick={()=>showPlayerDetails(player.summonerId)}>
                                             <p className="width">{player.summonerName}</p>
                                         </a>
+                                        {player.isCaptain && showBtnCapt?
+                                            <span className="captain_indicator">
+                                                C
+                                            </span>
+                                        :""}
                                     </div>
                                     {showBtn ? "" :
                                         <div>
@@ -147,11 +154,12 @@ function PlayerList(props) {
                                         <p>${player.value}</p>
                                     </div>
 
-
-
                                 {showBtn ?
                                     <div className="select_player_div">
                                         <button className="select_player_btn" onClick={() => props.callback(player)}>{props.btnText || "Select Player"}</button>
+                                        {showBtnCapt?
+                                        <button value="Captain" className="select_player_btn" onClick={() => props.captainCallback(player)}>Captain</button>
+                                        :""}
                                     </div>
                                 : ""}
                             </div>
