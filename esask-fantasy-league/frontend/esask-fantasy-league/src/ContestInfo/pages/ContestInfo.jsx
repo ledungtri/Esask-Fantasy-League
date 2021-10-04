@@ -18,7 +18,9 @@ function ContestInfo({contest, status, show, handleCloseInfo,onJoinBtnClick}) {
         setLoading(true);
         const res = await fetch(backendHost.BACKEND_HOST + "/api/contests/" + contestID);
         res.json().then(res => {
-            setCurrContest(res.data.contest)   
+            const contest = res.data.contest;
+            contest.status = status;
+            setCurrContest(contest)
             setTeams(res.data.participatedTeam)
         });
         setLoading(false);

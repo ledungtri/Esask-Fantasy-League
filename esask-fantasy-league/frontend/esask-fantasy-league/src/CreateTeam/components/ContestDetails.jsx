@@ -5,6 +5,7 @@ function ContestDetails(props) {
     return(
         <div data-testid="contest-details" className="contestDetails">
             <Title title={"Contest : " + props.contest.name}/>
+            <Title title={"Status : " + props.contest.status}/>
             <Title title={"Start Date : " + new Date(props.contest.startDate).toLocaleDateString()}/>
             <Title title={"End Date : " + new Date(props.contest.endDate).toLocaleDateString()}/>
         </div>
