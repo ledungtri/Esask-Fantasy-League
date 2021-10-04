@@ -46,6 +46,3 @@ test("contain create button", () => {
     expect(submitButton.value).toEqual("Create Team");
 });
 
-// test("contain assign captain button", () =>{
-//     const captainButton = 
-// });

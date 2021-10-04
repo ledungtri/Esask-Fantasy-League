@@ -11,8 +11,7 @@ function CreateTeam(props) {
     const [totalValue, setTotalValue] = useState(0);
     const [selectedPlayers] = useState([]);
 
-    const[showCaptain, setShowCaptain] = useState(false);
-    
+    const [captainId, setCaptainId] = useState("");
 
     const [message, setMessage] = useState();
     const [messageType, setMessageType] = useState('');
@@ -27,8 +26,10 @@ function CreateTeam(props) {
 
     function handleRemovePlayer(player) {
         const index = selectedPlayers.indexOf(player);
+        selectedPlayers[index].isCaptain=false;
         delete selectedPlayers[index];
         recalculateTotalValue();
+
     }
 
     function recalculateTotalValue() {
@@ -37,26 +38,21 @@ function CreateTeam(props) {
         setTotalValue(total);
     }
 
-    //to be completed
+    
     function handleAssignCaptain(player){
 
         console.log(selectedPlayers)
                 
-        for(let x=0; x<selectedPlayers.length; x++){
-            if(selectedPlayers[x].isCaptain){
-                selectedPlayers[x].isCaptain=false;
-            }
-        }
-
+        selectedPlayers.forEach(
+            player => player.isCaptain=false
+        )
+        
         const index = selectedPlayers.indexOf(player);
         player.isCaptain=true;
         selectedPlayers[index]=player;
 
-        // console.log(selectedPlayers[index])
-
-        // console.log(selectedPlayers[index].isCaptain)
-        // console.log(selectedPlayers[index].summonerName)
-        setShowCaptain(true);
+        setCaptainId(player.summonerId)
+       
     }
 
     function closeModal(){
@@ -67,6 +63,24 @@ function CreateTeam(props) {
         e.preventDefault();
 
         const players = selectedPlayers.filter(p => p !== null);
+
+        let isCaptainAssigned=false;
+
+        
+        for(let x=0; x<players.length; x++){
+            if(players[x].isCaptain){
+                isCaptainAssigned=true;
+                
+            }
+        }
+        console.log(isCaptainAssigned);
+
+        if(isCaptainAssigned === false){
+            setMessage("Please select a captain");
+            setMessageType('error');
+            return;
+        }
+
         if (players.length !== 6) {
             setMessage("There should be 6 players");
             setMessageType('error');
@@ -117,12 +131,7 @@ function CreateTeam(props) {
                 <PlayerList players={selectedPlayers} title="Selected Players" showBtnCapt showBtn btnText="Remove" callback={handleRemovePlayer} captainCallback={handleAssignCaptain}/>
 
                 {messageType? <PopUpMessage type={messageType} body={message} closeHandler={closeModal}/> : ""}
-                {showCaptain?
-                    <span>
-                        
-                    </span>
-                :""}
-
+                
                 <form className="createTeamForm" onSubmit={handleSubmit}>
                     <input
                         data-testid='team-name-input'

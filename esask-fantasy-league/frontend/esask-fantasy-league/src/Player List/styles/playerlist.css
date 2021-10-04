@@ -73,6 +73,11 @@
   transform: scale(1.04);
 }
 
+.captain_indicator{
+  color: rgb(236, 95, 95);
+  font-weight: bolder;
+}
+
 
 @media only screen and (max-width: 1000px) {
   .width_50{
