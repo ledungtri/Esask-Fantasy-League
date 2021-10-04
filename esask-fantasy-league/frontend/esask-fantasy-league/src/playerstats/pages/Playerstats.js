@@ -12,23 +12,26 @@ import * as apiService from '../api/api'
 
 function Playerstats(props) {
 
+    const [startDate, setStartDate] = useState(props.startDate);
+    const [endDate, setEndDate] = useState(props.endDate);
     const [playerStats, setPlayerStats] = useState([]);
     const [playerEntries, setPlayerEntries] = useState({});
-    const [totalGames, setTotalGames] = useState(0);
+    const [totalScore, setTotalScore] = useState(0);
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState(true);
     const handleClose = () => setShow(false);
     const sumonnerIDProp = props.summonerId;
 
 
+
+
     const fetchPlayer = async () => {
         setLoading(true);
-        const response = await apiService.getData(sumonnerIDProp)
-     
+        const response = await apiService.getData(sumonnerIDProp, startDate, endDate)
         if (response.status < 400) {
           setPlayerStats(response.data.stats);
           setPlayerEntries(response.data.entries);
-          setTotalGames(response.data.totalGames)
+          setTotalScore((response.data.stats)[0].score);
           setLoading(false);
         }
       };
@@ -43,23 +46,24 @@ function Playerstats(props) {
       <div>
       <Modal
         size="lg"
+        fullscreen="md-down"      
         aria-labelledby="contained-modal-title-vcenter"
         centered
         show={props.show}
         onHide={props.handleClose}
-        >
-        <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-            Player's Stats
-            </Modal.Title>
-        </Modal.Header>
-            {loading? <Loading /> :
-        <Modal.Body>
-            <HeaderName performance = {playerEntries}  />  
-            <MatchesStats stats = {playerStats} />
-        </Modal.Body>
-            }
-          {props.loggedin&&props.show?<DraftButton onClose={handleClose} loggedin={true}  />:""}
+      >
+      <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+          Player's Stats
+          </Modal.Title>
+      </Modal.Header>
+      {loading? <Loading /> :
+      <Modal.Body>
+          <HeaderName performance = {playerEntries}  />  
+          <MatchesStats stats = {playerStats} />
+      </Modal.Body>
+      }
+      {props.loggedin&&props.show?<DraftButton onClose={handleClose} loggedin={true}  />:""}
 
         <Modal.Footer>
         </Modal.Footer>

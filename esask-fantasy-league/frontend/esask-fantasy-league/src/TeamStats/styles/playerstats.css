@@ -1,0 +1,62 @@
+
+  .header_player {
+    width: 75%;
+    height: 27vh;
+    padding-top: 1em;
+    background-color: #141e61;
+    margin: 15px auto;
+  }
+  .performance_player {
+    background-color: #141e61;
+    margin: 20px;
+    padding: 40px 40px 40px 40px;
+
+  }
+  .performance-row {
+    margin: 0 auto;
+  }
+
+  .performance-col {
+    text-align: center;
+  }
+
+  .draft_player_btn {
+    background-color: #141e61;
+    border-radius: 10px;
+    color: #eeeeee;
+   
+    padding:0.35em 1.2em;
+    border:0.1em solid #FFFFFF;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:#FFFFFF;
+    text-align:center;
+    transition: all 0.2s;
+    float: right;
+  }
+  .draft_player_btn:hover {
+    background-color: #0f044c;
+    transform: scale(1.04);
+  }
+
+  .table-dark {
+    --bs-table-bg: rgb(20, 30, 97) !important;
+    --bs-table-striped-bg: rgb(15, 4, 76) !important;
+  }
+
+  .modal-header { 
+    color: white;
+  }
+  .modal-header .btn-close  { 
+    /* background: url("https://image.flaticon.com/icons/svg/60/60993.svg") !important; */
+ }
+ .modal-content {
+   background-color: rgba(61, 60,115, 0.9) !important;
+ }
+ a:hover {
+  cursor:pointer;
+ }

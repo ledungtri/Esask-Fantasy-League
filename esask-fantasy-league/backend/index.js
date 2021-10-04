@@ -27,6 +27,7 @@ function useRoutes() {
     app.use('/api', playerRoute);
     app.use('/api', playerRouter);
     app.use('/api', contestRoute);
+   // app.use('/api', teamRoute);
     // TODO: implement user route
 }
 

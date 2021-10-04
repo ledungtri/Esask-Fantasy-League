@@ -6,7 +6,10 @@ const playerService = require('../services/playerService');
 /** Nisrine */
 const getPlayerStats =  function(req, res){
     summonerID = req.params._id; //_id is sumonnerID
-    playerService.getPlayerStats(summonerID)
+    startDate = req.params.startDate; 
+    endDate = req.params.endDate;
+
+    playerService.getPlayerStats(summonerID,startDate, endDate )
     .then(function(response) {
         return res.status(200).json({success:true, entries:response.entries, stats: response.stats, totalGames:response.totalGames});
     })
