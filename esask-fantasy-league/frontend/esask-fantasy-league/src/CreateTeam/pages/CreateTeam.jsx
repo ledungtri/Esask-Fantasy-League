@@ -83,26 +83,29 @@ function CreateTeam(props) {
                 <h4>Remaining Budget: ${50000 - totalValue}</h4>
             </div>
 
-            <div data-testid="available-players" className="playerListContainer">
-                <PlayerList title="Available Players" showBtn btnText="Select" callback={handleSelectPlayer}/>
-            </div>
+            <div className="outer_playerlist_div">
+                <div data-testid="available-players" className="playerListContainer">
+                    <PlayerList title="Available Players" showBtn btnText="Select" callback={handleSelectPlayer}/>
+                </div>
 
-            <div data-testid='selected-players' className="playerListContainer">
-                <PlayerList players={selectedPlayers} title="Selected Players" showBtn btnText="Remove" callback={handleRemovePlayer} hideSearch />
+                <div data-testid='selected-players' className="playerListContainer">
 
-                {messageType? <PopUpMessage type={messageType} body={message} closeHandler={closeModal}/> : ""}
+                    <PlayerList players={selectedPlayers} title="Selected Players" showBtnCapt showBtn btnText="Remove" callback={handleRemovePlayer} hideSearch/>
 
-                <form className="createTeamForm" onSubmit={handleSubmit}>
-                    <input
-                        data-testid='team-name-input'
-                        type="text"
-                        name="teamName"
-                        value={teamName}
-                        onChange={(e) => setTeamName(e.target.value)}
-                        placeholder="Enter your team's name here"
-                    />
-                    <input data-testid='submit-btn' type="submit" value="Create Team"/>
-                </form>
+                    {messageType? <PopUpMessage type={messageType} body={message} closeHandler={closeModal}/> : ""}
+
+                    <form className="createTeamForm" onSubmit={handleSubmit}>
+                        <input
+                            data-testid='team-name-input'
+                            type="text"
+                            name="teamName"
+                            value={teamName}
+                            onChange={(e) => setTeamName(e.target.value)}
+                            placeholder="Enter your team's name here"
+                        />
+                        <input data-testid='submit-btn' type="submit" value="Create Team"/>
+                    </form>
+                </div>
             </div>
         </div>
     );
