@@ -87,7 +87,7 @@ function PlayerList(props) {
                                             <p className="width">{player.summonerName}</p>
                                         </a>
                                         {player.isCaptain && showBtnCapt?
-                                            <span className="captain_indicator">
+                                            <span data-testid="captain_indicator">
                                                 C
                                             </span>
                                         :""}
@@ -105,7 +105,7 @@ function PlayerList(props) {
                                     <div className="select_player_div">
                                         <button className="select_player_btn" onClick={() => props.callback(player)}>{props.btnText || "Select Player"}</button>
                                         {showBtnCapt?
-                                        <button value="Captain" className="select_player_btn" onClick={() => props.captainCallback(player)}>Captain</button>
+                                        <button data-testid="captain_button" name="captain" value="Captain" className="select_player_btn" onClick={() => props.captainCallback(player)}>Captain</button>
                                         :""}
                                     </div>
                                 : ""}
