@@ -11,7 +11,7 @@ function SearchBar(props) {
     return (
         <div className="searchBar">
             <div className="searchInput_div">
-                <input data-testid="test_search_field" type="text" name="input_text" value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder="Search players by name" />
+                <input data-testid="test_search_field" type="text" name="input_text" value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder="Search players" />
                 
             </div>
 
@@ -19,7 +19,7 @@ function SearchBar(props) {
 
             <div className="searchBtn_div">
                 <button data-testid="test_search_btn" onClick={() => props.getSearchText(searchText)}>Search</button>
-                <button data-testid="test_search_btn2" onClick={props.clear}>Cancel</button>
+                <button data-testid="test_search_btn2" onClick={() => props.clear(setSearchText)}>Cancel</button>
             </div>
         </div>
     )
