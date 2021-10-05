@@ -30,7 +30,10 @@
 .listing_heading > div {
   margin: 0 30px 0 45px;
 }
-.listing div,
+.listing div {
+  display: flex;
+  justify-content: space-evenly;
+}
 .listing_heading div {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr 1fr;
@@ -55,7 +58,7 @@
   width: 50%;
 }
 .width_90 {
-  width: 90%;
+  width: 95%;
 }
 .pagination {
   display: flex;
@@ -80,11 +83,11 @@
   transform: scale(1.04);
 }
 
-.captain_indicator{
+.captain_indicator {
   color: rgb(236, 95, 95);
   font-weight: bolder;
+  position: absolute;
 }
-
 
 @media only screen and (max-width: 1000px) {
   .width_50 {

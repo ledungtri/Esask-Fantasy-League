@@ -109,14 +109,14 @@ function PlayerList(props) {
                     <h3 data-testid="title">{title}</h3>
                 </div>
                 {hideSearch ? "":<SearchBar getSearchText={getSearchList} clear={clearSearch} showError={showError} />}
-                <label>Filter by Salary</label>
+                {/* <label>Filter by Salary</label>
                 <select>
                     <option >-- All --</option>
                     <option value="12500">$12,500</option>
                     <option value="10000">$10,000</option>
                     <option value="7500">$7,500</option>
                     <option value="0">$0</option>
-                </select>
+                </select> */}
                 {showBtn ? "" :
                     <div className={showBtn ? "listing_heading width_90" :"listing_heading width_50"}>
                         <div>

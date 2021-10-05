@@ -1,23 +1,23 @@
 .TeamCreateContainer {
-    padding-bottom: 20px;
+  padding-bottom: 20px;
 }
 .playerListContainer {
-    width: 50%;
-    display: inline-block;
-    overflow: auto;
-    height: 500px;
+  width: 50%;
+  display: inline-block;
+  overflow: auto;
+  height: 500px;
 }
 
-.createTeamForm{
-    margin: 20px;
+.createTeamForm {
+  margin: 20px;
 }
 
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
 
 .close:hover,
 .close:focus {
@@ -26,50 +26,49 @@
   cursor: pointer;
 }
 
-input[type=text] {
-    width: 100%;
-    text-align: center;
-    font-size: x-large;
-    padding: 12px 20px;
-    box-sizing:border-box;
-    border: 2px solid #141E61;
+input[type="text"] {
+  width: 100%;
+  text-align: center;
+  font-size: x-large;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #141e61;
 }
 
-
-input[type=submit] {
-    background-color: #2a69bb;
-    border: none;
-    color: white;
-    font-size: large;
-    padding: 16px 32px;
-    text-decoration:solid;
-    margin: 25px 0px 0px 0px;
-    cursor: pointer;
-    width: 100%;
-    border-radius: 10px;
-  }
+input[type="submit"] {
+  background-color: #2a69bb;
+  border: none;
+  color: white;
+  font-size: large;
+  padding: 16px 32px;
+  text-decoration: solid;
+  margin: 25px 0px 0px 0px;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 10px;
+}
 
 .pop-up-header {
-    padding: 2px 16px;
-    color: white;
+  padding: 2px 16px;
+  color: white;
 }
 
 .error {
-    background-color: #ce1b1b;
+  background-color: #ce1b1b;
 }
 
 .success {
-    background-color: #649a00;
+  background-color: #649a00;
 }
 
 .pop-up-body {
-    padding: 2px 16px;
-    color: black;
+  padding: 2px 16px;
+  color: black;
 }
 
 .pop-up-message {
-    background-color: #eeeeee;
-    margin: auto;
-    border: 1px solid #888;
-    width: 80%;
+  background-color: #eeeeee;
+  margin: auto;
+  border: 1px solid #888;
+  width: 80%;
 }
