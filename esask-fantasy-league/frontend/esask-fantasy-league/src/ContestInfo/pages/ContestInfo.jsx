@@ -41,7 +41,7 @@ function ContestInfo({contest, status, show, handleCloseInfo,onJoinBtnClick}) {
                         <ContestDetails contest={currContest}/>
                         <TeamsListHeading /> 
                         {teams.map(team => (
-                            <TeamRow team={team} contestStatus={contestStatus}/>
+                            <TeamRow team={team} contest={currContest}/>
                         ))}
                     </Modal.Body>
                 }
