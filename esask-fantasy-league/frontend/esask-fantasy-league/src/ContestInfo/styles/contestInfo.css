@@ -5,6 +5,9 @@
     text-align: center;
     font-size: 30px;
 }
+.modal-content {
+    color: #eeeeee;
+}
 
 .teams-list-heading {
     color: #eeeeee;

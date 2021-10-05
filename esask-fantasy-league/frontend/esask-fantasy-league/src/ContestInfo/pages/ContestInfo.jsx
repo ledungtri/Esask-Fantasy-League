@@ -48,6 +48,7 @@ function ContestInfo({contest, status, show, handleCloseInfo,onJoinBtnClick}) {
                 {show ? 
                 <div className='join-button'>
                     <button
+                        data-testid="btn-join-test"
                         className="btnJoinContest"
                         disabled={contestStatus !== 'Upcoming'}
                         onClick={() => onJoinBtnClick(currContest)}
