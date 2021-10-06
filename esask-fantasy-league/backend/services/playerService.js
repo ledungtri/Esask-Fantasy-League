@@ -35,6 +35,7 @@ assignPlayerValue =  (res_data) =>{
 
     for(let i = 0; i < sorted_res.length; i++){
         sorted_res[i].pos = i+1;
+        sorted_res[i].isCaptain=false;
         if(i < 40){
             sorted_res[i].value =12500;
         }

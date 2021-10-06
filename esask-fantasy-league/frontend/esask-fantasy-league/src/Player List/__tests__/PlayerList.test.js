@@ -20,3 +20,11 @@ test('renders pagination component', () => {
     render(<PlayerList />);
     expect(screen.getByTestId("paginate")).toBeInTheDocument();
 })
+
+
+test('Renders the captain button ', () => {
+    render(<PlayerList showBtnCapt={true}/>);
+    const captButton = getByTestId("captain_button");
+    expect(captButton.value).toEqual("Captain");
+  });
+

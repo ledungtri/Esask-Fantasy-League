@@ -1,6 +1,8 @@
 import React from "react";
 import {CreateTeam} from "../index";
-import {render} from "@testing-library/react";
+import {render, screen} from "@testing-library/react";
+import PlayerList from "../../Player List/components/PlayerList";
+import '@testing-library/jest-dom';
 
 let getByTestId;
 
@@ -45,3 +47,10 @@ test("contain create button", () => {
     const submitButton = getByTestId('submit-btn');
     expect(submitButton.value).toEqual("Create Team");
 });
+
+const isCaptain = false;
+test('show C when player selected as captain', () => {
+    render(<PlayerList />);
+    if(isCaptain) expect(screen.queryByTestId("captain_indicator")).toBeInTheDocument();
+    if(!isCaptain) expect(screen.queryByTestId("captain_indicator")).not.toBeInTheDocument();  
+})

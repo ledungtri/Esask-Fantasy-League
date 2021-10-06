@@ -59,14 +59,14 @@ function PlayerList(props) {
                 filteredList = playerList.filter(player => {
                     return player.summonerName.toLowerCase().includes(searchValue.toLowerCase())
                    });
-            } 
+            }
             if (searchBy === "salary"){
                 console.log("over here2")
                 filteredList = playerList.filter(player => {
                     return player.value.toString() === searchValue
                    });
             }
-            
+
 
             if(filteredList.length === 0){
                 console.log("over here3")
@@ -142,9 +142,9 @@ function PlayerList(props) {
                                 <option value="salary">Salary</option>
                             </select>
                     </div>
-                    <SearchBar getSearchText={getSearchList} clear={clearSearch} showError={showError} /> 
+                    <SearchBar getSearchText={getSearchList} clear={clearSearch} showError={showError} />
                 </div>)}
-                
+
 
                 {/* ----------------------------------------- List heading ------------------------------------------ */}
                 {showBtn ? "" :
@@ -183,7 +183,7 @@ function PlayerList(props) {
                                             <p className="width">{player.summonerName}</p>
                                         </a>
                                         {player.isCaptain && showBtnCapt?
-                                            <span className="captain_indicator">
+                                            <span className="captain_indicator" data-testid="captain_indicator">
                                                 C
                                             </span>
                                         :""}
@@ -202,6 +202,9 @@ function PlayerList(props) {
                                 {showBtn ?
                                     <div className="select_player_div">
                                         <button className="select_player_btn" onClick={() => props.callback(player)}>{props.btnText || "Select Player"}</button>
+                                        {showBtnCapt?
+                                        <button data-testid="captain_button" name="captain" value="Captain" className="select_player_btn" onClick={() => props.captainCallback(player)}>Captain</button>
+                                        :""}
                                     </div>
                                 : ""}
                             </div>
@@ -211,13 +214,12 @@ function PlayerList(props) {
                     <div className="pagination">
                         <p>Page {page} of {totalPages}</p>
                         <Paginate totalPages={totalPages} handlePaginate={handlePaginate} />
-                    </div>        
-        
                     </div>
-        
+
+                    </div>
+
                 </div>
             )
         }
-        
+
         export default PlayerList
-        
