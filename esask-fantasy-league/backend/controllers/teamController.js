@@ -10,10 +10,8 @@ async function createTeam(req, res) {
 }
 
 async function getTeamStatsById(req, res) {
-    //TODO: implement getTeamById
     try {
         let teamStats = await teamService.getTeamStats(req.params._id, req.params.startDate, req.params.endDate);
-       // console.log(teamStats)
        if(Object.keys(teamStats).length==0)
         return res.status(404).json({success: false, data: teamStats});
         else

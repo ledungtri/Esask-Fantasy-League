@@ -102,13 +102,8 @@ async function getPlayerStats(isCaptain, id, startDate, endDate) { //player id
             assists+=stat.data.assists;
             deaths+=stat.data.deaths;
 
-           // playerScore+=stat.data.score
         }
-
-            // if(isCaptain)
-            // playerScore = calculateScoreCaptain( wins, towers, dragons, barons) //to change
-            // else
-            playerScore = calculateScorePlayer(isCaptain, kills, assists, deaths) //to change
+        playerScore = calculateScorePlayer(isCaptain, kills, assists, deaths) //to change
 
 
 
