@@ -18,23 +18,23 @@ function TeamStats(props) {
     const [teamName, setTeamName] = useState("");
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState(true);
-    const [contestOver, setContestOver] = useState(true);
+    //const [contestOver, setContestOver] = useState(props.contestOver);
     const [startDate, setStartDate] = useState("2021-09-01");
-    const [endDate, setEndDate] = useState("2021-09-30");
+    const [endDate, setEndDate] = useState("2021-09-07");
 
     const handleClose = () => setShow(false);
-    const teamID = '615499d13389b232e00a21cb'; //this to be deleted when integrating the code with contest page
+    const teamID = '6157377d1058bad48b54845d'; //this to be deleted when integrating the code with contest page
 
    // const teamID = props.teamID; //this will come from contest page
-   // const contestOver = props.contestOver; //this will come from contest page
+    const contestOver = props.contestOver!==null && props.contestOver!==undefined?props.contestOver:true; 
    // const startDate = props.startDate; //this will come from contest page
    // const endDate = props.endDate; //this will come from contest page
 
     const fetchPlayer = async () => {
         setLoading(true);
         const response = await apiService.getData(teamID, startDate, endDate)
-     
-        if (response.status < 400) {
+        if(response) {
+          if (response.status = 200) {
           console.log("response")
           console.log(response)
           setPlayerStats(response.data.data.playersData);
@@ -43,9 +43,13 @@ function TeamStats(props) {
           setTeamName(response.data.data.name); 
 
           setLoading(false);
-        }
-      };
+          }
+        } else {
+          setLoading(false);
+           console.error("ERROR RESPONSE");
 
+        }   
+      };
 
     useEffect(() => {
         fetchPlayer();
@@ -55,7 +59,6 @@ function TeamStats(props) {
     return (
       <div>
         {/* show the team stats only when the contest is  over */}
-        {contestOver?
         <Modal
           data-testid="team-stats-container"
           scrollable={true}
@@ -63,26 +66,31 @@ function TeamStats(props) {
           aria-labelledby="contained-modal-title-vcenter"
           centered
           show={show}
-          onHide={()=>setShow(false)}
-          >
+          onHide={()=>setShow(false)} >
+            
           <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
               Team's Stats
               </Modal.Title>
           </Modal.Header>
-              {loading? <Loading /> :
-          <Modal.Body >
-              <HeaderName teamPerformance = {teamPerformance} teamScore={teamScore} teamName={teamName} />  
-              <PlayersPerformance stats = {playerStats} startDate={startDate} endDate={endDate} />
-              <TeamPerformance performance = {teamPerformance}  />
 
-          </Modal.Body>
-              }
+          {contestOver?
+            loading? <Loading /> :
+              <Modal.Body >
+                  <HeaderName teamPerformance = {teamPerformance} teamScore={teamScore} teamName={teamName} />  
+                  <PlayersPerformance stats = {playerStats} startDate={startDate} endDate={endDate} />
+                  <TeamPerformance performance = {teamPerformance}  />
+
+              </Modal.Body>
+          
+            : <h1 data-testid="teamstats-unavailable" className=" header_player text-center text-light" >
+              Team Stats data Unavailable, Please come back when the contest is over</h1>
+          }
 
           <Modal.Footer>
           </Modal.Footer>
         </Modal>
-        :<h1 className=" header_player text-center text-light" >Team Stats data Unavailable, Please come back when the contest is over</h1>}
+        
 
       </div>
             

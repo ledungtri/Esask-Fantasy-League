@@ -40,9 +40,9 @@ export default function PlayersPerformance(props) {
                 </tr>
             </thead>
             <tbody>
-                {stats.map((stat) => (       
-                    <tr>
-                        <td><a href="#" onClick={()=>showPlayerDetails(stat.summonnerID)}>{stat.summonerName}</a></td>
+                {stats.map((stat, i) => (       
+                    <tr key={i}>
+                        <td><a href="#" data-testid="player-name" onClick={()=>showPlayerDetails(stat.summonnerID)}>{stat.summonerName}</a></td>
                         <td>{String(stat.isCaptain).localeCompare(true)==0?"Yes":"No"}</td>
                         <td>{stat.data.kills}</td>
                         <td>{stat.data.assists}</td>

@@ -1,0 +1,106 @@
+{
+    "success": true,
+    "data": {
+        "score": 655,
+        "name": "Team77",
+        "captainBonus": {
+            "towers": 0,
+            "dragons": 0,
+            "barons": 0,
+            "wins": 0,
+            "captainBonusScore": 0
+        },
+        "playersData": [
+            {
+                "summonerName": "rank1mandingo",
+                "summonnerID": "uDCGK1nfavei3-MPTCRxfHHlQrKwFlzs5XwTcdYv0nlOQjY",
+                "isCaptain": false,
+                "data": {
+                    "kills": 34,
+                    "assists": 26,
+                    "deaths": 25,
+                    "wins": 3,
+                    "towers": 23,
+                    "dragons": 6,
+                    "barons": 0
+                },
+                "playerScore": 129
+            },
+            {
+                "summonerName": "Eric Wei",
+                "summonnerID": "n_boXS6G69RCIqsCefz1_W2vCjOB6O9ULAS7X75wm9Zi4ds",
+                "isCaptain": false,
+                "data": {
+                    "kills": 2,
+                    "assists": 9,
+                    "deaths": 3,
+                    "wins": 1,
+                    "towers": 9,
+                    "dragons": 2,
+                    "barons": 1
+                },
+                "playerScore": 21
+            },
+            {
+                "summonerName": "FZ3R0",
+                "summonnerID": "MBhKZAA3MmM7HMi5cf7-hF7uxsVBVpb7nmJ8ByDCv8Ev0uA",
+                "isCaptain": false,
+                "data": {
+                    "kills": 11,
+                    "assists": 11,
+                    "deaths": 23,
+                    "wins": 2,
+                    "towers": 12,
+                    "dragons": 4,
+                    "barons": 1
+                },
+                "playerScore": 32
+            },
+            {
+                "summonerName": "animegirl2007",
+                "summonnerID": "83hEbwsr4bp38SzgfhDNXJOCK-YfuXjgh6Zcs6KhaXeHmh0v",
+                "isCaptain": false,
+                "data": {
+                    "kills": 27,
+                    "assists": 58,
+                    "deaths": 26,
+                    "wins": 3,
+                    "towers": 34,
+                    "dragons": 10,
+                    "barons": 3
+                },
+                "playerScore": 171
+            },
+            {
+                "summonerName": "A5PECT",
+                "summonnerID": "tVhbl5d8qyBUkh6LU-qsNmu93aM_sBW4rb7bgtJQvi8m7Vk",
+                "isCaptain": false,
+                "data": {
+                    "kills": 38,
+                    "assists": 17,
+                    "deaths": 22,
+                    "wins": 3,
+                    "towers": 30,
+                    "dragons": 9,
+                    "barons": 3
+                },
+                "playerScore": 126
+            },
+            {
+                "summonerName": "Dragonmini",
+                "summonnerID": "HcsH1v8jOYvOtwHTGC0QKSddQztZKXkVXylA6f218y4yR8M",
+                "isCaptain": false,
+                "data": {
+                    "kills": 23,
+                    "assists": 59,
+                    "deaths": 11,
+                    "wins": 4,
+                    "towers": 37,
+                    "dragons": 9,
+                    "barons": 4
+                },
+                "playerScore": 176
+            }
+        ]
+    }
+}

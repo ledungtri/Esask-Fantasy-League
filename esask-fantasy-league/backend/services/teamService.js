@@ -32,7 +32,9 @@ async function validateContest(contestId) {
 async function getTeamPlayers(id) { //id being the id of the team from the db
     try {
         const players = Team.findById(id);
+        if(players)
         return players;
+        else return []
     } catch(e) {
         throw Error('Error while getting team data from the database')
     }
