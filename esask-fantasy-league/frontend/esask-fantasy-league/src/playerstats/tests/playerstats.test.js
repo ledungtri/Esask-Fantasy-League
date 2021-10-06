@@ -7,7 +7,8 @@ import DraftButton from '../components/DraftButton';
 import '@testing-library/jest-dom'
 
 const summonerID ='-tyH2c-M71YU_U1QomFkLXI2KMeystnXWRK1xWXOBzWm7iU';
-
+const startDate = "2021-09-01";
+const endDate = "2021-09-07";
 
 it('gets the data from the server',  async () => {
   render(<Playerstats summonerId={summonerID} show={true} loggedin={true} />);
@@ -19,6 +20,7 @@ it('gets the data from the server',  async () => {
 
  
 describe('The button to draft the player shows up only when user is logged in', () => {
+  
   it('Does not render the button when logged out ', () => {
     render(<Playerstats show={true}  loggedin={false}/>);
     expect(screen.queryByTestId(/draftbtn/i)).not.toBeTruthy();
@@ -43,7 +45,7 @@ it('Closes the popup when the button is clicked', async  () => {
 
 
 it('Renders the close button ', async () => {
-  render(<Playerstats show={true} loggedin={true} />);
+  render(<Playerstats show={true} startDate={startDate} endDate={endDate} />);
   await  waitFor(()=>screen.getByRole('button', {name:'Close'}));
   const closeButton = screen.getByRole('button', {name:'Close'});
   expect(closeButton).toBeInTheDocument();
