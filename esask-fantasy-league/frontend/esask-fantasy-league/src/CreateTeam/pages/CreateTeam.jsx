@@ -119,7 +119,7 @@ function CreateTeam(props) {
             </div>
 
             <div data-testid="remaining-budget" className='title'>
-                <h4>Remaining Budget: ${50000 - totalValue}</h4>
+                <h4>Remaining Budget: ${(50000 - totalValue).toLocaleString()}</h4>
             </div>
 
             <div className="outer_playerlist_div">

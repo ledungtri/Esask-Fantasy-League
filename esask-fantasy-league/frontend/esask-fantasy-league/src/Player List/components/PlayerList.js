@@ -194,7 +194,7 @@ function PlayerList(props) {
                                         </div>
                                     }
                                     <div>
-                                        <p>${player.value}</p>
+                                        <p>${(player.value).toLocaleString()}</p>
                                     </div>
 
 
