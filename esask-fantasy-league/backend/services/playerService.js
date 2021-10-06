@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const GaleforceModule = require('galeforce');
 const _ = require('lodash');
+require('dotenv').config();
 
 const galeforce = new GaleforceModule({
     'riot-api': {key: process.env.RIOT_TOKEN},

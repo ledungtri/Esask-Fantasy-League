@@ -1,28 +1,21 @@
-const contest = require('../models/contestModel');
+const contestService = require('../services/contestService');
 
 getAllContests = async (req, res) => {
-
-    contest.find({}, function (err,contests){
-        if (err){
-            return res
-                .status(400)
-                .json({success: false, error: err});
-        }
-
-        if (!contests.length){
-            return res
-                .status(404)
-                .json({success: false, error: "No contests available"});
-        }
-        
-        contests.forEach(contest => {
-            contest.isContestOpen = contest.startDate > Date.now();
-        });
-        
-        return res
-            .status(200)
-            .json({success: true, data: contests});
-    });
+    try {
+        const contests = await contestService.getContests();
+        return res.status(200).json({success: true, data: contests});
+    } catch (e) {
+        return res.status(400).json({success: false, error: e.message});
+    }
 }
 
-module.exports = {getAllContests};
+async function getContestById(req, res) {
+    try {
+        const contest = await contestService.getContestById(req.params.id);
+        return res.status(200).json({success: true, data: contest});
+    } catch (e) {
+        return res.status(400).json({success: false, error: e.message});
+    }
+}
+
+module.exports = {getAllContests, getContestById};

@@ -2,8 +2,7 @@
  * Description: main page to display the stats of a player after click
 */
 import React, { useState, useEffect } from 'react';
-import {HeaderName, PlayerPerformance, MatchesStats, DraftButton} from '../components'
-import axios from 'axios';
+import {HeaderName, MatchesStats, DraftButton} from '../components'
 import Loading from '../components/Loading';
 import Modal from 'react-bootstrap/Modal'
 import * as apiService from '../api/api'
@@ -47,7 +46,7 @@ function Playerstats(props) {
       <div>
       <Modal
         size="lg"
-        fullscreen="md-down"      
+        fullscreen="md-down"
         aria-labelledby="contained-modal-title-vcenter"
         centered
         show={props.show}
@@ -60,11 +59,14 @@ function Playerstats(props) {
       </Modal.Header>
       {loading? <Loading /> :
       <Modal.Body>
-          <HeaderName performance = {playerEntries}  />  
+          <HeaderName performance = {playerEntries}  />
           <MatchesStats stats = {playerStats} />
       </Modal.Body>
       }
-      {loggedin&&props.show?<DraftButton onClose={handleClose} loggedin={true}  />:""}
+      {loggedin&&props.show?<DraftButton handleDraftPlayer={() => {
+              props.handleDraftPlayer();
+              props.handleClose();
+          }} loggedin={true}  />:""}
 
         <Modal.Footer>
         </Modal.Footer>

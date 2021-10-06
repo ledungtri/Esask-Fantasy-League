@@ -2,11 +2,10 @@ import React, {useState} from "react";
 import apis from "../../api/api";
 import ContestDetails from "../components/ContestDetails";
 import PlayerList from "../../Player List/components/PlayerList";
-import Title from "../../Home Page/components/Title";
 import PopUpMessage from "../components/PopUpMessage";
 
 function CreateTeam(props) {
-    const contest = (props.location && props.location.contest) || {};
+    const [contest] = useState((props.location && props.location.contest)? props.location.contest : {});
     const [teamName, setTeamName] = useState("");
     const [totalValue, setTotalValue] = useState(0);
     const [selectedPlayers] = useState([]);

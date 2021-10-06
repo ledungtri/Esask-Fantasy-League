@@ -1,6 +1,6 @@
 const Team = require('../models/teamModel');
 const ObjectId = require('mongoose').Types.ObjectId;
-const playerService = require('../services/playerService')
+const playerService = require('./playerService');
 
 async function createTeam(body) {
     const team = new Team({
@@ -12,21 +12,21 @@ async function createTeam(body) {
     return await team.save();
 }
 
-
-async function getTeamById(id) {
-    //TODO: Implement getTeamById
+async function findTeamsByContest(contest) {
+    const teams = await Team.find({contestId: contest._id});
+    const promises =  teams.map(team => getTeamStats(team._id, contest.startDate, contest.endDate));
+    const participatedTeams = await Promise.all(promises);
+    const result = participatedTeams.sort((a, b) => b.score -  a.score);
+    for (let i = 0; i < result.length; i++) {
+        result[i].rank = i+1;
+    }
+    return result;
 }
-
-async function updateTeamById(id, body) {
-    //TODO: Implement getTeamById
-}
-
 
 async function validateContest(contestId) {
     if (!ObjectId.isValid(contestId)) {
         throw {message: "Invalid contestId"};
     }
-    // todo: verify contest exists
 }
 
 async function getTeamPlayers(id) { //id being the id of the team from the db
@@ -38,12 +38,12 @@ async function getTeamPlayers(id) { //id being the id of the team from the db
     } catch(e) {
         throw Error('Error while getting team data from the database')
     }
-    
+
 }
 
 async function getTeamStats(id,  startDate, endDate) { //id being the tema id from db
 
-    
+
     let towers=0, dragons=0, barons=0, wins=0; //captain bonuses
     let teamScore = 0; //this is the tsum of all players score + the captain score
     let captainBonusScore=0; //this is the captain score based on turrets, dragons, barons and win
@@ -51,11 +51,11 @@ async function getTeamStats(id,  startDate, endDate) { //id being the tema id fr
     let teamName="";
     try {
         let team = (await getTeamPlayers(id));
-        players = JSON.parse(JSON.stringify(team.players)); 
+        players = JSON.parse(JSON.stringify(team.players));
         teamName = team.name;
 
         //this has to be for all players in a team by match
-        for(const player of players) {
+        const promises = players.map(async player => {
             const stats = await getPlayerStats(player.isCaptain, player.summonerId, startDate, endDate);
             teamScore += stats.playerScore;
             //console.log(stats);
@@ -68,21 +68,21 @@ async function getTeamStats(id,  startDate, endDate) { //id being the tema id fr
                 wins = stats.data.wins;  //these are data for the whole team
                 captainBonusScore = calculateBonusCaptain(wins, towers, dragons, barons)
                 teamScore += captainBonusScore
-            }          
-           
-        };
-       
+            }
+        });
+        await Promise.all(promises);
 
         return {
+            id: team._id,
             score: teamScore, //team score is the captain's bonus.
             name:teamName,
-            captainBonus:{towers, dragons, barons, wins, captainBonusScore}, 
+            captainBonus:{towers, dragons, barons, wins, captainBonusScore},
             playersData:playersStat
         };
     } catch(error) {
         console.log(error)
     }
-    
+
 }
 
 /**This function to get the total of stats of all the matches for this player */
@@ -90,7 +90,7 @@ async function getPlayerStats(isCaptain, id, startDate, endDate) { //player id
     try {
         const stats = await playerService.getPlayerStats(id,startDate, endDate );
         // const date = stats.stats[0].date;
-     
+
         let towers=0, dragons=0, barons=0;
         let wins=0, kills=0, assists=0, deaths=0; //these are total stats for all matches of this player
         for(const stat of stats.stats) { //for each stat means for each match stats for one specific player, in the last 5 matches
@@ -103,27 +103,25 @@ async function getPlayerStats(isCaptain, id, startDate, endDate) { //player id
             deaths+=stat.data.deaths;
 
            // playerScore+=stat.data.score
-        } 
-     
+        }
+
             // if(isCaptain)
             // playerScore = calculateScoreCaptain( wins, towers, dragons, barons) //to change
-            // else 
+            // else
             playerScore = calculateScorePlayer(isCaptain, kills, assists, deaths) //to change
 
 
-        
-        return { 
-            summonerName:stats.entries[0].summonerName, 
+
+        return {
+            summonerName:stats.entries[0].summonerName,
             summonnerID:stats.entries[0].summonerId,
-            isCaptain:isCaptain, 
+            isCaptain:isCaptain,
             data: {kills, assists, deaths, wins, towers, dragons, barons}, //total stats for this player in the last 5 matches
-            playerScore: playerScore 
-        }  
+            playerScore: playerScore
+        }
     } catch(error) {
         console.log(error)
     }
-
-  
 }
 
 /**Calculate team captain bonus */
@@ -131,7 +129,7 @@ function calculateBonusCaptain(wins, towers, dragons, barons) {
     return (1.5*(towers + dragons*2 + barons*3 + wins*2))
 }
 function calculateScorePlayer(isCaptain, kills, assists, deaths) {
-    if(!isCaptain) return (kills*3 + assists*2 - deaths ) 
-    else  return (1.5*(kills*3 + assists*2 - deaths) ) 
+    if(!isCaptain) return (kills*3 + assists*2 - deaths )
+    else  return (1.5*(kills*3 + assists*2 - deaths) )
 }
-module.exports = {createTeam, getTeamById,getTeamPlayers,getTeamStats, getPlayerStats, updateTeamById};
+module.exports = {createTeam, findTeamsByContest, getTeamPlayers, getTeamStats, getPlayerStats};
