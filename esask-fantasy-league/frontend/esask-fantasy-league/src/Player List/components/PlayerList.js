@@ -29,6 +29,7 @@ function PlayerList(props) {
 
     // get the list of players from the backend
     async function fetchPlayersList(){
+        setShowNoMatch(false);
         setLoading(true);
         const res = await fetch(backendHost.BACKEND_HOST + "/api/playerlist");
         res.json().then(res => setPlayerList(res));
@@ -67,7 +68,7 @@ function PlayerList(props) {
             }
             
 
-            if(filteredList.length == 0){
+            if(filteredList.length === 0){
                 console.log("over here3")
                 setShowNoMatch(true);
             }
