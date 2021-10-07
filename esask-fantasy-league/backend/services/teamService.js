@@ -51,7 +51,9 @@ async function getTeamStats(id,  startDate, endDate) { //id being the tema id fr
     let teamName="";
     try {
         let team = (await getTeamPlayers(id));
-        players = JSON.parse(JSON.stringify(team.players));
+      
+
+        players = team.players;
         teamName = team.name;
 
         //this has to be for all players in a team by match

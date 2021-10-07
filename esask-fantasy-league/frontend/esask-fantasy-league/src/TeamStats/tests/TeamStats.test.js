@@ -15,23 +15,26 @@ const startDate = "2021-09-01";
 const endDate = "2021-09-07";
 const URL = 'localhost:3001/api/teams/6157377d1058bad48b54845d/2021-09-01/2021-09-07'; //the link to call for mockups
 const fakeData = require('./tests-data/teamData.json'); //this is a json containing fake API response data.
-
-
+const mockOverContest = {
+  status: "Closed",
+  startDate: "2021-09-01",
+  endDate: "2021-09-07"
+}
+const mockOnGoingContest = {
+  status:"Upcoming",
+  startDate:"2021-09-01",
+  endDate:"2021-09-07"
+}
 
 it('shows the team stats popup',  async () => {
-    render(<TeamStats contestOver={true} />);
+    render(<TeamStats contest={mockOverContest} team={fakeData.data}  />);
     expect(screen.queryByTestId(/team-stats-container/i)).toBeInTheDocument();
    });
   
-it('shows the loading message before loading',  async () => {
-    render(<TeamStats />);
-    expect(screen.queryByTestId(/loadingtext/i)).toBeInTheDocument();
-});
-
 describe('Testing the API call', () => {
  
   it('makes an API call ',  async () => { 
-     render(<TeamStats />);
+     render(<TeamStats contest={mockOnGoingContest} team={fakeData.data} />);
      const spy = jest.spyOn(api, 'getData')
      api.getData(teamID, startDate, endDate)
      expect(spy).toHaveBeenCalled();
@@ -60,30 +63,29 @@ describe('Testing the API call', () => {
 describe('Showing the team stats only when the contest is not over yet ', () => {
   
   it('Does not show the team stats when the contest is not over',  async () => { 
-    render(<TeamStats contestOver={false} />);
+    render(<TeamStats contest={mockOnGoingContest} team={fakeData.data} />);
     expect(screen.queryByTestId(/teamstats-unavailable/i)).toBeInTheDocument();
 
 
    });
 
   it('Shows the team stats when the contets is over',  async () => { 
-    render(<TeamStats contestOver={true} />);
+    render(<TeamStats contest={mockOverContest} team={fakeData.data} />);
     expect(screen.queryByTestId(/team-stats-container/i)).toBeInTheDocument();
   
    });
 });
 
 
-
 it('Closes the popup when the button is clicked', async  () => {
-  render(<TeamStats />);
+  render(<TeamStats contest={mockOverContest} team={fakeData.data} handleClose={()=>{}} />);
   fireEvent.click(screen.getByRole('button', {name:'Close'}));  
   await waitFor(()=>expect(screen.queryByTestId(/team-stats-container/i)).not.toBeInTheDocument());
 });
 
 
 it('Renders the close button ', async () => {
-  render(<TeamStats/>);
+  render(<TeamStats contest={mockOverContest}  team={fakeData.data}  />);
   await  waitFor(()=>screen.getByRole('button', {name:'Close'}));
   const closeButton = screen.getByRole('button', {name:'Close'});
   expect(closeButton).toBeInTheDocument();
