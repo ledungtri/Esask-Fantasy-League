@@ -23,7 +23,13 @@ test('renders pagination component', () => {
 
 //Assign Captain - Navin
 test('Renders the captain button ', () => {
-    render(<PlayerList showBtn={true}/>);
+    const mockPlayers = [{
+        summonerId: "123123123",
+        summonerName: "Player Name",
+        value: 7500
+    }];
+
+    render(<PlayerList showBtnCapt showBtn players={mockPlayers}/>);
     const captButton = screen.getByTestId("captain_button");
     expect(captButton.value).toEqual("Captain");
 });
