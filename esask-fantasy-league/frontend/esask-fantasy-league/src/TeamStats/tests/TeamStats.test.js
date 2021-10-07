@@ -8,12 +8,12 @@ import * as api from '../api/api'
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import { PlayersPerformance, TeamPerformance } from '../components';
-
+import backendHost from '../../api/backendHost';
 /** Mocking Variables to use during the tests */
 const teamID = '6157377d1058bad48b54845d'; 
 const startDate = "2021-09-01";
 const endDate = "2021-09-07";
-const URL = 'localhost:3001/api/teams/'+ teamID +'/'+ startDate+'/'+ endDate; //the link to call for mockups
+const URL = backendHost.BACKEND_HOST + '/api/teams/'+ teamID +'/'+ startDate+'/'+ endDate; //the link to call for mockups
 const fakeTeamData = require('./tests-data/teamData.json'); //this is a json containing fake API response data.
 
 const mockOverContest = {
