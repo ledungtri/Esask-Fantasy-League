@@ -23,8 +23,8 @@ test('renders pagination component', () => {
 
 
 test('Renders the captain button ', () => {
-    render(<PlayerList showBtnCapt={true}/>);
-    const captButton = getByTestId("captain_button");
+    render(<PlayerList showBtn={true}/>);
+    const captButton = screen.getByTestId("captain_button");
     expect(captButton.value).toEqual("Captain");
-  });
+});
 
