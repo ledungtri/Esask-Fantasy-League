@@ -1,5 +1,11 @@
-import React, {useState} from 'react';
+/**
+ * -  Author : Nisrine Zbadi
+ *  - File purpose : this component iterates through the list of players in a team
+ *  and displays for every player, the total of kills,assists, deaths and the scores
+ *  - Date: October 7th, 2021
+ */
 
+import React, {useState} from 'react';
 import Table from 'react-bootstrap/Table'
 import Playerstats from '../../playerstats/pages/Playerstats';
 

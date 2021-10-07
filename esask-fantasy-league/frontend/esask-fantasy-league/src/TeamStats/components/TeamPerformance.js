@@ -1,7 +1,12 @@
+/**
+ * -  Author : Nisrine Zbadi
+ *  - File purpose : this component shows the captain bonuses including the towers, dragons 
+ *  and barons + the score.
+ *  - Date: October 7th, 2021
+ */
+
 import React from 'react'
 import Table from 'react-bootstrap/Table'
-
-
 
 
 export default function TeamPerformance(props) {

@@ -1,5 +1,6 @@
 /** Author : Nisrine Zbadi 
- * Description: main page to display the stats of a player after click
+ * Description: main page to display the stats of a team's stats after clicking on their name
+ * this is being called in the contest list page.
 */
 import React, { useState, useEffect } from 'react';
 import {HeaderName, PlayersPerformance, TeamPerformance} from '../components'
