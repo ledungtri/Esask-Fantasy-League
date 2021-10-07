@@ -36,7 +36,7 @@ function ContestInfo({contest, status, show, handleCloseInfo,onJoinBtnClick}) {
                 <Modal.Header closeButton>
                     <Modal.Title>Contest Details</Modal.Title>
                 </Modal.Header>
-                {loading ? <Loading /> : 
+                {loading ? <Loading message="loading... Please wait" /> : 
                     <Modal.Body>
                         <ContestDetails contest={currContest}/>
                         <TeamsListHeading /> 

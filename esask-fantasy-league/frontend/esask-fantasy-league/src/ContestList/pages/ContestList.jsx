@@ -43,7 +43,7 @@ function ContestList(props) {
         <div className="contestListContainer">
             {showContestInfo ? <ContestInfo contest={contestID} status={contestStatus} show={showContestInfo} handleCloseInfo={handleCloseContestInfo} onJoinBtnClick={handleJoinContestBtnClick}/> : ""}
             <Title title="List of Contests"/>
-            {loading ? <Loading /> : ""}  
+            {loading ? <Loading message="loading...Please wait" /> : ""}  
             <ContestHeading /> 
             {contestList.map(contest => (
                 <ContestRow contest={contest} onJoinBtnClick={handleJoinContestBtnClick} showDetails={handleShowContestInfo}/>

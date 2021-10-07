@@ -29,11 +29,16 @@ function PlayerList(props) {
 
     // get the list of players from the backend
     async function fetchPlayersList(){
-        setShowNoMatch(false);
-        setLoading(true);
-        const res = await fetch(backendHost.BACKEND_HOST + "/api/playerlist");
-        res.json().then(res => setPlayerList(res));
-        setLoading(false);
+        try{
+            setShowNoMatch(false);
+            setLoading(true);
+            const res = await fetch(backendHost.BACKEND_HOST + "/api/playerlist");
+            res.json().then(res => setPlayerList(res));
+            setLoading(false);
+        }catch(error){
+            console.log(error);
+        }
+        
     }
 
     // call the fetch function using useEffect
@@ -89,8 +94,15 @@ function PlayerList(props) {
 
     // pagination calculations
     const startIndex = (page - 1) * playersPerPage;
-    const current = playerList.slice(startIndex,startIndex + playersPerPage);
+    let current;
+    try{
+        current = playerList.slice(startIndex,startIndex + playersPerPage);
+    }catch(err){
+        console.log(err);
+    }
+    
     const totalPages = Math.ceil(playerList.length/playersPerPage);
+
 
     // function to handle pagination
     const handlePaginate = (number) => {
