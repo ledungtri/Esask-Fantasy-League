@@ -1,3 +1,8 @@
+/**
+ * -  Author : Nisrine Zbadi
+ *  - File purpose : this is the component that shows the loading message and spinner
+ *  - Date: October 7th, 2021
+ */
 import React from 'react'
 
 function Loading(props) {

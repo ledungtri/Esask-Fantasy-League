@@ -1,14 +1,13 @@
+/**
+ * -  Author : Nisrine Zbadi
+ *  - File purpose : this is the component that shows the name and the score
+ *   of a player in the ehader of stats page, 
+ *  - Date: October 7th, 2021
+ */
 import React from 'react'
-import styled from 'styled-components';
-import { TeamPerformance } from '.';
-
 
 
 export default function HeaderName(props) {
-
-    console.log('i am in header name')
-    console.log(props)
-    console.log(props.teamScore)
     return (
         <div className="header_player">
             <h1 className="text-center text-light">

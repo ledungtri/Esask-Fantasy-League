@@ -1,3 +1,10 @@
+/**
+ * -  Author : Nisrine Zbadi
+ *  - File purpose : this is the service that is being called from the player controller, 
+ * it contains all the API calls to the Riot API using the npm package Galeforce, to get the player's stats
+ *  - Date: October 7th, 2021
+ */
+
 require('dotenv').config();
 
 const GaleforceModule = require('galeforce');

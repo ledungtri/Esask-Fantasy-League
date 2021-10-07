@@ -1,5 +1,6 @@
 /** Author : Nisrine Zbadi 
- * Description: main page to display the stats of a player after click
+ * Description: main page to display the stats of a team's stats after clicking on their name
+ * this is being called in the contest list page.
 */
 import React, { useState, useEffect } from 'react';
 import {HeaderName, PlayersPerformance, TeamPerformance} from '../components'
@@ -17,6 +18,7 @@ function TeamStats(props) {
     const [contestOver, setContestOver] = useState(props.contest.status !== "Upcoming");
     const [startDate, setStartDate] = useState(props.contest.startDate);
     const [endDate, setEndDate] = useState(props.contest.endDate);
+    const [show, setShow] = useState(true);
 
     const fetchPlayer = async () => {
         setLoading(true);
@@ -39,8 +41,11 @@ function TeamStats(props) {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
-          show
-          onHide={props.handleClose} >
+          show = {show}
+          onHide={()=>{
+            setShow(false);
+            props.handleClose();
+          }} >
 
           <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
@@ -56,7 +61,7 @@ function TeamStats(props) {
                   <div><HeaderName teamPerformance = {teamPerformance} teamScore={teamScore} teamName={teamName} />
                   <PlayersPerformance stats = {playerStats} startDate={startDate} endDate={endDate} />
                   <TeamPerformance performance = {teamPerformance}  />
-</div>
+        </div>
               : <h1 className=" header_player text-center text-light" >Team Stats data Unavailable, Please come back when the contest is over</h1>}
               </Modal.Body>
 

@@ -1,3 +1,12 @@
+/**
+ * -  Author : Nisrine Zbadi and Bill Le
+ *  - File purpose : this is the service that is being called from the team controller, 
+ * it contains all the API calls to the Riot API using the npm package Galeforce, to get the team stats of the team
+ * It connests to the database to egt the list of all the players in a team, 
+ * then for each player it gets the stats using the playerservice.
+ *  - Date: October 7th, 2021
+ */
+
 const Team = require('../models/teamModel');
 const ObjectId = require('mongoose').Types.ObjectId;
 const playerService = require('./playerService');
@@ -29,6 +38,7 @@ async function validateContest(contestId) {
     }
 }
 
+/** Nisrine: A helper function to get the list of all the players in a team, from the db */
 async function getTeamPlayers(id) { //id being the id of the team from the db
     try {
         const players = Team.findById(id);
@@ -41,9 +51,9 @@ async function getTeamPlayers(id) { //id being the id of the team from the db
 
 }
 
+/** Nisrine: This is the main function to be called from the controller, to get stats of all players in a team, 
+ * including the captain */
 async function getTeamStats(id,  startDate, endDate) { //id being the tema id from db
-
-
     let towers=0, dragons=0, barons=0, wins=0; //captain bonuses
     let teamScore = 0; //this is the tsum of all players score + the captain score
     let captainBonusScore=0; //this is the captain score based on turrets, dragons, barons and win
@@ -51,7 +61,7 @@ async function getTeamStats(id,  startDate, endDate) { //id being the tema id fr
     let teamName="";
     try {
         let team = (await getTeamPlayers(id));
-        players = JSON.parse(JSON.stringify(team.players));
+        players = team.players;
         teamName = team.name;
 
         //this has to be for all players in a team by match
@@ -123,6 +133,8 @@ async function getPlayerStats(isCaptain, id, startDate, endDate) { //player id
 function calculateBonusCaptain(wins, towers, dragons, barons) {
     return (1.5*(towers + dragons*2 + barons*3 + wins*2))
 }
+
+/**Calculate the regular players score, including the captain */
 function calculateScorePlayer(isCaptain, kills, assists, deaths) {
     if(!isCaptain) return (kills*3 + assists*2 - deaths )
     else  return (1.5*(kills*3 + assists*2 - deaths) )

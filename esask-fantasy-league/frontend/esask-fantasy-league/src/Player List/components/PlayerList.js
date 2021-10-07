@@ -55,18 +55,17 @@ function PlayerList(props) {
     // function to filter list by search text
     const getSearchList=  (searchValue)=>{
         try{
-            console.log(searchValue);
-            console.log(searchBy);
             setShowError(false);
+            if(searchValue === ""){
+                setShowError(true);
+            }
             let filteredList = [];
             if(searchBy === "name"){
-                console.log("over here")
                 filteredList = playerList.filter(player => {
                     return player.summonerName.toLowerCase().includes(searchValue.toLowerCase())
                    });
             }
             if (searchBy === "salary"){
-                console.log("over here2")
                 filteredList = playerList.filter(player => {
                     return player.value.toString() === searchValue
                    });
@@ -74,14 +73,11 @@ function PlayerList(props) {
 
 
             if(filteredList.length === 0){
-                console.log("over here3")
                 setShowNoMatch(true);
             }
-            console.log("over here4")
             setPlayerList(filteredList);
         }catch(err){
-            console.log("over here5")
-            setShowError(true);
+            console.log(err);
         }
 
     }
