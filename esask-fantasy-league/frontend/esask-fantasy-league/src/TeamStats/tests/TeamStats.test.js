@@ -13,35 +13,36 @@ import { PlayersPerformance, TeamPerformance } from '../components';
 const teamID = '6157377d1058bad48b54845d'; 
 const startDate = "2021-09-01";
 const endDate = "2021-09-07";
-const URL = 'localhost:3001/api/teams/6157377d1058bad48b54845d/2021-09-01/2021-09-07'; //the link to call for mockups
-const fakeData = require('./tests-data/teamData.json'); //this is a json containing fake API response data.
+const URL = 'localhost:3001/api/teams/'+ teamID +'/'+ startDate+'/'+ endDate; //the link to call for mockups
+const fakeTeamData = require('./tests-data/teamData.json'); //this is a json containing fake API response data.
+
 const mockOverContest = {
   status: "Closed",
-  startDate: "2021-09-01",
-  endDate: "2021-09-07"
+  startDate: startDate,
+  endDate: endDate
 }
 const mockOnGoingContest = {
   status:"Upcoming",
-  startDate:"2021-09-01",
-  endDate:"2021-09-07"
+  startDate:startDate,
+  endDate:endDate
 }
 
 it('shows the team stats popup',  async () => {
-    render(<TeamStats contest={mockOverContest} team={fakeData.data}  />);
+    render(<TeamStats contest={mockOverContest} team={fakeTeamData.data}  />);
     expect(screen.queryByTestId(/team-stats-container/i)).toBeInTheDocument();
    });
   
 describe('Testing the API call', () => {
  
   it('makes an API call ',  async () => { 
-     render(<TeamStats contest={mockOnGoingContest} team={fakeData.data} />);
+     render(<TeamStats contest={mockOnGoingContest} team={fakeTeamData.data} />);
      const spy = jest.spyOn(api, 'getData')
      api.getData(teamID, startDate, endDate)
      expect(spy).toHaveBeenCalled();
    });
    it('gets data from the server with 200 status ',  async () => { 
     var mock = new MockAdapter(axios);
-    const data = { response: fakeData };
+    const data = { response: fakeTeamData };
     mock.onGet(URL).reply(200, data);
     axios.get(URL).then((response) => {
       expect(response.status).toEqual(200);
@@ -63,14 +64,14 @@ describe('Testing the API call', () => {
 describe('Showing the team stats only when the contest is not over yet ', () => {
   
   it('Does not show the team stats when the contest is not over',  async () => { 
-    render(<TeamStats contest={mockOnGoingContest} team={fakeData.data} />);
+    render(<TeamStats contest={mockOnGoingContest} team={fakeTeamData.data} />);
     expect(screen.queryByTestId(/teamstats-unavailable/i)).toBeInTheDocument();
 
 
    });
 
   it('Shows the team stats when the contets is over',  async () => { 
-    render(<TeamStats contest={mockOverContest} team={fakeData.data} />);
+    render(<TeamStats contest={mockOverContest} team={fakeTeamData.data} />);
     expect(screen.queryByTestId(/team-stats-container/i)).toBeInTheDocument();
   
    });
@@ -78,14 +79,14 @@ describe('Showing the team stats only when the contest is not over yet ', () => 
 
 
 it('Closes the popup when the button is clicked', async  () => {
-  render(<TeamStats contest={mockOverContest} team={fakeData.data} handleClose={()=>{}} />);
+  render(<TeamStats contest={mockOverContest} team={fakeTeamData.data} handleClose={()=>{}} />);
   fireEvent.click(screen.getByRole('button', {name:'Close'}));  
   await waitFor(()=>expect(screen.queryByTestId(/team-stats-container/i)).not.toBeInTheDocument());
 });
 
 
 it('Renders the close button ', async () => {
-  render(<TeamStats contest={mockOverContest}  team={fakeData.data}  />);
+  render(<TeamStats contest={mockOverContest}  team={fakeTeamData.data}  />);
   await  waitFor(()=>screen.getByRole('button', {name:'Close'}));
   const closeButton = screen.getByRole('button', {name:'Close'});
   expect(closeButton).toBeInTheDocument();
@@ -93,7 +94,7 @@ it('Renders the close button ', async () => {
 
 it('Checks if all the player names have links',  async () => {
   var mock = new MockAdapter(axios);
-  const data = { response: fakeData };
+  const data = { response: fakeTeamData };
   mock.onGet(URL).reply(200, data);
   try {
     await axios.get(URL).then((response) => {

@@ -6,8 +6,7 @@ import Table from 'react-bootstrap/Table'
 
 export default function TeamPerformance(props) {
     const performance = props.performance;
-    console.log("props teamPerformance")
-    console.log(performance);
+
     return (
 
         <>

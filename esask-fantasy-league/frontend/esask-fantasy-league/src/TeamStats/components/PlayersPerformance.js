@@ -7,8 +7,6 @@ import Playerstats from '../../playerstats/pages/Playerstats';
 
 export default function PlayersPerformance(props) {
     const stats = (props.stats);
-    console.log("props stats")
-    console.log(stats?stats:"");
     const [showPlayerStats, setShowPlayerStats] = useState(false);
     const [summonerId, setSummonerId] = useState();
 
