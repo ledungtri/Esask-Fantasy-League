@@ -21,7 +21,7 @@ test('renders pagination component', () => {
     expect(screen.getByTestId("paginate")).toBeInTheDocument();
 })
 
-
+//Assign Captain - Navin
 test('Renders the captain button ', () => {
     render(<PlayerList showBtn={true}/>);
     const captButton = screen.getByTestId("captain_button");

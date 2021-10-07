@@ -48,6 +48,8 @@ test("contain create button", () => {
     expect(submitButton.value).toEqual("Create Team");
 });
 
+//Assign Captain - Navin
+
 const isCaptain = false;
 test('show C when player selected as captain', () => {
     render(<PlayerList />);
