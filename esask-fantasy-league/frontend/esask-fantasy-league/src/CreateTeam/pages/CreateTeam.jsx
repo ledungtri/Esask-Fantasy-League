@@ -39,13 +39,9 @@ function CreateTeam(props) {
 
 
     function handleAssignCaptain(player){
-
-        console.log(selectedPlayers)
-
         selectedPlayers.forEach(
             player => player.isCaptain=false
         )
-
         const index = selectedPlayers.indexOf(player);
         player.isCaptain=true;
         selectedPlayers[index]=player;
