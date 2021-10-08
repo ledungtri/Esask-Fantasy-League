@@ -27,23 +27,28 @@ const mockOnGoingContest = {
   endDate:endDate
 }
 
+//this test checks if the stats pop up will show up using the testid
 it('shows the team stats popup',  async () => {
     render(<TeamStats contest={mockOverContest} team={fakeTeamData.data}  />);
     expect(screen.queryByTestId(/team-stats-container/i)).toBeInTheDocument();
    });
   
+//This test checks if the API is being called, and also checks if the server response is 200, the second test 
+//of this suite will fail if the response is other than 200
+//the third tets of this suite will check if the response status is !==200, an error is thrown
+//We are using in this suite mocked data.
 describe('Testing the API call', () => {
- 
   it('makes an API call ',  async () => { 
      render(<TeamStats contest={mockOnGoingContest} team={fakeTeamData.data} />);
      const spy = jest.spyOn(api, 'getData')
      api.getData(teamID, startDate, endDate)
      expect(spy).toHaveBeenCalled();
    });
+
    it('gets data from the server with 200 status ',  async () => { 
     var mock = new MockAdapter(axios);
     const data = { response: fakeTeamData };
-    mock.onGet(URL).reply(200, data);
+    mock.onGet(URL).reply(200, data); //send 20 response status
     axios.get(URL).then((response) => {
       expect(response.status).toEqual(200);
     })
@@ -56,11 +61,13 @@ describe('Testing the API call', () => {
     const expectedError = async () => {
       await axios.get(URL);
     };
-     expect(expectedError()).rejects.toThrowError();
+     expect(expectedError()).rejects.toThrowError(); //expect the error to be thrown if the response status is !=200
   });
 })   
 
-
+//This suite of test checks if the team stats shows up only when the contest is not over,
+//by checking if the error message exixts in the page, this error message shows up
+//only when the contest is not over yet.
 describe('Showing the team stats only when the contest is not over yet ', () => {
   
   it('Does not show the team stats when the contest is not over',  async () => { 
@@ -78,19 +85,25 @@ describe('Showing the team stats only when the contest is not over yet ', () => 
 });
 
 
+//This test checks if the popup close when the close button is clicked
+//by checking if the main component still exist in the page or disapeared.
 it('Closes the popup when the button is clicked', async  () => {
   render(<TeamStats contest={mockOverContest} team={fakeTeamData.data} handleClose={()=>{}} />);
   fireEvent.click(screen.getByRole('button', {name:'Close'}));  
   await waitFor(()=>expect(screen.queryByTestId(/team-stats-container/i)).not.toBeInTheDocument());
 });
 
-
+//this test checks if the close button is being rendered
 it('Renders the close button ', async () => {
   render(<TeamStats contest={mockOverContest}  team={fakeTeamData.data}  />);
   const closeButton = screen.getByRole('button', {name:'Close'});
   expect(closeButton).toBeInTheDocument();
 });
 
+//this test checks if each player in the list of players has a link
+//by mocking the api call to the server, and expecting that 
+//note that player-name is the testid for the links
+//so if this test fails that means there is no links on the page.
 it('Checks if all the player names have links',  async () => {
   var mock = new MockAdapter(axios);
   const data = { response: fakeTeamData };
