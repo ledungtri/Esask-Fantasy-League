@@ -87,7 +87,6 @@ it('Closes the popup when the button is clicked', async  () => {
 
 it('Renders the close button ', async () => {
   render(<TeamStats contest={mockOverContest}  team={fakeTeamData.data}  />);
-  await  waitFor(()=>screen.getByRole('button', {name:'Close'}));
   const closeButton = screen.getByRole('button', {name:'Close'});
   expect(closeButton).toBeInTheDocument();
 });
