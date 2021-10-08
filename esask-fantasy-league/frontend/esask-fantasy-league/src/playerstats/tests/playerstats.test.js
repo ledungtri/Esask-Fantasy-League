@@ -37,7 +37,7 @@ describe('The button to draft the player shows up only when user is logged in', 
 
 it('Closes the popup when the button is clicked', async  () => {
   const onClick = jest.fn();
-  render(<DraftButton show={true} onClose={onClick} loggedin={true} />);
+  render(<DraftButton show={true} handleDraftPlayer={onClick} loggedin={true} />);
   await waitFor(()=>screen.getByText('Draft this player'));
   fireEvent.click(screen.getByText('Draft this player'));  
   expect(onClick).toHaveBeenCalled();
